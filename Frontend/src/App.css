@@ -1,42 +1,216 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.banner-app {
+  background-color: aquamarine;
+  height: 880px;
+  width: 100%;
+  position: relative;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.header-app {
+  width: 100%;
+  height: 90px;
+  position: fixed;
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+  transition: 0.3s;
+  z-index: 999;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header-app.scrolled {
+  background-color: rgb(201, 131, 131); /* Cor quando o usuário rolar a página */
+  border-bottom: 1px solid blue;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.logo-app {
+  left: 50px;
+  position: fixed;
 }
 
-.card {
-  padding: 2em;
+.ul-app {
+  list-style: none; 
+  display: flex; 
+  gap: 20px; 
 }
 
-.read-the-docs {
-  color: #888;
+.li-app {
+  width: 100px;
+  height: 30px;
+  top: 30px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  cursor: pointer;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.li-app:hover {
+
+}
+
+.about-app {
+  left: 200px;
+}
+
+.game-app {
+  left: 350px;
+}
+
+.login-app {
+  right: 200px;
+}
+
+.page2-app {
+  width: 100%;
+  height: 1080px;
+  background-color: aqua;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.titulo-p2-app {
+  font-size: 40px;
+  margin-top: 170px;
+}
+
+.video-p2-app {
+  width: 1500px;
+  height: 700px;
+  background-color: azure;
+  position: absolute;
+  margin-top: 250px;
+}
+
+.page3-app {
+  width: 100%;
+  height: 1080px;
+  background-color: rgb(136, 132, 132);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.titulo-p3-app {
+  font-size: 45px;
+  top: 170px;
+  left: 80px;
+  position: absolute;
+}
+
+.spacegame-p3-app {
+  width: 1700px;
+  height: 700px;
+  margin-top: 100px;
+  position: relative;
+  background-color: antiquewhite;
+}
+
+.game-p3-app {
+  width: 800px;
+  height: 300px;
+  background-color: rgb(58, 119, 119);
+  position: absolute;
+}
+
+.game1-app { 
+  top: 0px;
+  left: 0px;
+  position: absolute;
+} 
+
+.game2-app { 
+  top: 400px;
+  left: 0px;
+  position: absolute;
+}
+
+.game3-app { 
+  top: 0px;
+  right: 800px;
+  position: absolute;
+} 
+
+.game4-app { 
+  bottom: 300px;
+  right: 800px;
+  position: absolute;
+} 
+
+.page4-app {
+  width: 100%;
+  height: 1080px;
+  background-color: rgb(152, 184, 184);
+  position: relative;
+}
+
+.titulo-p4-app {
+  font-size: 45px;
+  top: 170px;
+  left: 80px;
+  position: absolute;
+}
+
+.spaceleft-p4-app {
+  width: 1100px;
+  height: 650px;
+  background-color: greenyellow;
+  position: absolute;
+  margin-top: 250px;
+  margin-left: 80px;
+
+}
+
+.imgleft-p4-app {
+  width: 100%;
+  height: 580px;
+  background-color: beige;
+  position: absolute;
+}
+
+.spaceimg-p4-app {
+  width: 550px;
+  height: 650px;
+  margin-top: 250px;
+  position: absolute;
+  right: 80px;
+  background-color: aqua;
+}
+
+.spaceimg1-p4-app, .spaceimg2-p4-app, .spaceimg3-p4-app {
+  position: absolute;
+  width: 100%;
+  height: 200px;
+  background-color: azure;
+}
+
+.spaceimg2-p4-app {
+  margin-top: 225px;
+}
+
+.spaceimg3-p4-app {
+  margin-top: 450px;
+}
+
+.img-p4-app {
+  width: 250px;
+  height: 200px;
+  position: absolute;
+  background-color: aquamarine;
+  right: 0;
+}
+
+.spacetext-p4-app {
+  position: absolute;
+  height: 200px;
+  width: 300px;
+  background-color: beige;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.textimg-p4-app {
+  font-size: 25px;
 }
