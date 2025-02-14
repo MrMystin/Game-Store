@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"; // Importa os hooks necessários
 import "./App.css";
 import Header from "./components/header";
+
+// import back from "../public/img/background.png"
+
 import game1 from "../public/img/jogo1.png";
 import game2 from "../public/img/jogo2.png";
 import game3 from "../public/img/jogo3.png";
@@ -19,6 +22,7 @@ function App() {
       <div className="banner-app"></div>
 
       <div className="page2-app">
+        {/* <img className="back-app" src={back} alt="background" /> */}
         <p className="titulo-p2-app">
           Descubra o Mundo Infinito do Minecraft: Explore, Construa e Sobreviva!
         </p>
@@ -70,6 +74,49 @@ function App() {
             <img className="img-p4-app" src={nov3} alt="img3" />
           </div>
         </div>
+      </div>
+
+      <div className="page5-app">
+        <div className="titulo-p5-app">Sobre nós</div>
+          <div className="space1-p5-app space-p5-app">
+            <div className="about-p5-app">
+              <div className="text-p5-app">
+                <p className="titulo-aboutp5-app">Descrição da foto</p>
+                <p className="text-p5-app">
+                Lorem ipsun Lorem ipsun Lorem ipsun
+                Lorem ipsunLorem ipsun Lorem ipsun
+                Lorem ipsunLorem ipsun Lorem ipsun
+                </p>
+              </div>
+              <img className="img-p5-app" src="" alt="foto1" />
+            </div>
+          </div>
+          <div className="space2-p5-app space-p5-app">
+            <div className="about-p5-app">
+              <div className="text-p5-app">
+                <p className="titulo-aboutp5-app">Descrição da foto</p>
+                <p className="text-p5-app">
+                Lorem ipsun Lorem ipsun Lorem ipsun
+                Lorem ipsunLorem ipsun Lorem ipsun
+                Lorem ipsunLorem ipsun Lorem ipsun
+                </p>
+              </div>
+              <img className="img-p5-app" src="" alt="foto1" />
+            </div>
+          </div>
+          <div className="space3-p5-app space-p5-app">
+            <div className="about-p5-app">
+              <div className="text-p5-app">
+                <p className="titulo-aboutp5-app">Descrição da foto</p>
+                <p className="text-p5-app">
+                Lorem ipsun Lorem ipsun Lorem ipsun
+                Lorem ipsunLorem ipsun Lorem ipsun
+                Lorem ipsunLorem ipsun Lorem ipsun
+                </p>
+              </div>
+                <img className="img-p5-app" src="" alt="foto1" />
+            </div>
+          </div>
       </div>
     </>
   );
