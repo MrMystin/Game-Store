@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  fullName     String        @db.VarChar(256)
+  username     String        @unique @db.VarChar(16)
+  email        String        @unique
+  password     String        @db.VarChar(32)
+  cpf          String        @unique @db.VarChar(11)
+  registerDate DateTime      @default(now())
+  Transaction  Transaction[]
+}
+
+model Product {
+  id                  Int           @id @default(autoincrement())
+  banner              String
+  name                String
+  discount            Int
+  value               Float
+  type                String
+  languages           String
+  releaseDate         String
+  fileSize            String
+  rating              String
+  minimumRequirements String
+  photos              String
+  indicativeRating    String
+  discription         String
+  discriptionPhoto    String
+  transaction         Transaction[]
+}
+
+model Transaction {
+  id              Int      @id @default(autoincrement())
+  userId          Int
+  productId       Int
+  value           Float
+  paymentType     String
+  transactionDate DateTime @default(now())
+  user            User     @relation(fields: [userId], references: [id])
+  product         Product  @relation(fields: [productId], references: [id])
+}
+
+enum PaymentType {
+  credit_card
+  debit_card
+  pix
+}
