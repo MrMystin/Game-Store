@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"; // Importa os hooks necessários
+import { useEffect, useState, useRef } from "react"; // Importa os hooks necessários
 import "./App.css";
 import Header from "./components/header";
 
@@ -16,9 +16,30 @@ import nov3 from "../public/img/nov3.png";
 
 function App() {
 
+  const sectionRef = useRef(null);
+  const topSectionRef = useRef(null);
+
+  const scrollToSection = () => {
+    if (sectionRef.current) {
+      const offset = 85; 
+      const topPosition = sectionRef.current.getBoundingClientRect().top + window.scrollY - offset;
+
+      window.scrollTo({ top: topPosition, behavior: "smooth" });
+    }
+  };
+
+  const scrollToTopSection = () => {
+    if (topSectionRef.current) {
+      const offset = 100;
+      const topPosition = topSectionRef.current.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: topPosition, behavior: "smooth" });
+    }
+  };
+
   return (
     <>
-    <Header />
+    <Header scrollToSection={scrollToSection} scrollToTopSection={scrollToTopSection}/>
+
       <div className="banner-app"></div>
 
       <div className="page2-app">
@@ -30,7 +51,7 @@ function App() {
       </div>
 
       <div className="page3-app">
-        <p className="titulo-p3-app">
+        <p className="titulo-p3-app" ref={topSectionRef}>
           Nossos jogos
         </p>
         <div className="spacegame-p3-app">
@@ -80,7 +101,7 @@ function App() {
       </div>
 
       <div className="page5-app">
-        <div className="titulo-p5-app">Sobre nós</div>
+        <div className="titulo-p5-app" ref={sectionRef}>Sobre nós</div>
           <div className="space1-p5-app space-p5-app">
             <div className="about-p5-app">
               <div className="text-p5-app">

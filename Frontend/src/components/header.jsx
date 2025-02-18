@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"; 
 
-function Header() {
+function Header({ scrollToSection, scrollToTopSection }) {
 
     const [scrolled, setScrolled] = useState(false);
 
@@ -18,6 +18,7 @@ function Header() {
       };
     }, []);
 
+
     return (
         <>
          <div className={`header-app ${scrolled ? "scrolled" : ""}`}>
@@ -25,8 +26,8 @@ function Header() {
             <img src="/img/download.png" alt="logo" />
           </div>
           <ul className="ul-app">
-            <li className="about-app li-app">sobre nós</li>
-            <li className="game-app li-app">Nossos jogos</li>
+          <li className="game-app li-app" onClick={scrollToSection}>Sobre nós</li>
+            <li className="about-app li-app" onClick={scrollToTopSection}>Nossos jogos</li>
             <li className="login-app li-app">Fazer login</li>
           </ul>
         </div>
