@@ -58,7 +58,7 @@ export async function registerUser(req, res) {
     });
 
     res.status(200).json({message: 'User created successfully'})
-  } catch (err) {console.log(err)}
+  } catch (err) {next(err)}
 }
 
 export async function updateUser(req, res) {

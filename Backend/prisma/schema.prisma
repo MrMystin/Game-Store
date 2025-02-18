@@ -25,22 +25,21 @@ model User {
 }
 
 model Product {
-  id                  Int           @id @default(autoincrement())
-  banner              String
-  name                String
-  discount            Int
-  value               Float
-  type                String
-  languages           String
-  releaseDate         String
-  fileSize            String
-  rating              String
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(256)
+  value Float
+  description      String @db.TinyText
+  languages        String
+  indicativeRating indicativeRating @default(rL)
+  rating           Float
+  releaseDate      DateTime
   minimumRequirements String
-  photos              String
-  indicativeRating    String
-  description         String
-  descriptionPhoto    String
-  transaction         Transaction[]
+  fileSize            Float
+  discount            Int
+  banner           String
+  photos           String[]  @default([]) 
+  descriptionPhoto String
+  transaction Transaction[]
 }
 
 model Transaction {
@@ -58,4 +57,13 @@ enum PaymentType {
   credit_card
   debit_card
   pix
+}
+
+enum indicativeRating {
+  rL
+  r10
+  r12
+  r14
+  r16
+  r18
 }
