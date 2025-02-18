@@ -53,23 +53,26 @@ function App() {
         <div className="titulo-p4-app">Novidades</div>
         <div className="spaceleft-p4-app">
           <img className="imgleft-p4-app" src={novg} alt="Imagem"/>
+          <div className="spacetextleft-app">
+            <p>Novas armas, objetos, mobs, biomas e modos estão disponíveis!</p>
+          </div>
         </div>
         <div className="spaceimg-p4-app">
-          <div className="spaceimg1-p4-app">
+          <div className="spaceimg1-p4-app spaceright-p4-app">
             <div className="spacetext-p4-app">
-              <p className="textimg-p4-app">Texto sobre a imagem</p>
+              <p className="textimg-p4-app">Construções novas nos mapas!</p>
             </div>
             <img className="img-p4-app" src={nov1} alt="img1" />
           </div>
-          <div className="spaceimg2-p4-app">
+          <div className="spaceimg2-p4-app spaceright-p4-app">
             <div className="spacetext-p4-app">
-              <p className="textimg-p4-app">Texto sobre a imagem</p>
+              <p className="textimg-p4-app">Modo multiplayer habilitado em todos os modos!</p>
             </div>
             <img className="img-p4-app" src={nov2} alt="img2" />
           </div>
-          <div className="spaceimg3-p4-app">
+          <div className="spaceimg3-p4-app spaceright-p4-app">
             <div className="spacetext-p4-app">
-              <p className="textimg-p4-app">Texto sobre a imagem</p>
+              <p className="textimg-p4-app">Novos blocos já disponíveis nessa atualização!</p>
             </div>
             <img className="img-p4-app" src={nov3} alt="img3" />
           </div>
