@@ -1,18 +1,24 @@
 import { useEffect, useState, useRef } from "react"; // Importa os hooks necessários
 import "./App.css";
 import Header from "./components/header";
+import SocialLinks from "./components/SocialLinks";
+import "./components/SocialLinks"
 
 // import back from "../public/img/background.png"
 
-import game1 from "../public/img/jogo1.png";
-import game2 from "../public/img/jogo2.png";
-import game3 from "../public/img/jogo3.png";
-import game4 from "../public/img/jogo4.jpg";
+import game1 from "/img/jogo1.png";
+import game2 from "/img/jogo2.png";
+import game3 from "/img/jogo3.png";
+import game4 from "/img/jogo4.jpg";
 
-import novg from "../public/img/novidadesG.png";
-import nov1 from "../public/img/nov1.png";
-import nov2 from "../public/img/nov2.png";
-import nov3 from "../public/img/nov3.png";
+import novg from "/img/novidadesG.png";
+import nov1 from "/img/nov1.png";
+import nov2 from "/img/nov2.png";
+import nov3 from "/img/nov3.png";
+
+import sobre1 from "/img/sobre1.png";
+import sobre2 from "/img/sobre2.png";
+import sobre3 from "/img/sobre3.png";
 
 function App() {
 
@@ -104,7 +110,7 @@ function App() {
         <div className="titulo-p5-app" ref={sectionRef}>Sobre nós</div>
           <div className="space1-p5-app space-p5-app">
             <div className="about-p5-app">
-              <div className="text-p5-app">
+              <div className="aboutspace-p5-app">
                 <p className="titulo-aboutp5-app">Descrição da foto</p>
                 <p className="text-p5-app">
                 Lorem ipsun Lorem ipsun Lorem ipsun
@@ -112,12 +118,12 @@ function App() {
                 Lorem ipsunLorem ipsun Lorem ipsun
                 </p>
               </div>
-              <img className="img-p5-app" src="" alt="foto1" />
+              <img className="img-p5-app" src={sobre1} alt="foto1" />
             </div>
           </div>
           <div className="space2-p5-app space-p5-app">
             <div className="about-p5-app">
-              <div className="text-p5-app">
+              <div className="aboutspace2-p5-app aboutspace-p5-app">
                 <p className="titulo-aboutp5-app">Descrição da foto</p>
                 <p className="text-p5-app">
                 Lorem ipsun Lorem ipsun Lorem ipsun
@@ -125,12 +131,12 @@ function App() {
                 Lorem ipsunLorem ipsun Lorem ipsun
                 </p>
               </div>
-              <img className="img-p5-app" src="" alt="foto1" />
+              <img className="img2-p5-app img-p5-app" src={sobre2} alt="foto1" />
             </div>
           </div>
           <div className="space3-p5-app space-p5-app">
             <div className="about-p5-app">
-              <div className="text-p5-app">
+              <div className="aboutspace-p5-app">
                 <p className="titulo-aboutp5-app">Descrição da foto</p>
                 <p className="text-p5-app">
                 Lorem ipsun Lorem ipsun Lorem ipsun
@@ -138,9 +144,15 @@ function App() {
                 Lorem ipsunLorem ipsun Lorem ipsun
                 </p>
               </div>
-                <img className="img-p5-app" src="" alt="foto1" />
+                <img className="img-p5-app" src={sobre3} alt="foto1" />
             </div>
           </div>
+      </div>
+
+      <div className="rodape-app">
+        <div className="spaceicons-rod-app">
+          <SocialLinks/>
+        </div>
       </div>
     </>
   );
