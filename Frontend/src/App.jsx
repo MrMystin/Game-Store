@@ -44,6 +44,7 @@ function App() {
 
   return (
     <>
+          <img className="background-app" src={novg} alt="" />
     <Header scrollToSection={scrollToSection} scrollToTopSection={scrollToTopSection}/>
 
       <div className="banner-app"></div>

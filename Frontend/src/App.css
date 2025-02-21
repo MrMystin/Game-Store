@@ -1,63 +1,23 @@
+/* -------- */
+/* Fundo da tela */
+/* -------- */
+
+.background-app {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+/* -------- */
+/* Banner */
+/* -------- */
+
+
 .banner-app {
   background-color: aquamarine;
   height: 880px;
   width: 100%;
   position: relative;
-}
-
-.header-app {
-  width: 100%;
-  height: 90px;
-  position: fixed;
-  background-color: transparent;
-  border-bottom: 1px solid transparent;
-  transition: 0.3s;
-  z-index: 999;
-}
-
-.header-app.scrolled {
-  background-color: rgb(201, 131, 131); /* Cor quando o usuário rolar a página */
-  border-bottom: 1px solid blue;
-}
-
-.logo-app {
-  left: 50px;
-  position: fixed;
-}
-
-.ul-app {
-  list-style: none; 
-  display: flex; 
-  gap: 20px; 
-}
-
-.li-app {
-  width: 100px;
-  height: 30px;
-  top: 30px;
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  cursor: pointer;
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.li-app:hover {
-
-}
-
-.about-app {
-  left: 200px;
-}
-
-.game-app {
-  left: 350px;
-}
-
-.login-app {
-  right: 200px;
 }
 
 /* -------- */
@@ -262,7 +222,6 @@
   width: 100%;
   height: 1250px;
   /* background-image: url(/img/background.png); */
-  background-color: rgb(107, 236, 124);
   position: relative;
 }
 
@@ -290,6 +249,7 @@
 
 .space2-p5-app {
   margin-top: 450px;
+  background-color: transparent;
 }
 
 .space3-p5-app {
