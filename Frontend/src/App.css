@@ -1,3 +1,15 @@
+:root {
+  --green: #477a1e;
+  --greenyellow: #70B237;
+  --blue: #36c7f2;
+  --brown: #61371f;
+  --light-brown: #854f2b;
+  --light-gray: rgb(201, 201, 201);
+  --gray: gray;
+  --medium-gray: rgb(83, 83, 83);
+  --dark-gray: rgb(49, 49, 49);
+}
+
 /* -------- */
 /* Fundo da tela */
 /* -------- */
@@ -14,7 +26,14 @@
 
 
 .banner-app {
+  display: block;
+  object-fit: cover; /* Evita espaços vazios no vídeo */
+  overflow: hidden;
   position: relative;
+}
+
+#detach-button-host {
+  display: none !important;
 }
 
 /* -------- */
@@ -28,21 +47,19 @@
   display: flex;
   justify-content: center;
   position: relative;
-  margin-top: -10px;
+  margin-top: -4px;
 }
 
 .titulo-p2-app {
   font-size: 40px;
-  margin-top: 170px;
+  margin-top: 140px;
   color: white;
 }
 
 .video-p2-app {
-  width: 1500px;
-  height: 700px;
-  background-color: azure;
   position: absolute;
-  margin-top: 250px;
+  margin-top: 20px;
+  transform: scale(0.65);
 }
 
 /* -------- */
@@ -61,7 +78,7 @@
 
 .titulo-p3-app {
   font-size: 45px;
-  top: 170px;
+  top: 140px;
   left: 80px;
   position: absolute;
   color: white;
@@ -71,13 +88,20 @@
   width: 1700px;
   height: 700px;
   margin-top: 100px;
-  position: relative;
+  position: absolute;
+  overflow: visible;
 }
 
 .game-p3-app {
   width: 800px;
   height: 300px;
   position: absolute;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.game-p3-app:hover {
+  transform: scale(1.1);
 }
 
 .game1-app { 
@@ -110,11 +134,12 @@
   /* background-image: url(/background.png); */
   background-color: rgb(97, 97, 97);
   position: relative;
+  margin-top: -4px;
 }
 
 .titulo-p4-app {
   font-size: 45px;
-  top: 170px;
+  top: 150px;
   left: 80px;
   position: absolute;
   color: white;
@@ -127,11 +152,11 @@
   margin-top: 250px;
   margin-left: 80px;
   border: 1px solid black;
+  transition: 0.3s ease-in-out;
 }
 
 .spaceleft-p4-app:hover {
   transform: scale(1.05);
-  transition: 0.3s;
   border: 1px solid white;
 }
 
@@ -155,7 +180,7 @@
 .spaceimg-p4-app {
   width: 600px;
   height: 700px;
-  margin-top: 250px;
+  margin-top: 225px;
   position: absolute;
   right: 40px;
 }
@@ -171,20 +196,22 @@
 
 .spaceimg1-p4-app:hover, .spaceimg2-p4-app:hover, .spaceimg3-p4-app:hover {
   transform: scale(1.05);
-  transition: 0.3s;
   border: 1px solid rgb(255, 255, 255);
 }
 
 .spaceimg1-p4-app  {
   margin-top: 25px;
+  transition: 0.3s ease-in-out;
 }
 
 .spaceimg2-p4-app {
   margin-top: 250px;
+  transition: 0.3s ease-in-out;
 }
 
 .spaceimg3-p4-app {
   margin-top: 475px;
+  transition: 0.3s ease-in-out;
 }
 
 .img-p4-app {
@@ -226,6 +253,7 @@
   left: 80px;
   position: absolute;
   color: rgb(37, 37, 37);
+  margin-top: 10px;
   z-index: 1;
 }
 

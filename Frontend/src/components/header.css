@@ -12,8 +12,8 @@
 }
 
 .header-app.scrolled {
-    background-color: rgb(143, 109, 109); /* Cor quando o usuário rolar a página */
-    border-bottom: 1px solid blue;
+    background-color: rgb(22, 22, 22); /* Cor quando o usuário rolar a página */
+    border-bottom: 2px solid rgb(78, 78, 78);
 }
 
 .logo-app {
@@ -52,27 +52,27 @@
 }
 
 .ul1-app:hover .text-header {
-    background-color: rgb(136, 136, 136);
+    background-color: rgb(88, 88, 88);
 }
 
 .ul2-app:hover .text-header {
-    background-color: rgb(136, 136, 136);
+    background-color: rgb(88, 88, 88);
 }
 
 .ul3-app:hover .text-header {
-    background-color: rgb(136, 136, 136);
+    background-color: rgb(88, 88, 88);
 }
 
 .ul1-app:hover .borderbottom-header {
-    border: 1px solid rgb(255, 67, 67);
+    border: 1px solid #477a1e;
 }
 
 .ul2-app:hover .borderbottom-header {
-    border: 1px solid rgb(255, 67, 67);
+    border: 1px solid #477a1e;
 }
 
 .ul3-app:hover .borderbottom-header {
-    border: 1px solid rgb(255, 67, 67);
+    border: 1px solid #477a1e;
 }
 
 .li-app {

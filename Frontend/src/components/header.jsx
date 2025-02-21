@@ -9,7 +9,7 @@ function Header({ scrollToSection, scrollToTopSection }) {
 
     useEffect(() => {
       const handleScroll = () => {
-        if (window.scrollY > 100) { 
+        if (window.scrollY > 700) { 
           setScrolled(true);
         } else {
           setScrolled(false);
@@ -29,14 +29,14 @@ function Header({ scrollToSection, scrollToTopSection }) {
             <img src={logo} alt="logo" />
           </div>
           <ul className="ul1-app">
-            <li className="game-app li-app" onClick={scrollToSection}>
-              <div className="text-header">Sobre nós</div>
+            <li className="game-app li-app" onClick={scrollToTopSection}>
+              <div className="text-header">Nossos jogos</div>
               <div className="borderbottom-header"></div>
             </li>
           </ul>
           <ul className="ul2-app">
-            <li className="about-app li-app" onClick={scrollToTopSection}>
-              <div className="text-header">Nossos jogos</div>
+            <li className="about-app li-app" onClick={scrollToSection}>
+              <div className="text-header">Sobre nós</div>
               <div className="borderbottom-header"></div>
             </li>
           </ul>
