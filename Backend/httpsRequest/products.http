@@ -1,0 +1,39 @@
+POST http://localhost:3000/products/new
+Content-Type: application/json
+
+{
+  "name": "Minecraft",
+  "value": 10,
+  "description": "Minecraft",
+  "indicativeRating": "r10",
+  "rating": 4.6,
+  "releaseDate": "2025-02-20",
+  "file": "minecraft's file",
+  "fileSize": 160000,
+  "minimumRequirements": [
+      {
+        "OS": "Windows 10+",
+        "Processor": "Intel I5 9400F",
+        "Memory": 4,
+        "Graphics": "GTX 3080",
+        "DirectX": 11,
+        "Storage": 160000
+      }
+    ],
+  "languages": [
+      {
+        "language": "BR"
+      },
+      {
+        "language": "EN"
+      }
+    ],
+  "photos": [
+      {
+        "photo": "photo",
+        "type": "photos"
+      }
+    ]
+}
+
+###

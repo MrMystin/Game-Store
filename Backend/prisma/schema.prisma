@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -25,21 +19,46 @@ model User {
 }
 
 model Product {
-  id    Int    @id @default(autoincrement())
-  name  String @db.VarChar(256)
-  value Float
-  description      String @db.TinyText
-  languages        String
-  indicativeRating indicativeRating @default(rL)
-  rating           Float
-  releaseDate      DateTime
-  minimumRequirements String
+  id                  Int                   @id @default(autoincrement())
+  name                String                @db.VarChar(256)
+  value               Decimal
+  description         String                @db.TinyText
+  indicativeRating    indicativeRating      @default(rL)
+  rating              Float
+  releaseDate         DateTime
+  file                String
   fileSize            Float
-  discount            Int
-  banner           String
-  photos           String[]  @default([]) 
-  descriptionPhoto String
-  transaction Transaction[]
+  discount            Int?
+  minimumRequirements minimumRequirements[]
+  languages           Languages[]
+  photos              Photos[]
+  transaction         Transaction[]
+}
+
+model minimumRequirements {
+  id        Int      @id @default(autoincrement())
+  OS        String   @db.VarChar(32)
+  Processor String   @db.VarChar(32)
+  Memory    Int
+  Graphics  String   @db.VarChar(32)
+  DirectX   Int
+  Storage   Int
+  productId Int
+  Product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Languages {
+  id       Int       @id @default(autoincrement())
+  language String    @unique @db.VarChar(2)
+  product  Product[]
+}
+
+model Photos {
+  id        Int       @id @default(autoincrement())
+  productId Int
+  photo     String
+  type      photoType
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Transaction {
@@ -66,4 +85,11 @@ enum indicativeRating {
   r14
   r16
   r18
+}
+
+enum photoType {
+  banner
+  thumbnail
+  photos
+  descriptionPhoto
 }

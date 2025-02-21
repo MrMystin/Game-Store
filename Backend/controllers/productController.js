@@ -4,7 +4,13 @@ const prisma = new PrismaClient();
 
 export async function getProducts(req, res) {
   try {
-    const products = await prisma.product.findMany();
+    const products = await prisma.product.findMany({
+      include: {
+        photos: true,
+        languages: true,
+        minimumRequirements: true
+      }
+    });
     if (!products) return res.status(400).json({message: "We don't have products yet :("});
     res.status(200).send({products})
   } catch (err) {next(err)}
@@ -21,19 +27,44 @@ export async function getOneProduct(req, res) {
 
 export async function newProduct(req, res) {
   try {
+    if (req.body.releaseDate) {
+      req.body.releaseDate = new Date(req.body.releaseDate)
+    }
     const parseData = productSchema.parse(req.body);
 
-    const productExist = await prisma.product.findUnique({where: {name: parseData.name}});
-    if (productExist) return res.status(400).json({errorCode: 1, error: 'nameMatch'});
+
+    const { photos, languages, minimumRequirements, ...data } = parseData;
 
     await prisma.product.create({
       data: {
-        ...parseData
+        ...data,
+        photos: {
+          create: photos.map(photo => ({
+            photo: photo.photo,
+            type: photo.type
+          }))
+        },
+        languages: {
+          connectOrCreate: languages.map(language => ({
+            where: { language: language.language },
+            create: { language: language.language }
+          }))
+        },
+        minimumRequirements: {
+          create: minimumRequirements.map(minimum => ({
+            OS: minimum.OS,
+            Processor: minimum.Processor,
+            Memory: minimum.Memory,
+            Graphics: minimum.Graphics,
+            DirectX: minimum.DirectX,
+            Storage: minimum.Storage
+          }))
+        }
       },
     });
 
     res.status(200).json({message: 'Product created successfully'})
-  } catch (err) {next(err)}
+  } catch (err) {console.log(err)}
 }
 
 export async function updateProduct(req, res) {
