@@ -6,6 +6,8 @@ import "./components/Rodape"
 
 // import back from "../public/img/background.png"
 
+import video from "/video/homeVideo.mp4";
+
 import game1 from "/img/jogo1.png";
 import game2 from "/img/jogo2.png";
 import game3 from "/img/jogo3.png";
@@ -47,7 +49,9 @@ function App() {
           <img className="background-app" src={novg} alt="" />
     <Header scrollToSection={scrollToSection} scrollToTopSection={scrollToTopSection}/>
 
-      <div className="banner-app"></div>
+      <div className="banner-app">
+        <video src={video} autoPlay loop muted></video>
+      </div>
 
       <div className="page2-app">
         {/* <img className="back-app" src={back} alt="background" /> */}

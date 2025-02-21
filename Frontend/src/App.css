@@ -14,9 +14,6 @@
 
 
 .banner-app {
-  background-color: aquamarine;
-  height: 880px;
-  width: 100%;
   position: relative;
 }
 
@@ -27,11 +24,11 @@
 .page2-app {
   width: 100%;
   height: 1080px;
-  /* background-image: url(../public/img/background.png); */
-  background-color: aqua;
+  background-color: rgb(75, 75, 75);
   display: flex;
   justify-content: center;
   position: relative;
+  margin-top: -10px;
 }
 
 .titulo-p2-app {
@@ -55,7 +52,7 @@
 .page3-app {
   width: 100%;
   height: 1080px;
-  background-image: url(/img/background.png);
+  background-color: rgb(126, 126, 126);
   position: relative;
   display: flex;
   align-items: center;
@@ -75,7 +72,6 @@
   height: 700px;
   margin-top: 100px;
   position: relative;
-  background-color: antiquewhite;
 }
 
 .game-p3-app {
@@ -112,7 +108,7 @@
   width: 100%;
   height: 1080px;
   /* background-image: url(/background.png); */
-  background-color: rgb(204, 204, 198);
+  background-color: rgb(97, 97, 97);
   position: relative;
 }
 
@@ -244,7 +240,7 @@
 
 .space1-p5-app {
   height: 450px;
-  background-color: beige;
+  background-color: rgb(180, 180, 180);
 }
 
 .space2-p5-app {
@@ -254,7 +250,7 @@
 
 .space3-p5-app {
   margin-top: 850px;
-  background-color: beige;
+  background-color: rgb(180, 180, 180);
 }
 
 .about-p5-app {

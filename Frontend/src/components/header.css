@@ -31,15 +31,53 @@
     transform: scale(1.1);
 }
 
-.ul-app {
+.ul1-app, .ul2-app, .ul3-app {
     list-style: none; 
     display: flex;
+    position: absolute;
+    cursor: pointer;
+    color: white;
+}
+
+.ul1-app {
+    left: 350px;
+}
+
+.ul2-app {
+    left: 550px;
+}
+
+.ul3-app {
+    right: 100px;
+}
+
+.ul1-app:hover .text-header {
+    background-color: rgb(136, 136, 136);
+}
+
+.ul2-app:hover .text-header {
+    background-color: rgb(136, 136, 136);
+}
+
+.ul3-app:hover .text-header {
+    background-color: rgb(136, 136, 136);
+}
+
+.ul1-app:hover .borderbottom-header {
+    border: 1px solid rgb(255, 67, 67);
+}
+
+.ul2-app:hover .borderbottom-header {
+    border: 1px solid rgb(255, 67, 67);
+}
+
+.ul3-app:hover .borderbottom-header {
+    border: 1px solid rgb(255, 67, 67);
 }
 
 .li-app {
     width: 120px;
     height: 60px;
-    background-color: aqua;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,16 +86,21 @@
 .text-header {
     width: 120px;
     height: 30px;
-    background-color: antiquewhite;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 10px;
+    border-radius: 20px;
+    transition: 0.1s;
+}
+
+.ul-appr:hover .borderbottom-header {
+    border-bottom: 2px solid black;
 }
 
 .borderbottom-header {
     width: 120px;
-    bottom: 12px;
+    bottom: 0px;
     position: absolute;
-    border-bottom: 2px solid black;
 }
   

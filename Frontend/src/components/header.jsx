@@ -28,15 +28,19 @@ function Header({ scrollToSection, scrollToTopSection }) {
           <div className="logo-app">
             <img src={logo} alt="logo" />
           </div>
-          <ul className="ul-app">
+          <ul className="ul1-app">
             <li className="game-app li-app" onClick={scrollToSection}>
               <div className="text-header">Sobre nós</div>
               <div className="borderbottom-header"></div>
             </li>
+          </ul>
+          <ul className="ul2-app">
             <li className="about-app li-app" onClick={scrollToTopSection}>
-            <div className="text-header">Nossos jogos</div>
-            <div className="borderbottom-header"></div>
-              </li>
+              <div className="text-header">Nossos jogos</div>
+              <div className="borderbottom-header"></div>
+            </li>
+          </ul>
+          <ul className="ul3-app">
             <li className="login-app li-app">
               <div className="text-header">Fazer login</div>
               <div className="borderbottom-header"></div>
