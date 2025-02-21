@@ -121,32 +121,27 @@
 .game-p3-app {
   width: 800px;
   height: 300px;
-  background-color: rgb(58, 119, 119);
   position: absolute;
 }
 
 .game1-app { 
   top: 0px;
   left: 0px;
-  position: absolute;
 } 
 
 .game2-app { 
-  top: 400px;
+  bottom: 0px;
   left: 0px;
-  position: absolute;
 }
 
 .game3-app { 
   top: 0px;
-  right: 800px;
-  position: absolute;
+  right: 0px;
 } 
 
 .game4-app { 
-  bottom: 300px;
-  right: 800px;
-  position: absolute;
+  bottom: 0px;
+  right: 0px;
 } 
 
 /* -------- */
@@ -202,11 +197,11 @@
 }
 
 .spaceimg-p4-app {
-  width: 550px;
-  height: 650px;
+  width: 600px;
+  height: 700px;
   margin-top: 250px;
   position: absolute;
-  right: 80px;
+  right: 40px;
 }
 
 .spaceright-p4-app {
@@ -215,6 +210,7 @@
   height: 200px;
   border: 1px solid black;
   user-select: none;
+  margin-left: 25px
 }
 
 .spaceimg1-p4-app:hover, .spaceimg2-p4-app:hover, .spaceimg3-p4-app:hover {
@@ -223,12 +219,16 @@
   border: 1px solid rgb(255, 255, 255);
 }
 
+.spaceimg1-p4-app  {
+  margin-top: 25px;
+}
+
 .spaceimg2-p4-app {
-  margin-top: 225px;
+  margin-top: 250px;
 }
 
 .spaceimg3-p4-app {
-  margin-top: 450px;
+  margin-top: 475px;
 }
 
 .img-p4-app {
@@ -343,17 +343,4 @@
 
 .img2-p5-app {
   right: 0px;
-}
-
-/* -------- */
-/* Rodapé app */
-/* -------- */
-
-.rodape-app {
-  width: 100%;
-  height: 700px;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  display: flex;
 }

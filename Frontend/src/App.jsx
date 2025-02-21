@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react"; // Importa os hooks necessários
 import "./App.css";
 import Header from "./components/header";
-import SocialLinks from "./components/SocialLinks";
-import "./components/SocialLinks"
+import Rodape from "./components/Rodape";
+import "./components/Rodape"
 
 // import back from "../public/img/background.png"
 
@@ -61,18 +61,10 @@ function App() {
           Nossos jogos
         </p>
         <div className="spacegame-p3-app">
-          <div className="game1-app">
-            <img className="game-p3-app" src={game1} alt="Minecraft" />
-          </div>
-          <div className="game2-app">
-            <img className="game-p3-app" src={game2} alt="Minecraft Legends" />
-          </div>
-          <div className="game3-app">
-            <img className="game-p3-app" src={game3} alt="Minecraft Dungeons" />
-          </div>
-          <div className="game4-app">
-            <img className="game-p3-app" src={game4} alt="Minecraft Story Mode" />
-          </div>
+          <img className="game-p3-app game1-app" src={game1} alt="Minecraft" />
+          <img className="game-p3-app game2-app" src={game2} alt="Minecraft Legends" />
+          <img className="game-p3-app game3-app" src={game3} alt="Minecraft Dungeons" />
+          <img className="game-p3-app game4-app" src={game4} alt="Minecraft Story Mode" />
         </div>
       </div>
 
@@ -148,12 +140,7 @@ function App() {
             </div>
           </div>
       </div>
-
-      <div className="rodape-app">
-        <div className="spaceicons-rod-app">
-          <SocialLinks/>
-        </div>
-      </div>
+          <Rodape/>
     </>
   );
 }

@@ -1,0 +1,110 @@
+.spaceall-rodape {
+  width: 100%;
+  height: 700px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  background-color: black;
+  padding: 20px;
+  position: absolute;
+  width: 100%;
+  height: 120px;
+  top: 0px;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: #222; 
+  color: white;
+  font-size: 24px;
+  border-radius: 50%;
+  transition: transform 0.3s, background-color 0.3s;
+  margin-top: 65px;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  background-color: red;
+}
+
+.titulo-rodape {
+  color: white;
+  position: absolute;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.spacebottom-rodape {
+  width: 100%;
+  height: 540px;
+  background-color: rgb(29, 29, 29);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 200px; 
+  position: absolute;
+  bottom: 0px;
+}
+
+.mojang-img-rodape {
+  width: 200px;
+  height: 200px;
+}
+
+.xbox-img-rodape {
+  transform: scale(1.3);
+}
+
+.spacegame-rodape {
+  width: 200px;
+  height: 200px;
+}
+
+.titulogame-rodape {
+  color: white;
+  font-size: 26px;
+}
+
+.game-rodape {
+  color: green;
+  margin-top: 10px;
+  position: absolute;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.game1-rodape {
+  margin-top: 10px;
+}
+
+.game2-rodape {
+  margin-top: 40px;
+}
+
+.game3-rodape {
+  margin-top: 70px;
+}
+
+.game4-rodape {
+  margin-top: 100px;
+}
+
+.game-rodape:hover {
+  border-bottom: 1px solid green;
+}
+
+.rating-img-rodape {
+  width: 300px;
+  height: 300px;
+}
