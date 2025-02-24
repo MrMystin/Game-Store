@@ -1,18 +1,16 @@
 import { useEffect, useState, useRef } from "react"; // Importa os hooks necessários
 import "./App.css";
-import Header from "./components/header";
-import Rodape from "./components/Rodape";
-import "./components/Rodape"
-
-// import back from "../public/img/background.png"
+import Header from "./components/header/header";
+import Rodape from "./components/footer/footer";
 
 import video from "/video/homeVideo.mp4";
 import gameplayVideo from "/video/gameplayVideo.mp4"
 
-import game1 from "/img/jogo1.png";
-import game2 from "/img/jogo2.png";
-import game3 from "/img/jogo3.png";
-import game4 from "/img/jogo4.jpg";
+import game1 from "/img/mine.png";
+import game2 from "/img/mine_legends.png";
+import game3 from "/img/mine_dungeons.png";
+import game4 from "/img/mine_education.png";
+
 
 import novg from "/img/novidadesG.png";
 import nov1 from "/img/nov1.png";
@@ -143,19 +141,7 @@ function App() {
               <img className="img-p5-app" src={sobre1} alt="foto1" />
             </div>
           </div>
-          <div className="space2-p5-app space-p5-app">
-            <div className="about-p5-app">
-              <div className="aboutspace2-p5-app aboutspace-p5-app">
-                <p className="titulo-aboutp5-app">Descrição da foto</p>
-                <p className="text-p5-app">
-                Lorem ipsun Lorem ipsun Lorem ipsun
-                Lorem ipsunLorem ipsun Lorem ipsun
-                Lorem ipsunLorem ipsun Lorem ipsun
-                </p>
-              </div>
-              <img className="img2-p5-app img-p5-app" src={sobre2} alt="foto1" />
-            </div>
-          </div>
+
           <div className="space3-p5-app space-p5-app">
             <div className="about-p5-app">
               <div className="aboutspace-p5-app">
