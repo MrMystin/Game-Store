@@ -6,6 +6,9 @@ import "./components/Rodape"
 
 // import back from "../public/img/background.png"
 
+import video from "/video/homeVideo.mp4";
+import gameplayVideo from "/video/gameplayVideo.mp4"
+
 import game1 from "/img/jogo1.png";
 import game2 from "/img/jogo2.png";
 import game3 from "/img/jogo3.png";
@@ -42,30 +45,34 @@ function App() {
     }
   };
 
+  const videoRef = useRef(null);
+
+  function playVideo() {
+    console.log('a');
+    var video = videoRef.current;
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
+
   return (
     <>
+    <img className="background-app" src={novg} alt="" />
+
     <Header scrollToSection={scrollToSection} scrollToTopSection={scrollToTopSection}/>
 
-      <div className="banner-app"></div>
-
-      <div className="page2-app">
-        {/* <img className="back-app" src={back} alt="background" /> */}
-        <p className="titulo-p2-app">
-          Descubra o Mundo Infinito do Minecraft: Explore, Construa e Sobreviva!
-        </p>
-        <div className="video-p2-app"></div>
-      </div>
-
-      <div className="page3-app">
-        <p className="titulo-p3-app" ref={topSectionRef}>
-          Nossos jogos
-        </p>
-        <div className="spacegame-p3-app">
-          <img className="game-p3-app game1-app" src={game1} alt="Minecraft" />
-          <img className="game-p3-app game2-app" src={game2} alt="Minecraft Legends" />
-          <img className="game-p3-app game3-app" src={game3} alt="Minecraft Dungeons" />
-          <img className="game-p3-app game4-app" src={game4} alt="Minecraft Story Mode" />
-        </div>
+      <div className="banner-app">
+        <video 
+          src={video} 
+          autoPlay 
+          loop 
+          muted 
+          controls={false} 
+          controlsList="nodownload nofullscreen noremoteplayback"
+          style={{ pointerEvents: "none" }}
+        ></video>
       </div>
 
       <div className="page4-app">
@@ -95,6 +102,29 @@ function App() {
             </div>
             <img className="img-p4-app" src={nov3} alt="img3" />
           </div>
+        </div>
+      </div>
+
+      <div className="page3-app">
+        <p className="titulo-p3-app" ref={topSectionRef}>
+          Nossos jogos
+        </p>
+        <div className="spacegame-p3-app">
+          <img className="game-p3-app game1-app" src={game1} alt="Minecraft" />
+          <img className="game-p3-app game2-app" src={game2} alt="Minecraft Legends" />
+          <img className="game-p3-app game3-app" src={game3} alt="Minecraft Dungeons" />
+          <img className="game-p3-app game4-app" src={game4} alt="Minecraft Story Mode" />
+        </div>
+      </div>
+
+      <div className="page2-app">
+        <p className="titulo-p2-app">
+          Descubra o Mundo Infinito do Minecraft: Explore, Construa e Sobreviva!
+        </p>
+        <div className="video-p2-app">
+          <video onClick={playVideo} ref={videoRef} data-src={gameplayVideo} loop muted playsInline preload="auto">
+            <source src={gameplayVideo} type="video/mp4" />
+          </video>
         </div>
       </div>
 

@@ -1,4 +1,7 @@
+import React from "react";
 import { useEffect, useState } from "react"; 
+import "./header.css"
+import logo from "/img/logo.svg";
 
 function Header({ scrollToSection, scrollToTopSection }) {
 
@@ -6,7 +9,7 @@ function Header({ scrollToSection, scrollToTopSection }) {
 
     useEffect(() => {
       const handleScroll = () => {
-        if (window.scrollY > 100) { 
+        if (window.scrollY > 700) { 
           setScrolled(true);
         } else {
           setScrolled(false);
@@ -23,12 +26,25 @@ function Header({ scrollToSection, scrollToTopSection }) {
         <>
          <div className={`header-app ${scrolled ? "scrolled" : ""}`}>
           <div className="logo-app">
-            <img src="/img/download.png" alt="logo" />
+            <img src={logo} alt="logo" />
           </div>
-          <ul className="ul-app">
-          <li className="game-app li-app" onClick={scrollToSection}>Sobre nós</li>
-            <li className="about-app li-app" onClick={scrollToTopSection}>Nossos jogos</li>
-            <li className="login-app li-app">Fazer login</li>
+          <ul className="ul1-app">
+            <li className="game-app li-app" onClick={scrollToTopSection}>
+              <div className="text-header">Nossos jogos</div>
+              <div className="borderbottom-header"></div>
+            </li>
+          </ul>
+          <ul className="ul2-app">
+            <li className="about-app li-app" onClick={scrollToSection}>
+              <div className="text-header">Sobre nós</div>
+              <div className="borderbottom-header"></div>
+            </li>
+          </ul>
+          <ul className="ul3-app">
+            <li className="login-app li-app">
+              <div className="text-header">Fazer login</div>
+              <div className="borderbottom-header"></div>
+            </li>
           </ul>
         </div>
         </>
