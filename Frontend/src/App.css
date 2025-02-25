@@ -1,6 +1,7 @@
 :root {
   --green: #477a1e;
   --greenyellow: #70B237;
+  --whiteblue: rgb(139, 238, 255);
   --blue: #36c7f2;
   --brown: #61371f;
   --light-brown: #854f2b;
@@ -43,9 +44,7 @@
 .page2-app {
   width: 100%;
   height: 1080px;
-  background-image: url(/img/backgroundPage.png);
-  background-attachment: fixed;
-  background-size: cover;
+  background-color: rgb(34, 34, 34);
   display: flex;
   justify-content: center;
   position: relative;
@@ -56,6 +55,7 @@
   font-size: 40px;
   margin-top: 140px;
   color: white;
+  font-weight: bold;
 }
 
 .video-p2-app {
@@ -70,10 +70,8 @@
 
 .page3-app {
   width: 100%;
-  height: 1080px;
-  background-image: url(/img/backgroundPage.png);
-  background-attachment: fixed;
-  background-size: cover;
+  height: 880px;
+  background-color: rgb(34, 34, 34);
   position: relative;
   display: flex;
   align-items: center;
@@ -82,10 +80,11 @@
 
 .titulo-p3-app {
   font-size: 45px;
-  top: 100px;
+  top: 0px;
   left: 80px;
   position: absolute;
   color: white;
+  font-weight: bold;
 }
 
 .spacegame-p3-app {
@@ -134,35 +133,34 @@
 
 .page4-app {
   width: 100%;
-  height: 1080px;
-  background-image: url(/img/backgroundPage.png); 
-  background-attachment: fixed;
-  background-size: cover;
+  height: 980px;
+  background: radial-gradient(70.71% 70.71% at 50% 50%, rgba(51, 224, 255, 0.2) 0, rgba(10, 10, 10, 0) 75%, rgb(10, 10, 10) 100%);
+  background-color: black;
   position: relative;
   margin-top: -5px;
 }
 
 .titulo-p4-app {
   font-size: 45px;
-  top: 150px;
+  top: 100px;
   left: 80px;
   position: absolute;
   color: white;
+  font-weight: bold;
 }
 
 .spaceleft-p4-app {
   width: 1100px;
   height: 650px;
   position: absolute;
-  margin-top: 250px;
+  margin-top: 200px;
   margin-left: 80px;
-  border: 1px solid black;
   transition: 0.3s ease-in-out;
+  color: white;
 }
 
 .spaceleft-p4-app:hover {
   transform: scale(1.05);
-  border: 1px solid white;
 }
 
 .imgleft-p4-app {
@@ -179,13 +177,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 30px;
+  font-size: 28px;
+  font-weight: bold;
+  background-color: rgba(202, 243, 255, 0.199);
 }
 
 .spaceimg-p4-app {
   width: 600px;
   height: 700px;
-  margin-top: 225px;
+  margin-top: 175px;
   position: absolute;
   right: 40px;
 }
@@ -194,14 +194,16 @@
   position: absolute;
   width: 550px;
   height: 200px;
-  border: 1px solid black;
+  border-radius: 30px;
   user-select: none;
-  margin-left: 25px
+  margin-left: 25px;
+  color: rgb(231, 253, 255);
+  font-weight: bold;
+  background-color: rgba(202, 243, 255, 0.199);
 }
 
 .spaceimg1-p4-app:hover, .spaceimg2-p4-app:hover, .spaceimg3-p4-app:hover {
   transform: scale(1.05);
-  border: 1px solid rgb(255, 255, 255);
 }
 
 .spaceimg1-p4-app  {
@@ -256,9 +258,10 @@
   font-size: 45px;
   left: 80px;
   position: absolute;
-  color: rgb(37, 37, 37);
+  color: white;
   margin-top: 10px;
   z-index: 1;
+  font-weight: bold;
 }
 
 .space-p5-app {
@@ -272,9 +275,7 @@
 
 .space1-p5-app {
   height: 450px;
-  background-image: url(/img/backgroundPage.png);
-  background-attachment: fixed;
-  background-size: cover;
+  background-color: rgb(199, 199, 199);
 }
 
 .space2-p5-app {
@@ -283,11 +284,8 @@
 
 .space3-p5-app {
   margin-top: 850px;
-  background-image: url(/img/backgroundPage.png);
-  background-attachment: fixed;
-  background-size: cover;
+  background-color: rgb(83, 83, 83);
 }
-
 .about-p5-app {
   width: 1300px;
   height: 300px;
@@ -353,6 +351,22 @@
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+/* ----------------- */
+    /* Keyframes */
+/* ----------------- */
+
+@keyframes border {
+  0% {
+    border-color: white;
+  }
+  50% {
+    border-color: var(--blue);
+  }
+  100% {
+    border-color: white;
+  }
 }
 
 @keyframes logo-spin {

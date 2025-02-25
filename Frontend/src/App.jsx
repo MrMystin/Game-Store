@@ -18,7 +18,6 @@ import nov2 from "/img/nov2.png";
 import nov3 from "/img/nov3.png";
 
 import sobre1 from "/img/sobre1.png";
-import sobre2 from "/img/sobre2.png";
 import sobre3 from "/img/sobre3.png";
 
 function App() {
