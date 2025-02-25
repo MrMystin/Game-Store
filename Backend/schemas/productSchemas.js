@@ -18,6 +18,18 @@ const minimumRequirementsSchema = z.object({
   Storage: z.number().nonnegative(),
 });
 
+const colorsSchema = z.object({
+  first: z.string().min(6).max(6).nonempty().trim(),
+  second: z.string().min(6).max(6).nonempty().trim(), 
+  third: z.string().min(6).max(6).nonempty().trim(), 
+  fourth: z.string().min(6).max(6).nonempty().trim(), 
+  fifth: z.string().min(6).max(6).nonempty().trim(), 
+  sixth: z.string().min(6).max(6).nonempty().trim(), 
+  title: z.string().min(6).max(6).nonempty().trim(), 
+  background1: z.string().min(6).max(6).nonempty().trim(), 
+  background2: z.string().min(6).max(6).nonempty().trim(), 
+})
+
 const productSchema = z.object({
   name: z.string().min(6).max(256).nonempty().trim(),
   value: z.number().nonnegative().min(0),
@@ -30,7 +42,8 @@ const productSchema = z.object({
   discount: z.number().optional(),
   photos: z.array(photoSchema),
   languages: z.array(languageSchema),
-  minimumRequirements: z.array(minimumRequirementsSchema)
+  minimumRequirements: z.array(minimumRequirementsSchema),
+  colors: z.array(colorsSchema)
 }).strict();
 
 const productUpdateSchema = productSchema.pick({

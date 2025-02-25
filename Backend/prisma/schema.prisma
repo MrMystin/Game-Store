@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model user {
   id           Int           @id @default(autoincrement())
   fullName     String        @db.VarChar(256)
   username     String        @unique @db.VarChar(16)
@@ -15,10 +15,10 @@ model User {
   password     String        @db.VarChar(256)
   cpf          String        @unique @db.VarChar(11)
   registerDate DateTime      @default(now())
-  Transaction  Transaction[]
+  transaction  transaction[]
 }
 
-model Product {
+model product {
   id                  Int                   @id @default(autoincrement())
   name                String                @db.VarChar(256)
   value               Decimal
@@ -30,9 +30,10 @@ model Product {
   fileSize            Float
   discount            Int?
   minimumRequirements minimumRequirements[]
-  languages           Languages[]
-  photos              Photos[]
-  transaction         Transaction[]
+  languages           languages[]
+  photos              photos[]
+  transaction         transaction[]
+  colors              colors[]
 }
 
 model minimumRequirements {
@@ -44,35 +45,50 @@ model minimumRequirements {
   DirectX   Int
   Storage   Int
   productId Int
-  Product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  Product   product? @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
-model Languages {
+model languages {
   id       Int       @id @default(autoincrement())
   language String    @unique @db.VarChar(2)
-  product  Product[]
+  product  product[]
 }
 
-model Photos {
+model photos {
   id        Int       @id @default(autoincrement())
   productId Int
   photo     String
   type      photoType
-  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   product   @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
-model Transaction {
-  id              Int      @id @default(autoincrement())
+model transaction {
+  id              Int         @id @default(autoincrement())
   userId          Int
   productId       Int
   value           Float
-  paymentType     String
-  transactionDate DateTime @default(now())
-  user            User     @relation(fields: [userId], references: [id])
-  product         Product  @relation(fields: [productId], references: [id])
+  paymentType     paymentType
+  transactionDate DateTime    @default(now())
+  user            user        @relation(fields: [userId], references: [id])
+  product         product     @relation(fields: [productId], references: [id])
 }
 
-enum PaymentType {
+model colors {
+  id          Int     @id @default(autoincrement())
+  productId   Int
+  first       String  @db.VarChar(6)
+  second      String  @db.VarChar(6)
+  third       String  @db.VarChar(6)
+  fourth      String  @db.VarChar(6)
+  fifth       String  @db.VarChar(6)
+  sixth       String  @db.VarChar(6)
+  title       String  @db.VarChar(6)
+  background1 String  @db.VarChar(6)
+  background2 String  @db.VarChar(6)
+  product     product @relation(fields: [productId], references: [id])
+}
+
+enum paymentType {
   credit_card
   debit_card
   pix

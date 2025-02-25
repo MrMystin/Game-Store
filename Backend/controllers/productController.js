@@ -1,5 +1,7 @@
 import {productSchema, productUpdateSchema} from '../schemas/productSchemas.js';
 import {PrismaClient} from '@prisma/client'
+import fs from 'fs';
+import path from 'path'
 const prisma = new PrismaClient();
 
 export async function getProducts(req, res) {
@@ -27,13 +29,35 @@ export async function getOneProduct(req, res) {
 
 export async function newProduct(req, res) {
   try {
+    console.log(req.body.photos[0].photo);
+    const base64Image = req.body.photos[0].photo;
+    if (!base64Image) {
+      return res.status(400).send('Nenhuma imagem Base64 foi enviada');
+    }
+  
+    const matches = base64Image.match(/^data:image\/([A-Za-z-+\/]+);base64,(.+)$/);
+    if (!matches) {
+      return res.status(400).send('Formato de imagem Base64 inválido');
+    }
+  
+    const buffer = Buffer.from(matches[2], 'base64');
+    const filePath = path.join('upload', `image-${Date.now()}.png`);
+
+    fs.writeFile(filePath, buffer, (err) => {
+      if (err) {
+        console.log(err)
+        return res.status(500).send('Erro ao salvar a imagem');
+      }
+      res.send('Imagem salva com sucesso');
+    });
+    return
     if (req.body.releaseDate) {
       req.body.releaseDate = new Date(req.body.releaseDate)
     }
     const parseData = productSchema.parse(req.body);
 
 
-    const { photos, languages, minimumRequirements, ...data } = parseData;
+    const { photos, languages, minimumRequirements, colors, ...data } = parseData;
 
     await prisma.product.create({
       data: {
@@ -58,6 +82,19 @@ export async function newProduct(req, res) {
             Graphics: minimum.Graphics,
             DirectX: minimum.DirectX,
             Storage: minimum.Storage
+          }))
+        },
+        colors: {
+          create: colors.map(colors => ({
+            first: colors.first,
+            second: colors.second,
+            third: colors.third,
+            fourth: colors.fourth,
+            fifth: colors.fifth,
+            sixth: colors.sixth,
+            title: colors.title,
+            background1: colors.background1,
+            background2: colors.background2
           }))
         }
       },
