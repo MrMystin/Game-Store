@@ -4,7 +4,9 @@ import Header from "./components/header/header";
 import Rodape from "./components/footer/footer";
 
 import video from "/video/homeVideo.mp4";
-import gameplayVideo from "/video/gameplayVideo.mp4"
+import gameplayVideo from "/video/gameplayVideo.mp4";
+
+import fundo from "/img/fundo.png";
 
 import game1 from "/img/mine.png";
 import game2 from "/img/mine_legends.png";
@@ -18,7 +20,8 @@ import nov2 from "/img/nov2.png";
 import nov3 from "/img/nov3.png";
 
 import sobre1 from "/img/sobre1.png";
-import sobre3 from "/img/sobre3.png";
+import sobre2 from "/img/sobre2.png";
+// import sobre3 from "/img/sobre3.png";
 
 function App() {
 
@@ -56,7 +59,7 @@ function App() {
 
   return (
     <>
-    <img className="background-app" src={novg} alt="" />
+    <img className="background-app" src={fundo} alt="" />
 
     <Header scrollToSection={scrollToSection} scrollToTopSection={scrollToTopSection}/>
 
@@ -116,7 +119,7 @@ function App() {
 
       <div className="page2-app">
         <p className="titulo-p2-app">
-          Descubra o Mundo Infinito do Minecraft: Explore, Construa e Sobreviva!
+          Descubra o Mundo Infinito do Minecraft: <span class="troca-palavra"></span>
         </p>
         <div className="video-p2-app">
           <video onClick={playVideo} ref={videoRef} data-src={gameplayVideo} loop muted playsInline preload="auto">
@@ -130,11 +133,11 @@ function App() {
           <div className="space1-p5-app space-p5-app">
             <div className="about-p5-app">
               <div className="aboutspace-p5-app">
-                <p className="titulo-aboutp5-app">Descrição da foto</p>
+                <p className="titulo-aboutp5-app">Programadores</p>
                 <p className="text-p5-app">
-                Lorem ipsun Lorem ipsun Lorem ipsun
-                Lorem ipsunLorem ipsun Lorem ipsun
-                Lorem ipsunLorem ipsun Lorem ipsun
+                Transformamos ideias em soluções tecnológicas eficientes, 
+                combinando inovação, criatividade e expertise para 
+                desenvolver sistemas, apps e sites que fazem a diferença. 
                 </p>
               </div>
               <img className="img-p5-app" src={sobre1} alt="foto1" />
@@ -144,14 +147,15 @@ function App() {
           <div className="space3-p5-app space-p5-app">
             <div className="about-p5-app">
               <div className="aboutspace-p5-app">
-                <p className="titulo-aboutp5-app">Descrição da foto</p>
+                <p className="titulo2-aboutp5-app titulo-aboutp5-app">Exploradores do Código</p>
                 <p className="text-p5-app">
-                Lorem ipsun Lorem ipsun Lorem ipsun
-                Lorem ipsunLorem ipsun Lorem ipsun
-                Lorem ipsunLorem ipsun Lorem ipsun
+                Assim como em um mundo cheio de desafios e aventuras, encaramos 
+                a programação como uma jornada épica. Criamos, inovamos e desbravamos 
+                novas possibilidades com tecnologia. Nosso objetivo é transformar 
+                ideias em realidade, construindo soluções digitais que fazem a diferença.
                 </p>
               </div>
-                <img className="img-p5-app" src={sobre3} alt="foto1" />
+                <img className="img-p5-app" src={sobre2} alt="foto1" />
             </div>
           </div>
       </div>

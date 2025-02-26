@@ -58,6 +58,12 @@
   font-weight: bold;
 }
 
+.troca-palavra::after {
+  content: "Explore!"; /* Palavra inicial */
+  animation: troca 15s infinite;
+  color: yellowgreen;
+}
+
 .video-p2-app {
   position: absolute;
   margin-top: 20px;
@@ -275,7 +281,7 @@
 
 .space1-p5-app {
   height: 450px;
-  background-color: rgb(199, 199, 199);
+  background-color: rgb(83, 83, 83);
 }
 
 .space2-p5-app {
@@ -311,17 +317,25 @@
   justify-content: center;
   display: flex;
   font-size: 36px;
+  color: yellowgreen;
+  font-weight: bold;
+}
+
+.titulo2-aboutp5-app {
+  bottom: 180px;
 }
 
 .text-p5-app {
   width: 800px;
   height: 200px;
   position: absolute;
-  margin-top: 100px;
+  margin-top: 80px;
   align-items: center;
   justify-content: center;
   display: flex;
   font-size: 28px;
+  color: white;
+  text-align: justify;
 }
 
 .img-p5-app {
@@ -375,6 +389,29 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes troca {
+  0%,
+  20% {
+    content: "Explore!";
+  }
+  21%,
+  40% {
+    content: "Construa!";
+  }
+  41%,
+  60% {
+    content: "Sobreviva!";
+  }
+  61%,
+  80% {
+    content: "Divirta-se!";
+  }
+  81%,
+  100% {
+    content: "Imagine!";
   }
 }
 
