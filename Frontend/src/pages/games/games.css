@@ -11,8 +11,10 @@
 
 }
 
-body{
-  background: linear-gradient(to bottom, var(--background1), var(--background2));
+.body-games {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
 }
 
 .bannerG {

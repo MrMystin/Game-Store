@@ -1,0 +1,209 @@
+.body-search {
+    background: linear-gradient(to bottom, rgb(248, 181, 37), rgb(10, 10, 153));
+    height: 100vh; 
+    width: 100vw; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-search {
+    position: absolute;
+    width: 120px;
+    top: 15px;
+    left: 10px;
+}
+
+.fotoPerfil {
+    width: 140px;
+    border-radius: 50%;
+    background-color: blue;
+    top: 30px;
+    position: absolute;
+}
+
+.userAndFullname {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    top: 180px;
+    position: absolute;
+}
+
+.usuario-search {
+    font-size: 36px;
+    top: 100px;
+}
+
+.line-blue-search {
+    width: 400px;
+    border-bottom: 3px solid blue;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.fullname-search {
+    font-size: 28px;
+    top: 150px;
+}
+
+.visual-search {
+    background-color: aliceblue;
+}
+
+.form-search {
+    display: flex;
+    flex-direction: column; 
+    width: 80%; 
+    padding: 20px;
+    position: absolute;
+}
+
+.form-search label {
+    font-size: 30px;
+    margin-top: 80px;
+    border-bottom: 1px solid black;
+    width: 500px;
+}
+
+.btn-search {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    font-size: 30px;
+    border-radius: 50px;
+    width: 150px;
+    height: 70px;
+    background-color: rgb(252, 198, 82);
+    border: none;
+}
+
+.btn-search:hover {
+    background-color: rgb(248, 181, 37);
+    cursor: pointer;
+}
+
+.central-main-search {
+    width: 700px;
+    height: 900px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    position: relative;
+}
+
+.left-main {
+    width: 400px;
+    height: 400px;
+    margin-right: 1300px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    position: absolute;
+}
+
+.logo-search-left {
+    position: absolute;
+    width: 90px;
+    top: 15px;
+}
+
+.titulo-left-search {
+    position: absolute;
+    top: 110px;
+    font-size: 36px;
+}
+
+.text-left-search {
+    position: absolute;
+    top: 160px;
+    font-size: 24px;
+    text-align: center;
+    font-weight: normal;
+}
+
+.cpf-search {
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    margin-top: 160px;
+}
+
+.label-search {
+    font-size: 24px; 
+}
+
+.input-search {
+    border: none; 
+    border-bottom: 2px solid #000; 
+    background: transparent; 
+    padding: 5px;
+    font-size: 20px;
+    width: 160px; 
+    outline: none;
+}
+
+.btn-search-left {
+    position: absolute;
+    font-size: 20px;
+    border-radius: 50px;
+    margin-top: 300px;
+    height: 36px;
+    width: 120px;
+    background-color: rgb(252, 198, 82);
+    border: none;
+}
+
+.btn-search-left:hover {
+    background-color: rgb(248, 181, 37);
+    cursor: pointer;
+}
+
+.right-main {
+    width: 350px;
+    height: 300px;
+    margin-left: 1300px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    position: absolute;
+}
+
+.rightUp-search {
+    margin-bottom: 400px;
+}
+
+.right-search {
+    margin-top: 400px;
+}
+
+.titulo-right-search {
+    position: absolute;
+    top: 60px;
+    font-size: 30px;
+    width: 330px;
+    text-align: center;
+}
+
+.btn-search-right {
+    position: absolute;
+    font-size: 26px;
+    border-radius: 50px;
+    margin-top: 120px;
+    width: 220px;
+    height: 50px;
+    background-color: rgb(252, 198, 82);
+    border: none;
+}
+
+.btn-search-right:hover {
+    background-color: rgb(248, 181, 37);
+    cursor: pointer;
+}

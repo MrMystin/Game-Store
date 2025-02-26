@@ -52,27 +52,61 @@
 }
 
 .ul1-app:hover .text-header {
-    background-color: rgb(88, 88, 88);
+    background-color: rgba(63, 63, 63, 0.6);
 }
 
 .ul2-app:hover .text-header {
-    background-color: rgb(88, 88, 88);
+    background-color: rgba(63, 63, 63, 0.6);
 }
 
 .ul3-app:hover .text-header {
-    background-color: rgb(88, 88, 88);
+    background-color: rgba(63, 63, 63, 0.6);
 }
 
-.ul1-app:hover .borderbottom-header {
-    border: 1px solid #477a1e;
+.borderbottom-header {
+    position: relative;
+    display: inline-block;
 }
 
-.ul2-app:hover .borderbottom-header {
-    border: 1px solid #477a1e;
+.borderbottom-header::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #477a1e;
+    transform: scaleX(0); 
+    transform-origin: left; 
+    transition: transform 0.3s ease-in-out;
 }
 
-.ul3-app:hover .borderbottom-header {
-    border: 1px solid #477a1e;
+.ul1-app:hover .borderbottom-header::after {
+    transform: scaleX(1); 
+}
+
+.ul1-app:not(:hover) .borderbottom-header::after {
+    transform-origin: right;
+    transform: scaleX(0); 
+}
+
+
+.ul2-app:hover .borderbottom-header::after {
+    transform: scaleX(1); 
+}
+
+.ul2-app:not(:hover) .borderbottom-header::after {
+    transform-origin: right; 
+    transform: scaleX(0);
+}
+
+.ul3-app:hover .borderbottom-header::after {
+    transform: scaleX(1); 
+}
+
+.ul3-app:not(:hover) .borderbottom-header::after {
+    transform-origin: right; 
+    transform: scaleX(0); 
 }
 
 .li-app {

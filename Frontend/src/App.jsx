@@ -65,6 +65,7 @@ function App() {
 
       <div className="banner-app">
         <video 
+          className="video-banner-app"
           src={video} 
           autoPlay 
           loop 

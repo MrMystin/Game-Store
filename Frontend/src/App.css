@@ -28,9 +28,15 @@
 
 .banner-app {
   display: block;
-  object-fit: cover; /* Evita espaços vazios no vídeo */
+  object-fit: cover; 
   overflow: hidden;
   position: relative;
+  width: 100%;
+  background-color: #36c7f2;
+}
+
+.video-banner-app {
+  width: 100%;
 }
 
 #detach-button-host {

@@ -5,7 +5,7 @@ import './games.css'
 function Games() {
     return (
         <>
-            <div></div>
+            <div className='body-games'></div>
             <div className='bannerG' style={{ backgroundImage: "url('/img/Banner1.png')" }}>
                 <div className='containerG' style={{ backgroundImage: "url('/img/placaG.png')" }}>
                     <div className='descontoG'>
