@@ -9,7 +9,7 @@ function Header({ scrollToSection, scrollToTopSection }) {
 
     useEffect(() => {
       const handleScroll = () => {
-        if (window.scrollY > 700) { 
+        if (window.scrollY > 400) { 
           setScrolled(true);
         } else {
           setScrolled(false);
@@ -42,7 +42,7 @@ function Header({ scrollToSection, scrollToTopSection }) {
           </ul>
           <ul className="ul3-app">
             <li className="login-app li-app">
-              <div className="text-header">Fazer login</div>
+              <div className="text-header"><a href="/create">Fazer login</a></div>
               <div className="borderbottom-header"></div>
             </li>
           </ul>

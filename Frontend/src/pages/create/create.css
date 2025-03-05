@@ -3,18 +3,6 @@
     padding: 0;
 }
 
-.body-create {
-    background-image: url(/img/backgroundPage.png);
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
-    height: 100vh; 
-    width: 100vw; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .logo-create {
     position: absolute;
     width: 120px;
@@ -81,7 +69,7 @@
 }
 
 .btn-create:hover {
-    background-color: rgb(182, 111, 79);
+    background-color: rgb(177, 105, 72);
     cursor: pointer;
     transform: scale(1.05);
 }

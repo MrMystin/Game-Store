@@ -28,7 +28,7 @@ const Create = () => {
     }
   }
   return (
-    <div className='body-create'>
+    <div className='body-crud'>
       <div className="central-main-create">
           <h1 className='titulo-create'>
             Crie sua conta <br/>

@@ -1,23 +1,15 @@
-.body-search {
-    background: linear-gradient(to bottom, rgb(248, 181, 37), rgb(10, 10, 153));
-    height: 100vh; 
-    width: 100vw; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .logo-search {
     position: absolute;
     width: 120px;
     top: 15px;
     left: 10px;
+    border-radius: 30px;
 }
 
 .fotoPerfil {
     width: 140px;
     border-radius: 50%;
-    background-color: blue;
+    background-color: rgb(5, 150, 24);
     top: 30px;
     position: absolute;
 }
@@ -38,7 +30,7 @@
 
 .line-blue-search {
     width: 400px;
-    border-bottom: 3px solid blue;
+    border-bottom: 3px solid rgb(156, 92, 63);
     margin-top: 3px;
     margin-bottom: 3px;
 }
@@ -67,23 +59,6 @@
     width: 500px;
 }
 
-.btn-search {
-    position: absolute;
-    bottom: 50px;
-    right: 50px;
-    font-size: 30px;
-    border-radius: 50px;
-    width: 150px;
-    height: 70px;
-    background-color: rgb(252, 198, 82);
-    border: none;
-}
-
-.btn-search:hover {
-    background-color: rgb(248, 181, 37);
-    cursor: pointer;
-}
-
 .central-main-search {
     width: 700px;
     height: 900px;
@@ -93,6 +68,10 @@
     align-items: center;
     border-radius: 50px;
     position: relative;
+}
+
+.search-email-cpf-senha {
+    font-weight: bold;
 }
 
 .left-main {
@@ -116,7 +95,8 @@
 .titulo-left-search {
     position: absolute;
     top: 110px;
-    font-size: 36px;
+    font-size: 32px;
+    width: 385px;
 }
 
 .text-left-search {
@@ -132,6 +112,7 @@
     align-items: center; 
     gap: 10px; 
     margin-top: 160px;
+    font-weight: bold;
 }
 
 .label-search {
@@ -155,13 +136,16 @@
     margin-top: 300px;
     height: 36px;
     width: 120px;
-    background-color: rgb(252, 198, 82);
+    transition: 0.3s;
+    background-color: rgb(156, 92, 63);
+    color: yellowgreen;
     border: none;
 }
 
 .btn-search-left:hover {
-    background-color: rgb(248, 181, 37);
+    background-color: rgb(177, 105, 72);
     cursor: pointer;
+    transform: scale(1.05);
 }
 
 .right-main {
@@ -199,11 +183,14 @@
     margin-top: 120px;
     width: 220px;
     height: 50px;
-    background-color: rgb(252, 198, 82);
+    transition: 0.3s;
+    background-color: rgb(156, 92, 63);
+    color: yellowgreen;
     border: none;
 }
 
 .btn-search-right:hover {
-    background-color: rgb(248, 181, 37);
+    background-color: rgb(177, 105, 72);
     cursor: pointer;
+    transform: scale(1.05);
 }

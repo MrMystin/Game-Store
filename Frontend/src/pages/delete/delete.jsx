@@ -17,10 +17,10 @@ const Delete = () => {
   }
   return (
     <>
-    <div className="body-delete">
+    <div className="body-crud">
       <div className="central-main-delete">
 
-      <img className="logo-delete" src="/img/logo.png" alt="logo"/>
+      <img className="logo-delete" src="/img/logo.jpg" alt="logo"/>
 
         <h1 className="titulo-delete">Delete sua conta</h1>
 

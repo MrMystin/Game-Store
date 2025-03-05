@@ -32,7 +32,7 @@
   overflow: hidden;
   position: relative;
   width: 100%;
-  background-color: #36c7f2;
+  background-color: black;
 }
 
 .video-banner-app {
@@ -92,7 +92,7 @@
 
 .titulo-p3-app {
   font-size: 45px;
-  top: 0px;
+  top: 40px;
   left: 80px;
   position: absolute;
   color: white;
@@ -328,7 +328,7 @@
 }
 
 .titulo2-aboutp5-app {
-  bottom: 180px;
+  bottom: 220px;
 }
 
 .text-p5-app {

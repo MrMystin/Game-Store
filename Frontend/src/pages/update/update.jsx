@@ -52,10 +52,10 @@ const Update = () => {
     }
   }
   return (
-    <div className="body-up">
+    <div className="body-crud">
       <div className="central-main-up">
           <h1 className="titulo-up">Atualize sua conta</h1>
-          <img className="logo-up" src="/img/logo.png" alt="logo" />
+          <img className="logo-up" src="/img/logo.jpg" alt="logo" />
 
           <form className="form-up">
             <label id='nameOut' htmlFor="nome">Nome completo: </label>
@@ -90,7 +90,7 @@ const Update = () => {
           </button>
       </div>
       <div className="left-main-up">
-      <img className="logo-up-left" src="/img/logo.png" alt="logo"/>
+      <img className="logo-up-left" src="/img/logo.jpg" alt="logo"/>
       <h1 className="titulo-up-search">Procure sua conta</h1>
         <div className="cpf-up">
             <p className="label-up">Digite seu CPF:</p>

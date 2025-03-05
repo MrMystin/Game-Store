@@ -50,10 +50,10 @@ const Search = () => {
     document.getElementById('nome').innerText = `${data.user.fullName}`;
   }
   return (
-    <div className="body-search">
+    <div className="body-crud">
       <div class="central-main-search">
         <img className="fotoPerfil" src="/img/fotoPerfil.png" alt="fotoPerfil" />
-          <img className="logo-search" src="/img/logo.png" alt="logo"/>
+          <img className="logo-search" src="/img/logo.jpg" alt="logo"/>
 
           <div className="userAndFullname">
             <div className="usuario-search" id="usuario"></div>
@@ -64,17 +64,15 @@ const Search = () => {
             <form action="" method="get" className="form-search">
 
               <label id="emailOut" className="" htmlFor="email">
-                Email: {" "}
+                <p className="search-email-cpf-senha">Email:</p> {" "}
               </label>
 
-              <div className="" id="email"></div>
               <label id="cpfOut" className="" htmlFor="cpf">
-                CPF:{" "}
+                <p className="search-email-cpf-senha">CPF:</p> {" "}
               </label>
 
-              <div className="" id="cpf"></div>
               <label id="passwordOut" className="" htmlFor="senha">
-                Senha: {" "}
+                <p className="search-email-cpf-senha">Senha:</p> {" "}
               </label>
 
               <div className="labelDiv-search senhaDiv-search" id="senha"></div>
@@ -82,7 +80,7 @@ const Search = () => {
             </form>
     </div>
     <div className="left-main">
-      <img className="logo-search-left" src="/img/logo.png" alt="logo"/>
+      <img className="logo-search-left" src="/img/logo.jpg" alt="logo"/>
       <h1 className="titulo-left-search">Já possui uma conta?</h1>
       <h2 className="text-left-search">Consulte seus dados digitando <br/>
       seu CPF.</h2>
