@@ -7,6 +7,7 @@ import Create from './pages/create/create.jsx'
 import Delete from './pages/delete/delete.jsx'
 import Search from './pages/search/search.jsx'
 import Update from './pages/update/update.jsx'
+import Login from './pages/login/login.jsx'
 
 import App from './App.jsx'
 import Games from './pages/games/games.jsx'
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/update",
     element: (<Update />)
+  },
+  {
+    path: "/login",
+    element: (<Login />)
   }
 ]);
 

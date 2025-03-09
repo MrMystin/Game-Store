@@ -26,7 +26,7 @@ function Header({ scrollToSection, scrollToTopSection }) {
         <>
          <div className={`header-app ${scrolled ? "scrolled" : ""}`}>
           <div className="logo-app">
-            <img src={logo} alt="logo" />
+            <img src={logo} alt="logo" onClick={() => (window.location.href = "/")}/>
           </div>
           <ul className="ul1-app">
             <li className="game-app li-app" onClick={scrollToTopSection}>
