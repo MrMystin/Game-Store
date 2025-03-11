@@ -29,33 +29,16 @@ export async function getOneProduct(req, res) {
 
 export async function newProduct(req, res) {
   try {
-    console.log(req.body.photos[0].photo);
-    const base64Image = req.body.photos[0].photo;
-    if (!base64Image) {
-      return res.status(400).send('Nenhuma imagem Base64 foi enviada');
+    var json = JSON.parse(req.body.json);
+    const body = {
+      ...json,
+      photos: req.photoDetails
     }
-  
-    const matches = base64Image.match(/^data:image\/([A-Za-z-+\/]+);base64,(.+)$/);
-    if (!matches) {
-      return res.status(400).send('Formato de imagem Base64 inválido');
-    }
-  
-    const buffer = Buffer.from(matches[2], 'base64');
-    const filePath = path.join('upload', `image-${Date.now()}.png`);
 
-    fs.writeFile(filePath, buffer, (err) => {
-      if (err) {
-        console.log(err)
-        return res.status(500).send('Erro ao salvar a imagem');
-      }
-      res.send('Imagem salva com sucesso');
-    });
-    return
-    if (req.body.releaseDate) {
-      req.body.releaseDate = new Date(req.body.releaseDate)
+    if (body.releaseDate) {
+      body.releaseDate = new Date(body.releaseDate)
     }
-    const parseData = productSchema.parse(req.body);
-
+    const parseData = productSchema.parse(body);
 
     const { photos, languages, minimumRequirements, colors, ...data } = parseData;
 
