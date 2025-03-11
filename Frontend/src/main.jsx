@@ -8,6 +8,7 @@ import Delete from './pages/delete/delete.jsx'
 import Search from './pages/search/search.jsx'
 import Update from './pages/update/update.jsx'
 import Login from './pages/login/login.jsx'
+import Invoice from './components/invoice/invoice.jsx'
 
 import App from './App.jsx'
 import Games from './pages/games/games.jsx'
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: (<Login />)
+  },
+  {
+    path: "/invoice",
+    element: (<Invoice />)
   }
 ]);
 
