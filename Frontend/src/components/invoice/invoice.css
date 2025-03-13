@@ -14,6 +14,7 @@
     background-color: gray;
     display: flex;
     justify-content: center;
+    align-items: center;
     position: absolute;
 }
 
@@ -23,13 +24,86 @@
     background-color: white;
     bottom: 0px;
     position: absolute;
-    display: flex;
-    justify-content: center;
 }
 
 .grouptext-invoice {
-    position: absolute;
+    position: relative;
     width: 100%;
     height: 150px;
     background-color: aqua;
+    justify-content: center;
+    display: flex;
+}
+
+.p1-gptx-invoice {
+    position: absolute;
+    margin-top: 20px;
+    font-size: 22px;
+
+}
+
+.p2-gptx-invoice {
+    position: absolute;
+    margin-top: 45px;
+}
+
+.p3-gptx-invoice {
+    position: absolute;
+    margin-top: 80px;
+    font-size: 30px;
+}
+
+.groupmid-invoice {
+    width: 100%;
+    position: relative;
+    height: 150px;
+    background-color: bisque;
+    display: flex;
+}
+
+.spacemid1-invoice {
+    position: absolute;
+    width: 50%;
+    height: 75px;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+}
+
+.spacemid2-invoice {
+    position: absolute;
+    width: 50%;
+    height: 75px;
+    bottom: 0px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+}
+
+.spacemid3-invoice {
+    position: absolute;
+    width: 50%;
+    height: 75px;
+    top: 0px;
+    right: 0px;
+    display: flex;
+    align-items: center;
+}
+
+.spacemid4-invoice {
+    position: absolute;
+    width: 50%;
+    height: 75px;
+    bottom: 0px;
+    right: 0px;
+    display: flex;
+    align-items: center;
+}
+
+.textmid-invoice {
+    width: 90%;
+    height: 50px;
+    margin-left: 8%;
+    margin-top: 10px;
 }
