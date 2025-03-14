@@ -1,7 +1,10 @@
 import {productSchema, productUpdateSchema} from '../schemas/productSchemas.js';
-import {PrismaClient} from '@prisma/client'
-import fs from 'fs';
-import path from 'path'
+import {PrismaClient} from '@prisma/client';
+import { promises as fs } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(path.dirname(__filename));
 const prisma = new PrismaClient();
 
 export async function getProducts(req, res) {
@@ -29,26 +32,23 @@ export async function getOneProduct(req, res) {
 
 export async function newProduct(req, res) {
   try {
-    var json = JSON.parse(req.body.json);
-    const body = {
-      ...json,
-      photos: req.photoDetails
-    }
+    req.body.releaseDate = new Date(req.body.releaseDate);
+    req.body.value = parseInt(req.body.value);
+    req.body.rating = parseInt(req.body.rating);
+    req.body.fileSize = parseInt(req.body.fileSize);
+    req.body.minimumRequirements.memory = parseInt(req.body.minimumRequirements.memory);
+    req.body.minimumRequirements.directX = parseInt(req.body.minimumRequirements.directX);
+    req.body.minimumRequirements.storage = parseInt(req.body.minimumRequirements.storage);
 
-    if (body.releaseDate) {
-      body.releaseDate = new Date(body.releaseDate)
-    }
-    const parseData = productSchema.parse(body);
-
+    const parseData = productSchema.parse(req.body);
     const { photos, languages, minimumRequirements, colors, ...data } = parseData;
 
-    await prisma.product.create({
+    const product = await prisma.product.create({
       data: {
         ...data,
         photos: {
           create: photos.map(photo => ({
-            photo: photo.photo,
-            type: photo.type
+            ...photo
           }))
         },
         languages: {
@@ -58,33 +58,48 @@ export async function newProduct(req, res) {
           }))
         },
         minimumRequirements: {
-          create: minimumRequirements.map(minimum => ({
-            OS: minimum.OS,
-            Processor: minimum.Processor,
-            Memory: minimum.Memory,
-            Graphics: minimum.Graphics,
-            DirectX: minimum.DirectX,
-            Storage: minimum.Storage
-          }))
+          create: {
+            ...minimumRequirements
+          }
         },
         colors: {
-          create: colors.map(colors => ({
-            first: colors.first,
-            second: colors.second,
-            third: colors.third,
-            fourth: colors.fourth,
-            fifth: colors.fifth,
-            sixth: colors.sixth,
-            title: colors.title,
-            background1: colors.background1,
-            background2: colors.background2
-          }))
+          create: {
+            ...colors
+          }
         }
       },
     });
 
+    for (const field of Object.keys(req.files)) {
+      var movedSuccessfully = [];
+      var counter = 1;
+      const folderPath = path.join(__dirname, `public/images/${product.id}`);
+      await fs.mkdir(folderPath, { recursive: true });
+
+      for (const file of req.files[field]) {
+        const extension = file.filename.split('.').pop();
+        const source = path.join(__dirname, 'temp', `${file.filename}`);
+        const destination = path.join(__dirname, `public/images/${product.id}`, `${file.fieldname}${req.files[field].length > 1 ? counter++ : ''}.${extension}`);
+
+        try {
+          await fs.rename(source, destination);
+          movedSuccessfully.push(destination);
+        } catch (err) {
+          await fs.rm(folderPath, { recursive: true, force: true });
+
+          for (const file of req.files[field]) {
+            const filePath = path.join(__dirname, 'temp', `${file.filename}`);
+            await fs.rm(filePath, { recursive: true, force: true });
+          }
+
+          await prisma.product.delete({where: {id: product.id}});
+          next(err)
+        }
+      } 
+    };
+
     res.status(200).json({message: 'Product created successfully'})
-  } catch (err) {console.log(err)}
+  } catch (err) {next(err)}
 }
 
 export async function updateProduct(req, res) {
