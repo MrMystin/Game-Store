@@ -1,16 +1,19 @@
 const multer  = require('multer');
+const fs = require('fs');
+const path = require('path');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    const folderPath = path.join(path.dirname(__dirname), `temp`);
+    fs.mkdir(folderPath, { recursive: true }, () => {});
     cb(null, './temp')
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    const tab = file.originalname.split('.');
-    const ext = tab[tab.length - 1];
-    cb(null, file.fieldname + '-' + uniqueSuffix + "." + ext)
+    const extension = file.originalname.split('.').pop();
+    cb(null, file.fieldname + '-' + uniqueSuffix + "." + extension)
   }
-})
+});
 
 const fileFilter = function (req, file, cb) {
   const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -21,6 +24,6 @@ const fileFilter = function (req, file, cb) {
   }
 };
 
-const upload = multer({ storage: storage, limits: {fileSize: 1024 * 1024 * 5}, fileFilter: fileFilter })
+const upload = multer({ storage: storage, limits: {fileSize: 1024 * 1024 * 5}, fileFilter: fileFilter });
 
 module.exports = upload;
