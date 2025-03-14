@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "SET DEBUG=backend:* & nodemon ./bin/www"
+    "start": "SET DEBUG=backend:* & nodemon ./bin/www",
+    "setup": "npm install && npx prisma migrate reset --force && npx prisma db push && node prisma/seed.js && SET DEBUG=backend:* & nodemon ./bin/www"
   },
   "dependencies": {
     "@prisma/client": "^6.3.1",
