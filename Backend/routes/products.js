@@ -5,7 +5,7 @@ const productController = require('../controllers/productController');
 const upload = require("../middlewares/upload");
 const checkFiles = require("../middlewares/checkFiles");
 
-var uploadNew = upload.fields([{ name: 'photos', maxCount: 5 }, { name: 'banner', maxCount: 1 }, { name: 'thumbnail', maxCount: 1 }, { name: 'descriptionPhoto', maxCount: 1}]);
+var uploadNew = upload.fields([{ name: 'photos', maxCount: 5 }, { name: 'banner', maxCount: 1 }, { name: 'descriptionPhoto', maxCount: 2}]);
 
 router.get('/listAll', productController.getProducts);
 router.get('/listOne/:id', productController.getOneProduct);

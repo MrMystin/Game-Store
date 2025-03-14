@@ -39,11 +39,11 @@ model product {
 model minimumRequirements {
   id        Int      @id @default(autoincrement())
   OS        String   @db.VarChar(32)
-  Processor String   @db.VarChar(32)
-  Memory    Int
-  Graphics  String   @db.VarChar(32)
-  DirectX   Int
-  Storage   Int
+  processor String   @db.VarChar(32)
+  memory    Int
+  graphics  String   @db.VarChar(32)
+  directX   Int
+  storage   Int
   productId Int
   Product   product? @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
@@ -85,7 +85,7 @@ model colors {
   title       String  @db.VarChar(6)
   background1 String  @db.VarChar(6)
   background2 String  @db.VarChar(6)
-  product     product @relation(fields: [productId], references: [id])
+  product     product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 enum paymentType {
