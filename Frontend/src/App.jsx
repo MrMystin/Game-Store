@@ -1,32 +1,26 @@
-import { useEffect, useState, useRef } from "react"; // Importa os hooks necessários
+import { useEffect, useState, useRef } from "react";
 import "./App.css";
 import Header from "./components/header/header";
 import Rodape from "./components/footer/footer";
-
 import video from "/video/homeVideo.mp4";
 import gameplayVideo from "/video/gameplayVideo.mp4";
-
 import fundo from "/img/fundo.png";
-
 import game1 from "/img/mine.png";
 import game2 from "/img/mine_legends.png";
 import game3 from "/img/mine_dungeons.png";
 import game4 from "/img/mine_education.png";
-
-
 import novg from "/img/novidadesG.png";
 import nov1 from "/img/nov1.png";
 import nov2 from "/img/nov2.png";
 import nov3 from "/img/nov3.png";
-
 import sobre1 from "/img/sobre1.png";
 import sobre2 from "/img/sobre2.png";
-// import sobre3 from "/img/sobre3.png";
 
 function App() {
-
   const sectionRef = useRef(null);
   const topSectionRef = useRef(null);
+  const [products, setProducts] = useState([])
+  let counter = 1; 
 
   const scrollToSection = () => {
     if (sectionRef.current) {
@@ -56,6 +50,22 @@ function App() {
       video.pause();
     }
   }
+
+  async function fetchProducts() {
+    try {
+      const response = await fetch('http://localhost:3000/products/listAll');
+      if (response.status === 200) {
+        const data = await response.json();
+        setProducts(data.products);
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <>
@@ -111,16 +121,14 @@ function App() {
           Nossos jogos
         </p>
         <div className="spacegame-p3-app">
-          <img className="game-p3-app game1-app" src={game1} alt="Minecraft" />
-          <img className="game-p3-app game2-app" src={game2} alt="Minecraft Legends" />
-          <img className="game-p3-app game3-app" src={game3} alt="Minecraft Dungeons" />
-          <img className="game-p3-app game4-app" src={game4} alt="Minecraft Story Mode" />
+          {products.map((product) => {
+            return <img key={product.id} className={`game-p3-app game${counter ? counter++ : ''}-app`} src={`http://localhost:3000/images/${product.id}/${product.photos.find(photo => photo.type === "banner").photo}`}  alt={`${product.name}`} />
+          })}
         </div>
       </div>
-
       <div className="page2-app">
         <p className="titulo-p2-app">
-          Descubra o Mundo Infinito do Minecraft: <span class="troca-palavra"></span>
+          Descubra o Mundo Infinito do Minecraft: <span className="troca-palavra"></span>
         </p>
         <div className="video-p2-app">
           <video onClick={playVideo} ref={videoRef} data-src={gameplayVideo} loop muted playsInline preload="auto">
