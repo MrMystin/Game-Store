@@ -11,11 +11,25 @@
 .central-invoice {
     width: 600px;
     height: 800px;
-    background-color: gray;
+    background-color: rgba(218, 218, 218, 0.877);
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
+    border-radius: 30px;
+    border: 2px solid gray;
+}
+
+.logo-invoice {
+    position: absolute;
+    top: 30px;
+    width: 350px;
+}
+
+.titlecentral-invoice {
+    position: absolute;
+    top: 120px;
+    font-size: 40px;
 }
 
 .content-invoice {
@@ -119,7 +133,28 @@
     height: 50px;
     margin-left: 8%;
     margin-top: 10px;
+    overflow-wrap: break-word; 
+    word-wrap: break-word;
 }
+
+.textmid-invoice h4 {
+    font-size: 17px;
+}
+
+.textmid-invoice p {
+    font-size: 16px;
+}
+
+.emailmid-invoice {
+    color: #0000ff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.p-textmid-invoice {
+    font-size: 14px;
+}
+
 
 .bottom-invoice {
     width: 500px;
@@ -191,9 +226,21 @@
 
 .textleft-bottom-invoice {
     margin-left: 10px;
+    font-size: 14px;
 }
 
 .textright-bottom-invoice {
    right: 10px;
    position: absolute;
+   font-size: 14px;
+}
+
+.valuebottom-invoice {
+    color: gray;
+    margin-left: 200px;
+}
+
+.numberbottom-invoice {
+    position: absolute;
+    right: 10px;
 }

@@ -1,11 +1,14 @@
 import React from "react";
 import "./invoice.css"
+import logo from "/img/logo.svg";
 
 function Invoice() {
     return (
         <>
             <div className="body-invoice">
                 <div className="central-invoice">
+                    <img src={logo} alt="logo" className="logo-invoice"/>
+                    <p className="titlecentral-invoice">Obrigado.</p>
                     <div className="content-invoice">
                         <div className="grouptext-invoice">
                             <p className="p1-gptx-invoice">Olá Gabriel,</p>
@@ -28,13 +31,17 @@ function Invoice() {
                             <div className="spacemid2-invoice">
                                 <div className="textmid-invoice">
                                     <h4>Data do pedido:</h4>
-                                    <p>F23423423423</p>
+                                    <p>15 de março de 2025</p>
                                 </div>
                             </div>
                             <div className="spacemid3-invoice">
                                 <div className="textmid-invoice">
                                     <h4>Enviar cobrança para:</h4>
-                                    <p>bielrocharo@gmail.com</p>
+                                    <a href="https://mail.google.com/mail" 
+                                    target="_blank" 
+                                    className="emailmid-invoice">
+                                        martinsdesousajussara@gmail.com
+                                    </a>
                                 </div>
                             </div>
                             <div className="spacemid4-invoice">
@@ -67,8 +74,8 @@ function Invoice() {
                                     <p className="textright-bottom-invoice">- R$ 0.00 BRL</p>
                                 </div>
                                 <div className="line-bottom-invoice line6-invoice">
-                                    <p>TOTAL:</p>
-                                    <p>R$0.00 BRL</p>
+                                    <p className="valuebottom-invoice">TOTAL:</p>
+                                    <p className="numberbottom-invoice">R$40.00 BRL</p>
                                 </div>
                             </div>
                         </div>
