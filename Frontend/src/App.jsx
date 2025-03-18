@@ -15,8 +15,14 @@ import nov2 from "/img/nov2.png";
 import nov3 from "/img/nov3.png";
 import sobre1 from "/img/sobre1.png";
 import sobre2 from "/img/sobre2.png";
+import iconPlay from "/img/iconPlay.png";
+import { useNavigate } from "react-router-dom"
 
 function App() {
+  const navigate = useNavigate();
+  const [mostrarSpan, setMostrarSpan] = useState(false); 
+  const [pause, setPause] = useState(false); 
+  const [actualWord, setActualWord] = useState(false); 
   const sectionRef = useRef(null);
   const topSectionRef = useRef(null);
   const [products, setProducts] = useState([])
@@ -46,7 +52,11 @@ function App() {
     var video = videoRef.current;
     if (video.paused) {
       video.play();
+      setMostrarSpan(true); 
+      setPause(false)
     } else {
+      setActualWord(window.getComputedStyle(document.getElementsByClassName("troca-palavra")[0], "::after").content.replace(/['"]/g, ""))
+      setPause(true)
       video.pause();
     }
   }
@@ -122,16 +132,19 @@ function App() {
         </p>
         <div className="spacegame-p3-app">
           {products.map((product) => {
-            return <img key={product.id} className={`game-p3-app game${counter ? counter++ : ''}-app`} src={`http://localhost:3000/images/${product.id}/${product.photos.find(photo => photo.type === "banner").photo}`}  alt={`${product.name}`} />
+            return <img key={product.id} onClick={() => navigate(`/games/${product.id}`)} className={`game-p3-app game${counter ? counter++ : ''}-app`} src={`http://localhost:3000/images/${product.id}/${product.photos.find(photo => photo.type === "banner").photo}`}  alt={`${product.name}`} />
           })}
         </div>
       </div>
       <div className="page2-app">
         <p className="titulo-p2-app">
-          Descubra o Mundo Infinito do Minecraft: <span className="troca-palavra"></span>
+          Descubra o Mundo Infinito do Minecraft
+          {mostrarSpan && (
+            <>: <span className={`troca-palavra ${pause ? "pause" : ""}`} data-content={pause ? actualWord : ""}></span></>
+          )}
         </p>
         <div className="video-p2-app">
-          <video onClick={playVideo} ref={videoRef} data-src={gameplayVideo} loop muted playsInline preload="auto">
+          <video onClick={playVideo} poster={iconPlay} ref={videoRef} data-src={gameplayVideo} loop muted playsInline preload="auto">
             <source src={gameplayVideo} type="video/mp4" />
           </video>
         </div>
