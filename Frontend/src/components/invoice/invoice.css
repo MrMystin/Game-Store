@@ -11,11 +11,25 @@
 .central-invoice {
     width: 600px;
     height: 800px;
-    background-color: gray;
+    background-color: rgba(218, 218, 218, 0.877);
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
+    border-radius: 30px;
+    border: 2px solid gray;
+}
+
+.logo-invoice {
+    position: absolute;
+    top: 30px;
+    width: 350px;
+}
+
+.titlecentral-invoice {
+    position: absolute;
+    top: 120px;
+    font-size: 40px;
 }
 
 .content-invoice {
@@ -30,7 +44,6 @@
     position: relative;
     width: 100%;
     height: 150px;
-    background-color: aqua;
     justify-content: center;
     display: flex;
 }
@@ -53,11 +66,25 @@
     font-size: 30px;
 }
 
+.infomid-invoice {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    margin-top: 10px;
+}
+
+.p-informid-invoice {
+    width: 480px;
+    height: 100%;
+    margin-left: 10px;
+    color: gray;
+    border-bottom: 1px solid rgba(163, 163, 163, 0.548);
+}
+
 .groupmid-invoice {
     width: 100%;
     position: relative;
     height: 150px;
-    background-color: bisque;
     display: flex;
 }
 
@@ -106,4 +133,114 @@
     height: 50px;
     margin-left: 8%;
     margin-top: 10px;
+    overflow-wrap: break-word; 
+    word-wrap: break-word;
+}
+
+.textmid-invoice h4 {
+    font-size: 17px;
+}
+
+.textmid-invoice p {
+    font-size: 16px;
+}
+
+.emailmid-invoice {
+    color: #0000ff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.p-textmid-invoice {
+    font-size: 14px;
+}
+
+
+.bottom-invoice {
+    width: 500px;
+    height: 270px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.space-bottom-invoice {
+    width: 450px;
+    height: 270px;
+    bottom: 0px;
+    position: absolute;
+}
+
+.line-bottom-invoice {
+    width: 450px;
+    height: 45px;
+}
+
+.title-bottom-invoice {
+    color: gray;
+    position: absolute;
+    margin-top: 20px;
+}
+
+.line1-invoice, .line2-invoice, 
+.line3-invoice, .line4-invoice, 
+.line5-invoice, .line6-invoice {
+    display: flex;
+    align-items: center;
+}
+
+.line1-invoice, .line3-invoice, .line5-invoice {
+    border-bottom: 1px solid rgba(163, 163, 163, 0.548);
+}
+
+.line2-invoice, .line4-invoice {
+    background-color: rgba(218, 218, 218, 0.877);
+}
+
+.text-bottom1-invoice {
+    height: 45px;
+    width: 190px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.text-bottom2-invoice {
+    height: 45px;
+    width: 150px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    margin-left: 200px;
+}
+
+.text-bottom3-invoice {
+    height: 45px;
+    width: 100px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    margin-left: 350px;
+}
+
+.textleft-bottom-invoice {
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.textright-bottom-invoice {
+   right: 10px;
+   position: absolute;
+   font-size: 14px;
+}
+
+.valuebottom-invoice {
+    color: gray;
+    margin-left: 200px;
+}
+
+.numberbottom-invoice {
+    position: absolute;
+    right: 10px;
 }
