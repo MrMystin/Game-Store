@@ -1,25 +1,32 @@
-import { React } from 'react';
+import { React, useState } from 'react';
 import './Create.css'; 
 import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fullName: "",
+    username: "",
+    cpf: "",
+    password: "",
+    email: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   async function enviarDados() {
     try {
-      const response = await fetch("http://localhost:3000/users/create", {
+      const response = await fetch("http://localhost:3000/users/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: `${document.getElementById("nome").value}`,
-          username: `${document.getElementById("usuario").value}`,
-          cpf: `${document.getElementById("cpf").value}`,
-          password: `${document.getElementById("senha").value}`,
-          email: `${document.getElementById("email").value}`,
-        }),
+        body: JSON.stringify(formData),
       });
       if (response.status == 200) {
         alert("Usuário cadastrado com sucesso");
-        navigate(`/Report?cpf=${document.getElementById("cpf").value}`);
+        navigate(`/login`);
       } else {
         alert("CPF/Email/Username já existe");
       }
@@ -38,19 +45,19 @@ const Create = () => {
 
           <form className="form-create">
             <label htmlFor="nome">Nome e Sobrenome: </label>
-            <input type="text" id="nome" name="nome" />
+            <input type="text" id="nome" name="fullName" onChange={handleChange} />
 
             <label htmlFor="usuario">Nome de Usuário: </label>
-            <input type="text" id="usuario" name="usuario" />
+            <input type="text" id="usuario" name="username" onChange={handleChange}/>
 
             <label htmlFor="email">Email: </label>
-            <input type="email" id="email" name="email" />
+            <input type="email" id="email" name="email" onChange={handleChange}/>
 
             <label htmlFor="cpf">CPF: </label>
-            <input type="text" id="cpf" name="cpf" />
+            <input type="text" id="cpf" name="cpf" onChange={handleChange}/>
 
             <label htmlFor="senha">Senha: </label>
-            <input type="password" id="senha" name="senha" />
+            <input type="password" id="senha" name="password" onChange={handleChange}/>
           </form>
 
           <button onClick={enviarDados} className="btn-create" type="submit">Criar</button>
