@@ -65,15 +65,13 @@
 }
 
 .troca-palavra::after {
-  content: "Explore!"; /* Palavra inicial */
+  content: "Explore!";
   animation: troca 15s infinite;
   color: yellowgreen;
 }
 
-
 .troca-palavra.pause::after {
-  animation: none; /* Animação pausada */
-  content: attr(data-content);
+  animation-play-state: paused;
 }
 
 .video-p2-app {
@@ -295,10 +293,6 @@
 .space1-p5-app {
   height: 450px;
   background-color: rgb(83, 83, 83);
-}
-
-.space2-p5-app {
-
 }
 
 .space3-p5-app {

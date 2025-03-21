@@ -22,7 +22,6 @@ function App() {
   const navigate = useNavigate();
   const [mostrarSpan, setMostrarSpan] = useState(false); 
   const [pause, setPause] = useState(false); 
-  const [actualWord, setActualWord] = useState(false); 
   const sectionRef = useRef(null);
   const topSectionRef = useRef(null);
   const [products, setProducts] = useState([])
@@ -48,16 +47,14 @@ function App() {
   const videoRef = useRef(null);
 
   function playVideo() {
-    console.log('a');
     var video = videoRef.current;
     if (video.paused) {
       video.play();
       setMostrarSpan(true); 
       setPause(false)
     } else {
-      setActualWord(window.getComputedStyle(document.getElementsByClassName("troca-palavra")[0], "::after").content.replace(/['"]/g, ""))
-      setPause(true)
       video.pause();
+      setPause(true)
     }
   }
 
@@ -140,7 +137,7 @@ function App() {
         <p className="titulo-p2-app">
           Descubra o Mundo Infinito do Minecraft
           {mostrarSpan && (
-            <>: <span className={`troca-palavra ${pause ? "pause" : ""}`} data-content={pause ? actualWord : ""}></span></>
+            <>: <span className={`troca-palavra ${pause ? `pause` : ""}`}></span></>
           )}
         </p>
         <div className="video-p2-app">
