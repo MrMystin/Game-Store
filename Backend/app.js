@@ -26,6 +26,6 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 module.exports = app;

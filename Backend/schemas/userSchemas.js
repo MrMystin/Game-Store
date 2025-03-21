@@ -10,7 +10,7 @@ const userSchema = z.object({
 
 const userUpdateSchema = userSchema.pick({
   fullName: true,
-  username: false,
+  username: true,
   email: true,
   password: true,
   cpf: false

@@ -3,7 +3,7 @@ import {PrismaClient} from '@prisma/client'
 import bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
-export async function getUsers(req, res) {
+export async function getUsers(req, res, next) {
   try {
     const users = await prisma.user.findMany();
     if (!users) return res.status(400).json({message: "We don't have users yet :("});
@@ -11,7 +11,7 @@ export async function getUsers(req, res) {
   } catch (err) {next(err)}
 }
 
-export async function getOneUser(req, res) {
+export async function getOneUser(req, res, next) {
   try {
     const {cpf} = req.params;
     const user = await prisma.user.findUnique({where: {cpf: cpf } });
@@ -20,7 +20,7 @@ export async function getOneUser(req, res) {
   } catch (err) {next(err)}
 }
 
-export async function registerUser(req, res) {
+export async function registerUser(req, res, next) {
   try {
     const parseData = userSchema.parse(req.body);
 
@@ -61,7 +61,7 @@ export async function registerUser(req, res) {
   } catch (err) {next(err)}
 }
 
-export async function updateUser(req, res) {
+export async function updateUser(req, res, next) {
   try {
     const {cpf} = req.params;
     const user = await prisma.user.findUnique({where: {cpf: cpf}});
@@ -80,10 +80,10 @@ export async function updateUser(req, res) {
       data: { ...newData }
     });
     res.status(200).json({message: 'User updated successfully'});
-  } catch (error) {next(err)}
+  } catch (err) {next(err)}
 }
 
-export async function deleteUser(req, res) {
+export async function deleteUser(req, res, next) {
   try {
     const {cpf} = req.params;
     const user = await prisma.user.findUnique({where: { cpf: cpf } });
