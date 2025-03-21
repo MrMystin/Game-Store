@@ -8,6 +8,7 @@ import Delete from './pages/delete/delete.jsx'
 import Search from './pages/search/search.jsx'
 import Update from './pages/update/update.jsx'
 import Login from './pages/login/login.jsx'
+import Buy from  './pages/buy/buy.jsx'
 import Invoice from './components/invoice/invoice.jsx'
 
 import App from './App.jsx'
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: "/invoice",
     element: (<Invoice />)
+  },
+  {
+    path: "/buy",
+    element: (<Buy />)
   }
 ]);
 
