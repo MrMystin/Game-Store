@@ -1,0 +1,128 @@
+
+
+.body-buy {
+    font-family: Arial, sans-serif;
+    background-image: url("./assets/img/background-buy.png"); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+
+.container-compras {
+    display: flex;
+    background-color: #ffffff;
+    height: 70vh;
+    width: 150vh;
+    border-radius: 20px;
+}
+
+.plan-box {
+    background: #03291e;
+    padding: 20px;
+    width: 50%;
+    border-radius: 20px;
+}
+
+.payment-box{
+    background: transparent;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    color: #000000;
+}
+
+.input-buy, #options-country {
+    padding: 10px;
+    margin: 20px ;
+    height: 20px;
+    border: none;
+    border-radius: 5px;
+    background: #032927;
+    color: rgb(255, 255, 255);
+}
+
+#options-country{
+    height: 35px;
+}
+
+.btn-compra {
+    width: 50%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #f551b0;
+    color: rgb(255, 255, 255);
+    margin: 70px 25%;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-compra:hover {
+    background: #ff6bda;
+}
+
+.txt-compra {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    font-size: 12px;
+}
+
+.game-box{
+    text-align: left;
+    margin-top: 50px;
+}
+
+#game-name{
+    text-align: center;
+    font-size: 30px;
+}
+
+.plan-info{
+    margin-top: 50px;
+    font-size: 20px;
+    align-content: space-between;
+}
+
+#language-game{
+    margin: 20px;
+}
+
+.buy-info{
+    width: 100%;
+    height: 80%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-infoc{
+    display: flex;
+    gap: 10px;
+}
+
+.txt-cards{
+    display: flex;
+    gap: 10px;
+}
+
+#date-cardc, #segurity-numberc{
+    flex: 1;
+    padding: 8px;
+}
+
+#validade, #seguranca{
+    flex: 1;
+    padding: 8px;
+}

@@ -5,9 +5,9 @@ import './games.css'
 function Games() {
     return (
         <>
-            <div className='body-games'></div>
-            <div className='bannerG' style={{ backgroundImage: "url('/img/Banner1.png')" }}>
-                <div className='containerG' style={{ backgroundImage: "url('/img/placaG.png')" }}>
+            <div></div>
+            <div className='bannerG' style={{ backgroundImage: "url('./src/assets/img/Banner1.png')" }}>
+                <div className='containerG' style={{ backgroundImage: "url('./src/assets/img/placaG.png')" }}>
                     <div className='descontoG'>
                         <h2 className='descontoTG'>-25%</h2>
                     </div>
@@ -45,7 +45,7 @@ function Games() {
                     <div className='classG'>
                         <h2 className="title-class">Classificação Indicativa</h2>
                         <div>
-                            <img className="img-class" src='/img/livre.png' alt='Classificação Livre'></img>
+                            <img className="img-class" src='./src/assets/img/livre.png' alt='Classificação Livre'></img>
                         </div>
                     </div>
                     <div className='informacaoG'>
@@ -56,7 +56,7 @@ function Games() {
                 </div>
             </div>
             <div className='descri'>
-                <img className='desc-img' src='/img/descricao.png'></img>
+                <img className='desc-img' src='./src/assets/img/descricao.png'></img>
                 <div className='desc-cont'>
                     <div className='desc-title'>Descrição</div>
                     <p className='txt-desc'>É um fato estabelecido há muito tempo que um leitor será distraído pelo conteúdo legível de uma página ao olhar para seu layout. O ponto de usar Lorem Ipsum é que ele tem uma distribuição mais ou menos normal de letras, ao contrário de usar 'Conteúdo aqui, conteúdo aqui', fazendo com que pareça um inglês legível. Muitos pacotes de editoração eletrônica e editores de páginas da web agora usam Lorem Ipsum como seu texto modelo padrão, e uma busca por 'lorem ipsum' revelará muitos sites ainda em sua infância. Várias versões evoluíram ao longo dos anos, às vezes por acidente, às vezes de propósito (humor injetado e coisas do tipo).</p>
