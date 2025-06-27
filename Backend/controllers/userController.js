@@ -1,7 +1,9 @@
 import {userSchema, userUpdateSchema} from '../schemas/userSchemas.js';
 import {PrismaClient} from '@prisma/client'
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 const prisma = new PrismaClient();
+const SECRET_KEY = process.env.JWT_SECRET || 'seu_segredo_super_secreto';
 
 export async function getUsers(req, res, next) {
   try {
@@ -14,6 +16,9 @@ export async function getUsers(req, res, next) {
 export async function getOneUser(req, res, next) {
   try {
     const {cpf} = req.params;
+    if (req.user.cpf !== cpf) {
+      return res.status(403).json({ message: "Access denied." });
+    }
     const user = await prisma.user.findUnique({where: {cpf: cpf } });
     if (!user) return res.status(400).json({message: 'User Not Found'});
     res.status(200).send({user})
@@ -64,6 +69,9 @@ export async function registerUser(req, res, next) {
 export async function updateUser(req, res, next) {
   try {
     const {cpf} = req.params;
+    if (req.user.cpf !== cpf) {
+      return res.status(403).json({ message: "Access denied." });
+    }
     const user = await prisma.user.findUnique({where: {cpf: cpf}});
     if (!user) return res.status(400).json({message: 'User Not Found'});
     
@@ -73,6 +81,7 @@ export async function updateUser(req, res, next) {
     if (newData.email) {
       const emailMatch = await prisma.user.findUnique({where: {email: newData.email}})
       if (emailMatch) res.status(400).json({message: 'Email already used'})
+      return
     }
     
     await prisma.user.update({
@@ -86,9 +95,41 @@ export async function updateUser(req, res, next) {
 export async function deleteUser(req, res, next) {
   try {
     const {cpf} = req.params;
+    if (req.user.cpf !== cpf) {
+      return res.status(403).json({ message: "Access denied." });
+    }
     const user = await prisma.user.findUnique({where: { cpf: cpf } });
     if (!user) return res.status(400).json({message: 'User Not Found'});
     await prisma.user.delete({where: {cpf: cpf}});
     res.status(200).json({message: 'User deleted successfully'})
   } catch (err) {next(err)}
+}
+
+export async function loginUser(req, res, next) {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password)
+      return res.status(400).json({ message: "Email and password are required." });
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user)
+      return res.status(400).json({ message: "Invalid credentials." });
+
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword)
+      return res.status(401).json({ message: "Invalid credentials." });
+
+    const token = jwt.sign(
+      { id: user.id, cpf: user.cpf, email: user.email },
+      SECRET_KEY,
+      { expiresIn: "2h" }
+    );
+
+    const { password: _, ...userData } = user; // remove senha
+
+    res.status(200).json({ token, user: userData });
+  } catch (err) {
+    next(err);
+  }
 }

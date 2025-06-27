@@ -1,4 +1,4 @@
-POST http://localhost:3000/users/register
+POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
@@ -11,22 +11,35 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/users/listAll
-
-###
-
-GET http://localhost:3000/users/listOne/12345678901
-
-###
-
-PATCH http://localhost:3000/users/update/12345678901
+POST http://localhost:3000/users/login
+Content-Type: application/json
 
 {
-  "fullName": "Mystin Mr",
-  "email": "test2@gmail.com",
-  "password": "testetest2",
+  "email": "test@gmail.com",
+  "password": "testetest"
 }
 
 ###
 
-DELETE http://localhost:3000/users/delete/12345678901
+GET http://localhost:3000/users/
+
+###
+
+GET http://localhost:3000/users/12345678901
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3BmIjoiMTIzNDU2Nzg5MDEiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzUwOTA2MTg1LCJleHAiOjE3NTA5MTMzODV9.PyXpQ0RPm0xNc6EnQ4UvjfC_HWaxVRSoSpXjE-whQY0
+
+###
+
+PATCH http://localhost:3000/users/12345678901
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3BmIjoiMTIzNDU2Nzg5MDEiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzUwOTA2MTg1LCJleHAiOjE3NTA5MTMzODV9.PyXpQ0RPm0xNc6EnQ4UvjfC_HWaxVRSoSpXjE-whQY0
+
+{
+  "fullName": "Mystin Mr",
+  "email": "test2@gmail.com",
+  "password": "testetest2"
+}
+
+###
+
+DELETE http://localhost:3000/users/12345678901
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3BmIjoiMTIzNDU2Nzg5MDEiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzUwOTA2MTg1LCJleHAiOjE3NTA5MTMzODV9.PyXpQ0RPm0xNc6EnQ4UvjfC_HWaxVRSoSpXjE-whQY0

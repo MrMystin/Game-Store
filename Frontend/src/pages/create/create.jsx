@@ -1,71 +1,170 @@
-import { React, useState } from 'react';
-import './Create.css'; 
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import "./create.css";
+import Header from "../../components/header/header";
+import Rodape from "../../components/footer/footer";
 
-const Create = () => {
+function Signup() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    fullName: "",
-    username: "",
-    cpf: "",
-    password: "",
-    email: "",
-  });
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      navigate("/");
+    }
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSaving(true);
+
+    const cpfNumber = cpf.replace(/\D/g, ""); 
+
+    fetch("http://localhost:3000/users/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        fullName: name,
+        cpf: cpfNumber,
+        username: username
+      })
+    }).then(async (res) => {
+        if (!res.ok) {
+          const error = await res.json();
+          throw new Error(error.message || "Erro ao criar conta");
+        }
+        return res.json();
+      }).then((data) => {
+        fetch("http://localhost:3000/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      }).then(async (res) => {
+          if (!res.ok) {
+            const error = await res.json();
+            throw new Error(error.message || "Erro ao fazer login");
+          }
+          return res.json();
+        }).then((data) => {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          Swal.fire({
+            icon: "success",
+            title: "Registration successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/");
+          setEmail("");
+          setPassword("");
+        })
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "An Error Occurred!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }).finally(() => setIsSaving(false));
   };
 
-  async function enviarDados() {
-    try {
-      const response = await fetch("http://localhost:3000/users/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (response.status == 200) {
-        alert("Usuário cadastrado com sucesso");
-        navigate(`/login`);
-      } else {
-        alert("CPF/Email/Username já existe");
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const handleCpfChange = (e) => {
+    let value = e.target.value.replace(/\D/g, "").slice(0, 11);
+    value = value
+      .replace(/^(\d{3})(\d)/, "$1.$2")
+      .replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3")
+      .replace(/\.(\d{3})(\d)/, ".$1-$2");
+
+    setCpf(value);
+  };
+
   return (
-    <div className='body-crud'>
-      <div className="central-main-create">
-          <h1 className='titulo-create'>
-            Crie sua conta <br/>
-            aqui:
-          </h1>
-          <img className="logo-create" src="/img/logo.jpg" alt="logo" />
-
-          <form className="form-create">
-            <label htmlFor="nome">Nome e Sobrenome: </label>
-            <input type="text" id="nome" name="fullName" onChange={handleChange} />
-
-            <label htmlFor="usuario">Nome de Usuário: </label>
-            <input type="text" id="usuario" name="username" onChange={handleChange}/>
-
-            <label htmlFor="email">Email: </label>
-            <input type="email" id="email" name="email" onChange={handleChange}/>
-
-            <label htmlFor="cpf">CPF: </label>
-            <input type="text" id="cpf" name="cpf" onChange={handleChange}/>
-
-            <label htmlFor="senha">Senha: </label>
-            <input type="password" id="senha" name="password" onChange={handleChange}/>
+    <>
+      <Header />
+      <div className="signup-container">
+        <div className="signup-card">
+          <h2 className="signup-title">Create Account</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label htmlFor="name">Name</label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="username">Username</label>
+              <input
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="email">Email address</label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="cpf">CPF</label>
+              <input
+                id="cpf"
+                type="text"
+                value={cpf}
+                onChange={handleCpfChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button className="signup-btn" type="submit" disabled={isSaving}>
+              {isSaving ? "Creating..." : "Create Account"}
+            </button>
           </form>
-
-          <button onClick={enviarDados} className="btn-create" type="submit">Criar</button>
+          <div className="divider" />
+          <Link to="/login" className="login-link">
+            Already have an account? Sign in
+          </Link>
+        </div>
       </div>
-      <a href='/'><img className="allBack" src="/img/voltar.png" alt="back" /></a>
-    </div>
-    
+      <Rodape />
+    </>
   );
-};
+}
 
-export default Create;
+export default Signup;

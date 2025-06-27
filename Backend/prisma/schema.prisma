@@ -19,39 +19,56 @@ model user {
 }
 
 model product {
-  id                  Int                   @id @default(autoincrement())
-  name                String                @db.VarChar(256)
-  value               Decimal
-  description         String                @db.TinyText
-  indicativeRating    indicativeRating      @default(rL)
-  rating              Float
-  releaseDate         DateTime
-  file                String
-  fileSize            Float
-  discount            Int?
-  minimumRequirements minimumRequirements[]
-  languages           languages[]
-  photos              photos[]
-  transaction         transaction[]
-  colors              colors[]
+  id               Int               @id @default(autoincrement())
+  name             String            @db.VarChar(256)
+  value            Decimal
+  description      String            @db.TinyText
+  indicativeRating indicativeRating  @default(rL)
+  rating           Float
+  releaseDate      DateTime
+  file             String
+  fileSize         Float
+  discount         Int?
+  workOn           String
+
+  photos           photos[]
+  languages        productLanguage[]
+  goodies          goodies[]
+  gameFeatures     gameFeature[]
+  timeToBeats      timeToBeat[]
+  requirements     productRequirements?
+  transactionItem  transactionItem[]
+
+  genres           Genre[]           @relation("ProductGenres")
+  tags             Tag[]             @relation("ProductTags")
+  company          Company           @relation(fields: [companyId], references: [id])
+  companyId        Int
+  publisher        Publisher         @relation(fields: [publisherId], references: [id])
+  publisherId      Int
 }
 
-model minimumRequirements {
-  id        Int      @id @default(autoincrement())
-  OS        String   @db.VarChar(32)
-  processor String   @db.VarChar(32)
-  memory    Int
-  graphics  String   @db.VarChar(32)
-  directX   Int
-  storage   Int
-  productId Int
-  Product   product? @relation(fields: [productId], references: [id], onDelete: Cascade)
-}
-
-model languages {
+model Genre {
   id       Int       @id @default(autoincrement())
-  language String    @unique @db.VarChar(2)
-  product  product[]
+  name     String    @unique
+  products product[] @relation("ProductGenres")
+}
+
+model Tag {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products product[] @relation("ProductTags")
+}
+
+model Company {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products product[]
+}
+
+model Publisher {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products product[]
 }
 
 model photos {
@@ -62,30 +79,98 @@ model photos {
   product   product   @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
-model transaction {
-  id              Int         @id @default(autoincrement())
-  userId          Int
-  productId       Int
-  value           Float
-  paymentType     paymentType
-  transactionDate DateTime    @default(now())
-  user            user        @relation(fields: [userId], references: [id])
-  product         product     @relation(fields: [productId], references: [id])
+model productLanguage {
+  id        Int       @id @default(autoincrement())
+  language  String    @db.VarChar(10)
+  audio     Boolean
+  text      Boolean
+  productId Int
+  product   product   @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
-model colors {
-  id          Int     @id @default(autoincrement())
-  productId   Int
-  first       String  @db.VarChar(6)
-  second      String  @db.VarChar(6)
-  third       String  @db.VarChar(6)
-  fourth      String  @db.VarChar(6)
-  fifth       String  @db.VarChar(6)
-  sixth       String  @db.VarChar(6)
-  title       String  @db.VarChar(6)
-  background1 String  @db.VarChar(6)
-  background2 String  @db.VarChar(6)
-  product     product @relation(fields: [productId], references: [id], onDelete: Cascade)
+model goodies {
+  id        Int       @id @default(autoincrement())
+  text      String
+  productId Int
+  product   product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model gameFeature {
+  id        Int       @id @default(autoincrement())
+  name      String
+  productId Int
+  product   product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model timeToBeat {
+  id        Int     @id @default(autoincrement())
+  value     Float
+  productId Int
+  product   product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model productRequirements {
+  id        Int         @id @default(autoincrement())
+  productId Int         @unique
+  windows   requirement @relation("WindowsRequirement", fields: [windowsId], references: [id])
+  mac       requirement @relation("MacRequirement", fields: [macId], references: [id])
+  linux     requirement @relation("LinuxRequirement", fields: [linuxId], references: [id])
+
+  windowsId Int
+  macId     Int
+  linuxId   Int
+
+  product   product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model requirement {
+  id        Int    @id @default(autoincrement())
+  OS        String @db.VarChar(32)
+  processor String @db.VarChar(32)
+  memory    Int
+  graphics  String @db.VarChar(32)
+  directX   Int
+  storage   Int
+
+  windowsOf productRequirements[] @relation("WindowsRequirement")
+  macOf     productRequirements[] @relation("MacRequirement")
+  linuxOf   productRequirements[] @relation("LinuxRequirement")
+}
+
+
+model transaction {
+  id               Int                 @id @default(autoincrement())
+  invoiceId        String              @unique @db.VarChar(32) // e.g., F40901238123
+  orderId          String              @unique @db.VarChar(32) // e.g., F23423423423
+  userId           Int
+  paymentType      paymentType
+  transactionDate  DateTime            @default(now())
+  source           String              @db.VarChar(64)         // e.g., Minecraft Store
+  total            Decimal
+
+  user             user                @relation(fields: [userId], references: [id])
+  transactionItems transactionItem[]
+}
+
+model transactionItem {
+  id             Int       @id @default(autoincrement())
+  transactionId  Int
+  productId      Int
+  productName    String    @db.VarChar(256)
+  publisherName  String    @db.VarChar(128)
+  productValue   Decimal
+  discount       Decimal   @default(0)
+  finalPrice     Decimal
+
+  transaction    transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  product        product     @relation(fields: [productId], references: [id])
+}
+
+enum photoType {
+  banner
+  thumbnail
+  photos
+  descriptionPhoto
 }
 
 enum paymentType {
@@ -101,11 +186,4 @@ enum indicativeRating {
   r14
   r16
   r18
-}
-
-enum photoType {
-  banner
-  thumbnail
-  photos
-  descriptionPhoto
 }

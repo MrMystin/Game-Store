@@ -1,213 +1,150 @@
-import {PrismaClient} from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
+
 const prisma = new PrismaClient();
 
-const games = [
-  {
-    "name": "Minecraft",
-    "value": 10,
-    "description": "Minecraft",
-    "indicativeRating": "r10",
-    "rating": 4.6,
-    "releaseDate": "2025-02-20",
-    "file": "minecraft's file",
-    "fileSize": 160000,
-    "minimumRequirements": {
-      "OS": "Windows 10+",
-      "processor": "Intel I5 9400F",
-      "memory": 4,
-      "graphics": "GTX 3080",
-      "directX": 11,
-      "storage": 160000
-    },
-    "languages": [
-      {"language": "BR"},
-      {"language": "EN"}
-    ],
-    "colors": {
-      "first": "103302",
-      "second": "46a4e6",
-      "third": "33cc0d",
-      "fourth": "7dbdd3",
-      "fifth": "331702",
-      "sixth": "fff3e2",
-      "title": "0b700b",
-      "background1": "180b01",
-      "background2": "000000"
-    },
-    "photos": [
-      {"photo": "photos1.png", "type": "photos"},
-      {"photo": "photos2.png", "type": "photos"},
-      {"photo": "photos3.png", "type": "photos"},
-      {"photo": "photos4.png", "type": "photos"},
-      {"photo": "photos5.png", "type": "photos"},
-      {"photo": "banner.png", "type": "banner"},
-      {"photo": "thumbnail.png", "type": "thumbnail"},
-      {"photo": "descriptionPhoto.png", "type": "descriptionPhoto"}
-    ]
-  },
-  {
-    "name": "Minecraft Dungeons",
-    "value": 10,
-    "description": "Minecraft Dungeons",
-    "indicativeRating": "r10",
-    "rating": 4.6,
-    "releaseDate": "2025-02-20",
-    "file": "minecraft-dungeons's file",
-    "fileSize": 160000,
-    "minimumRequirements": {
-      "OS": "Windows 10+",
-      "processor": "Intel I5 9400F",
-      "memory": 4,
-      "graphics": "GTX 3080",
-      "directX": 11,
-      "storage": 160000
-    },
-    "languages": [
-      {"language": "BR"},
-      {"language": "EN"}
-    ],
-    "colors": {
-      "first": "dc622b",
-      "second": "6e1d15",
-      "third": "1bc7ff",
-      "fourth": "15242b",
-      "fifth": "140f0e",
-      "sixth": "7dbdd3",
-      "title": "1bc7ff",
-      "background1": "18282e",
-      "background2": "3b2121"
-    },
-    "photos": [
-      {"photo": "photos1.png", "type": "photos"},
-      {"photo": "photos2.png", "type": "photos"},
-      {"photo": "photos3.png", "type": "photos"},
-      {"photo": "photos4.png", "type": "photos"},
-      {"photo": "photos5.png", "type": "photos"},
-      {"photo": "banner.png", "type": "banner"},
-      {"photo": "thumbnail.png", "type": "thumbnail"},
-      {"photo": "descriptionPhoto.png", "type": "descriptionPhoto"}
-    ]
-  },
-  {
-    "name": "Minecraft Legends",
-    "value": 10,
-    "description": "Minecraft Legends",
-    "indicativeRating": "r10",
-    "rating": 4.6,
-    "releaseDate": "2025-02-20",
-    "file": "minecraft-legends's file",
-    "fileSize": 160000,
-    "minimumRequirements": {
-      "OS": "Windows 10+",
-      "processor": "Intel I5 9400F",
-      "memory": 4,
-      "graphics": "GTX 3080",
-      "directX": 11,
-      "storage": 160000
-    },
-    "languages": [
-      {"language": "BR"},
-      {"language": "EN"}
-    ],
-    "colors": {
-      "first": "421c35",
-      "second": "ffd33d",
-      "third": "e67526",
-      "fourth": "7f696e",
-      "fifth": "080408",
-      "sixth": "d4c8d6",
-      "title": "e67526",
-      "background1": "241119",
-      "background2": "080408"
-    },
-    "photos": [
-      {"photo": "photos1.png", "type": "photos"},
-      {"photo": "photos2.png", "type": "photos"},
-      {"photo": "photos3.png", "type": "photos"},
-      {"photo": "photos4.png", "type": "photos"},
-      {"photo": "photos5.png", "type": "photos"},
-      {"photo": "banner.png", "type": "banner"},
-      {"photo": "thumbnail.png", "type": "thumbnail"},
-      {"photo": "descriptionPhoto.png", "type": "descriptionPhoto"}
-    ]
-  },
-  {
-    "name": "Minecraft Education",
-    "value": 10,
-    "description": "Minecraft Education",
-    "indicativeRating": "r10",
-    "rating": 4.6,
-    "releaseDate": "2025-02-20",
-    "file": "minecraft-education's file",
-    "fileSize": 160000,
-    "minimumRequirements": {
-      "OS": "Windows 10+",
-      "processor": "Intel I5 9400F",
-      "memory": 4,
-      "graphics": "GTX 3080",
-      "directX": 11,
-      "storage": 160000
-    },
-    "languages": [
-      {"language": "BR"},
-      {"language": "EN"}
-    ],
-    "colors": {
-      "first": "5fa5ef",
-      "second": "616467",
-      "third": "538121",
-      "fourth": "835926",
-      "fifth": "8dc6f3",
-      "sixth": "1e201f",
-      "title": "46a0ca",
-      "background1": "e6fffb",
-      "background2": "273b21"
-    },
-    "photos": [
-      {"photo": "photos1.png", "type": "photos"},
-      {"photo": "photos2.png", "type": "photos"},
-      {"photo": "photos3.png", "type": "photos"},
-      {"photo": "photos4.png", "type": "photos"},
-      {"photo": "photos5.png", "type": "photos"},
-      {"photo": "banner.png", "type": "banner"},
-      {"photo": "thumbnail.png", "type": "thumbnail"},
-      {"photo": "descriptionPhoto.png", "type": "descriptionPhoto"}
-    ]
-  }
-]
-
-for (const game of games) {
-  await prisma.product.create({
-    data: {
-      name: game.name,
-      value: game.value,
-      description: game.description,
-      indicativeRating: game.indicativeRating,
-      rating: game.rating,
-      releaseDate: new Date(game.releaseDate),
-      file: game.file,
-      fileSize: game.fileSize,
-      photos: {
-        create: game.photos.map(photo => ({
-          ...photo
-        }))
-      },
-      languages: {
-        connectOrCreate: game.languages.map(language => ({
-          where: { language: language.language },
-          create: { language: language.language }
-        }))
-      },
+async function seed() {
+  const games = [
+    {
+      name: "Minecraft",
+      discount: 5,
+      value: 10,
+      description: "Minecraft",
+      indicativeRating: "r10",
+      rating: 4.6,
+      releaseDate: new Date("2025-02-20"),
+      file: "minecraft's file",
+      fileSize: 160000,
+      photos: [
+        { photo: "banner.png", type: "banner" },
+        { photo: "descriptionPhoto1.jpg", type: "descriptionPhoto" },
+        { photo: "descriptionPhoto2.gif", type: "descriptionPhoto" },
+        { photo: "photos1.png", type: "photos" },
+        { photo: "photos2.png", type: "photos" },
+        { photo: "photos3.jpg", type: "photos" },
+        { photo: "photos4.jpg", type: "photos" },
+        { photo: "photos5.png", type: "photos" }
+      ],
+      languages: [
+        { language: "Português", audio: false, text: true },
+        { language: "Português de Portugal", audio: false, text: true },
+        { language: "Inglês", audio: false, text: true }
+      ],
+      goodies: [
+        { text: "Exclusive wallpaper" },
+        { text: "Digital map" }
+      ],
+      timeToBeats: [14.5, 22.5, 38, 23],
+      gameFeatures: [
+        { name: "Multiplayer" },
+        { name: "Cross-platform" },
+        { name: "Creative Mode" }
+      ],
       minimumRequirements: {
-        create: {
-          ...game.minimumRequirements
+        windows: {
+          OS: "Windows 10+",
+          processor: "Intel I5 9400F",
+          memory: 4,
+          graphics: "GTX 3080",
+          directX: 11,
+          storage: 160000
+        },
+        mac: {
+          OS: "macOS Big Sur",
+          processor: "Apple M1",
+          memory: 4,
+          graphics: "Integrated M1 GPU",
+          directX: 12,
+          storage: 160000
+        },
+        linux: {
+          OS: "Ubuntu 20.04",
+          processor: "Ryzen 5 3600",
+          memory: 4,
+          graphics: "RX 570",
+          directX: 12,
+          storage: 160000
         }
       },
-      colors: {
-        create: {
-          ...game.colors
+      workOn: "Windows (7, 8, 10, 11), Linux (Ubuntu 14.04, Ubuntu 16.04, Ubuntu 18.04), Mac OS X (10.9+)",
+      company: "Mojang",
+      publisher: "Mojang",
+      genres: ["Action", "Sandbox", "Adventure"],
+      tags: ["Adventure", "Action", "Indie", "Fantasy", "Sandbox", "FPS"]
+    },
+  ];
+
+  for (const game of games) {
+    const windowsReq = await prisma.requirement.create({ data: game.minimumRequirements.windows });
+    const macReq = await prisma.requirement.create({ data: game.minimumRequirements.mac });
+    const linuxReq = await prisma.requirement.create({ data: game.minimumRequirements.linux });
+
+    await prisma.product.create({
+      data: {
+        name: game.name,
+        value: game.value,
+        discount: game.discount,
+        description: game.description,
+        indicativeRating: game.indicativeRating,
+        rating: game.rating,
+        releaseDate: game.releaseDate,
+        file: game.file,
+        fileSize: game.fileSize,
+        workOn: game.workOn,
+        photos: {
+          create: game.photos.map(p => ({ photo: p.photo, type: p.type }))
+        },
+        languages: {
+          create: game.languages.map(lang => ({
+            language: lang.language,
+            audio: lang.audio,
+            text: lang.text
+          }))
+        },
+        goodies: {
+          create: game.goodies.map(g => ({ text: g.text }))
+        },
+        timeToBeats: {
+          create: game.timeToBeats.map(value => ({ value }))
+        },
+        gameFeatures: {
+          create: game.gameFeatures.map(gf => ({ name: gf.name }))
+        },
+        requirements: {
+          create: {
+            windowsId: windowsReq.id,
+            macId: macReq.id,
+            linuxId: linuxReq.id
+          }
+        },
+        genres: {
+          connectOrCreate: game.genres.map(name => ({
+            where: { name },
+            create: { name }
+          }))
+        },
+        tags: {
+          connectOrCreate: game.tags.map(name => ({
+            where: { name },
+            create: { name }
+          }))
+        },
+        company: {
+          connectOrCreate: {
+            where: { name: game.company },
+            create: { name: game.company }
+          }
+        },
+        publisher: {
+          connectOrCreate: {
+            where: { name: game.publisher },
+            create: { name: game.publisher }
+          }
         }
       }
-    },
-  });
+    });
+  }
+
+  console.log('Seed finalizado!');
 }
+
+seed()

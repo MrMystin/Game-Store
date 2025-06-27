@@ -12,7 +12,7 @@
 }
 
 .header-app.scrolled {
-    background-color: rgb(22, 22, 22); /* Cor quando o usuário rolar a página */
+    background-color: rgb(22, 22, 22);
     border-bottom: 2px solid rgb(78, 78, 78);
 }
 
@@ -32,7 +32,7 @@
 }
 
 .ul1-app, .ul2-app, .ul3-app {
-    list-style: none; 
+    list-style: none;
     display: flex;
     position: absolute;
     cursor: pointer;
@@ -51,21 +51,20 @@
     right: 100px;
 }
 
-.ul1-app:hover .text-header {
+/* Hovers por item individual (corrigido) */
+.ul1-app .li-app:hover .text-header,
+.ul2-app .li-app:hover .text-header,
+.ul3-app .li-app:hover .text-header {
     background-color: rgba(63, 63, 63, 0.6);
 }
 
-.ul2-app:hover .text-header {
-    background-color: rgba(63, 63, 63, 0.6);
-}
-
-.ul3-app:hover .text-header {
-    background-color: rgba(63, 63, 63, 0.6);
-}
-
+/* Efeitos de borda animada */
 .borderbottom-header {
     position: relative;
     display: inline-block;
+    width: 140px;
+    bottom: 0px;
+    position: absolute;
 }
 
 .borderbottom-header::after {
@@ -76,37 +75,23 @@
     width: 100%;
     height: 2px;
     background-color: #477a1e;
-    transform: scaleX(0); 
-    transform-origin: left; 
+    transform: scaleX(0);
+    transform-origin: left;
     transition: transform 0.3s ease-in-out;
 }
 
-.ul1-app:hover .borderbottom-header::after {
-    transform: scaleX(1); 
+/* Animação por item individual (corrigido) */
+.ul1-app .li-app:hover .borderbottom-header::after,
+.ul2-app .li-app:hover .borderbottom-header::after,
+.ul3-app .li-app:hover .borderbottom-header::after {
+    transform: scaleX(1);
 }
 
-.ul1-app:not(:hover) .borderbottom-header::after {
+.ul1-app .li-app:not(:hover) .borderbottom-header::after,
+.ul2-app .li-app:not(:hover) .borderbottom-header::after,
+.ul3-app .li-app:not(:hover) .borderbottom-header::after {
     transform-origin: right;
-    transform: scaleX(0); 
-}
-
-
-.ul2-app:hover .borderbottom-header::after {
-    transform: scaleX(1); 
-}
-
-.ul2-app:not(:hover) .borderbottom-header::after {
-    transform-origin: right; 
     transform: scaleX(0);
-}
-
-.ul3-app:hover .borderbottom-header::after {
-    transform: scaleX(1); 
-}
-
-.ul3-app:not(:hover) .borderbottom-header::after {
-    transform-origin: right; 
-    transform: scaleX(0); 
 }
 
 .li-app {
@@ -128,12 +113,9 @@
     transition: 0.1s;
 }
 
-.ul-appr:hover .borderbottom-header {
-    border-bottom: 2px solid black;
-}
-
-.borderbottom-header {
-    width: 140px;
-    bottom: 0px;
-    position: absolute;
+/* Classe desconhecida corrigida (ul-appr → não usada) */
+.cart-app .text-header {
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 16px;
 }

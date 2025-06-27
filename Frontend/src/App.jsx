@@ -60,9 +60,10 @@ function App() {
 
   async function fetchProducts() {
     try {
-      const response = await fetch('http://localhost:3000/products/listAll');
+      const response = await fetch('http://localhost:3000/products/');
       if (response.status === 200) {
         const data = await response.json();
+        console.log(data)
         setProducts(data.products);
       }
     } catch (err) {
