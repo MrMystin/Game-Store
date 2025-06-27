@@ -2,13 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 var { authenticateToken } = require('../middlewares/auth.js');
-var userController = require('../controllers/userController');
+var transactionController = require('../controllers/transactionController');
 
-router.get('/', userController.getUsers);
-router.get('/:id', authenticateToken, userController.getOneUser);
-router.post('/', userController.registerUser);
-router.patch('/:cpf', authenticateToken, userController.updateUser);
-router.delete('/:cpf', authenticateToken, userController.deleteUser);
-router.post('/login', userController.loginUser);
+router.get('/', authenticateToken, transactionController.getTransactions);
+router.get('/:id', authenticateToken, transactionController.getTransactionById);
+router.post('/', authenticateToken, transactionController.createTransaction);
+
 
 module.exports = router;

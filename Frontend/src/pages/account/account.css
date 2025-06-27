@@ -211,3 +211,23 @@ input:focus {
   font-weight: bold;
   transform: translateX(4px);
 }
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.product-banner {
+  width: 240px;
+  height: 135px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.product-banner:hover {
+  transform: scale(1.05);
+}

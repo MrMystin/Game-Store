@@ -10,6 +10,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/header/header";
 import Rodape from "../../components/footer/footer";
 import Swal from "sweetalert2";
+import Buy from "../../components/buy/buy";
+import { addToCart } from "../../utils/cart";
 
 function formatRequirementsObject(reqObj) {
   if (!reqObj) return [];
@@ -64,6 +66,7 @@ function Games() {
   const [requirements, setRequirements] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalImage, setModalImage] = useState(null);
+  const [hasPurchased, setHasPurchased] = useState(false);
 
   useEffect(() => {
     fetch(`http://localhost:3000/products/${id}`, { method: "GET" })
@@ -91,6 +94,36 @@ function Games() {
         navigate("/");
       });
   }, [id, navigate]);
+
+  useEffect(() => {
+    if (!game) return;
+  
+    const token = localStorage.getItem("token");
+    if (!token) return;
+  
+    fetch("http://localhost:3000/transaction", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Erro ao buscar transações");
+        return res.json();
+      })
+      .then((data) => {
+        const transactions = data.transactions || [];
+        const hasBought = transactions.some((transaction) =>
+          transaction.transactionItems.some(
+            (item) => item.productId === game.id
+          )
+        );
+        setHasPurchased(hasBought);
+      })
+      .catch((err) => {
+        console.error("Erro ao verificar compra:", err);
+      });
+  }, [game]);
 
   useEffect(() => {
     if (!game || !game.requirements || !activeTab) return;
@@ -132,6 +165,8 @@ function Games() {
   ];
 
   const tags = ["Adventure", "Action", "Indie", "Fantasy", "Exploration"];
+
+  const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
 
   return (
     <>
@@ -191,8 +226,20 @@ function Games() {
                     <div className="current-price">R$ {game.discount}</div>
                   </div>
                   <div className="action-buttons">
-                    <button className="add-to-cart-btn">Add to cart</button>
-                    <button className="buy-now-btn">Buy now</button>
+                    {hasPurchased ? (
+                      <button className="bought-btn" disabled>
+                        Comprado
+                      </button>
+                    ) : (
+                      <>
+                        <button className="add-to-cart-btn" onClick={() => addToCart(game)}>
+                          Add to cart
+                        </button>
+                        <button className="buy-now-btn" onClick={() => setIsBuyModalOpen(true)}>
+                          Buy now
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -562,6 +609,7 @@ function Games() {
       ) : (
         <p>Carregando...</p>
       )}
+      <Buy isOpen={isBuyModalOpen} onClose={() => setIsBuyModalOpen(false)} game={game} />
       <Rodape />
     </>
   );

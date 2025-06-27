@@ -141,6 +141,10 @@
   height: 220px;
 }
 
+.purchase-content:has(.bought-btn) {
+  height: 160px;
+}
+
 .discount-badge {
   position: absolute;
   top: 13px;
@@ -188,7 +192,8 @@
 }
 
 .add-to-cart-btn,
-.buy-now-btn {
+.buy-now-btn,
+.bought-btn {
   padding: 16px;
   border-radius: 5px;
   font-size: 16px;
@@ -748,4 +753,10 @@
   font-size: 14px;
   color: #212121;
   white-space: nowrap;
+}
+
+.bought-btn { 
+  color: #000000;
+  cursor: not-allowed;
+  background-color: green;
 }

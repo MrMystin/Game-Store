@@ -98,6 +98,7 @@ export async function deleteUser(req, res, next) {
     if (req.user.cpf !== cpf) {
       return res.status(403).json({ message: "Access denied." });
     }
+    await prisma.transaction.deleteMany({ where: { userId: Number(cpf) } }); 
     const user = await prisma.user.findUnique({where: { cpf: cpf } });
     if (!user) return res.status(400).json({message: 'User Not Found'});
     await prisma.user.delete({where: {cpf: cpf}});

@@ -11,10 +11,10 @@ const transactionItemSchema = z.object({
 }).strict();
 
 const transactionSchema = z.object({
-  invoiceId: z.string().min(6).max(32).trim(),         // Ex: F40901238123
-  orderId: z.string().min(6).max(32).trim(),           // Ex: F23423423423
+  invoiceId: z.string().min(6).max(32).trim(),
+  orderId: z.string().min(6).max(32).trim(),
   paymentType: z.enum(["credit_card", "debit_card", "pix"]),
-  source: z.string().min(1).max(64).trim(),            // Ex: "Minecraft Store"
+  source: z.string().min(1).max(64).trim(),           
   total: z.number().nonnegative(),
   transactionItems: z.array(transactionItemSchema).min(1),
 }).strict();

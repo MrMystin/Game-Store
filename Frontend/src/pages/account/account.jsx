@@ -15,22 +15,58 @@ export default function PerfilUsuario() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [userProducts, setUserProducts] = useState([]);
+
   useEffect(() => {
-    if (!localStorage.getItem("user")) {
-      navigate("/");
-    }
     const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const userObj = JSON.parse(storedUser);
-      setUser(userObj);
-      setName(userObj.fullName);
-      setEmail(userObj.email);
-    } else {
+    if (!storedUser) {
       localStorage.removeItem("token");
-      localStorage.removeItem("user");
       navigate("/");
+      return;
     }
+  
+    const userObj = JSON.parse(storedUser);
+    setUser(userObj);
+    setName(userObj.fullName);
+    setEmail(userObj.email);
+  
+    // Função para buscar transações e extrair produtos comprados
+    const fetchUserTransactions = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch("http://localhost:3000/transaction", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        if (!res.ok) throw new Error("Erro ao buscar transações");
+        const data = await res.json();
+  
+        const uniqueProductsMap = new Map();
+  
+        data.transactions.forEach((tx) => {
+          tx.transactionItems.forEach((item) => {
+            if (!uniqueProductsMap.has(item.productId)) {
+              uniqueProductsMap.set(item.productId, item.product);
+            }
+          });
+        });
+  
+        setUserProducts(Array.from(uniqueProductsMap.values()));
+      } catch (err) {
+        console.error("Erro ao carregar produtos:", err);
+      }
+    };
+  
+    fetchUserTransactions();
   }, []);
+  
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/");
+  };
 
   const handleExcluirConta = () => {
     setMostrarConfirmacao(true);
@@ -145,7 +181,7 @@ export default function PerfilUsuario() {
           <button
             id="logout-btn"
             className={`logout-btn ${abaAtiva === "logout" ? "ativo" : ""}`}
-            onClick={() => alert("Logout")}
+            onClick={() => logout()}
           >
             Logout
           </button>
@@ -190,9 +226,32 @@ export default function PerfilUsuario() {
           {abaAtiva === "produtos" && (
             <div className="formulario">
               <h2>Meus Produtos</h2>
-              <p>Lista de produtos aqui...</p>
+              <div className="product-list">
+                {userProducts.length === 0 ? (
+                  <p>Você ainda não comprou nenhum produto.</p>
+                ) : (
+                  userProducts.map((product) => {
+                    const banner = product.photos.find(p => p.type === "banner")?.photo;
+                    return (
+                      <a
+                        key={product.id}
+                        href="https://www.mediafire.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={`http://localhost:3000/images/${product.id}/${banner}`}
+                          alt={product.name}
+                          className="product-banner"
+                        />
+                      </a>
+                    );
+                  })
+                )}
+              </div>
             </div>
           )}
+
         </main>
 
         {mostrarConfirmacao && (

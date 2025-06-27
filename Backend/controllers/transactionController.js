@@ -12,7 +12,15 @@ export async function getTransactions(req, res, next) {
     const transactions = await prisma.transaction.findMany({
       where: { userId },
       include: {
-        transactionItems: true,
+        transactionItems: {
+          include: {
+            product: {
+              include: {
+                photos: true,
+              }
+            }
+          }
+        }
       },
       orderBy: {
         transactionDate: 'desc'

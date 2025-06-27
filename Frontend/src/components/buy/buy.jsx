@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import "./buy.css";
+import { Link, useNavigate } from "react-router-dom";
 
 function Buy({ isOpen, onClose, game }) {
   if (!isOpen || !game) return null;
-
+  const navigate = useNavigate();
   const banner = game.photos.find((photo) => photo.type === "banner")?.photo;
 
   const [cardName, setCardName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardCcv, setCardCcv] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Formata o número do cartão como "1234 5678 9012 3456"
   function handleCardNumberChange(e) {
@@ -17,9 +19,7 @@ function Buy({ isOpen, onClose, game }) {
     if (value.length > 16) value = value.slice(0, 16);
 
     // Divide em grupos de 4 dígitos
-    const formattedValue = value
-      .match(/.{1,4}/g)
-      ?.join(" ") || "";
+    const formattedValue = value.match(/.{1,4}/g)?.join(" ") || "";
 
     setCardNumber(formattedValue);
   }
@@ -43,10 +43,65 @@ function Buy({ isOpen, onClose, game }) {
     setCardCcv(value);
   }
 
+  async function handleConfirmPurchase(e) {
+    e.preventDefault();
+
+    setLoading(true);
+
+    try {
+      // Aqui você deve montar os dados conforme o schema do backend
+      const body = {
+        invoiceId: `F${Date.now()}`,
+        orderId: `O${Date.now()}`,
+        paymentType: "credit_card",
+        source: "Minecraft Store",
+        total: Number(game.discount),  // converta para number
+        transactionItems: [
+          {
+            productId: Number(game.id),
+            productName: game.name,
+            publisherName: game.publisher?.name || "",
+            productValue: Number(game.value),    // converter aqui
+            discount: Number(game.value) - Number(game.discount), // desconto calculado
+            finalPrice: Number(game.discount),
+          },
+        ],
+      };
+      
+
+      const token = localStorage.getItem("token"); // supondo que o token JWT está aqui
+
+      const res = await fetch("http://localhost:3000/transaction/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to create transaction");
+      }
+
+      // Sucesso
+      alert("Purchase confirmed!");
+      navigate("/");
+      onClose();
+    } catch (err) {
+      alert("Error: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="buy-modal-overlay" onClick={onClose}>
       <div className="buy-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="buy-modal-close" onClick={onClose}>×</button>
+        <button className="buy-modal-close" onClick={onClose}>
+          ×
+        </button>
 
         <div
           className="buy-modal-banner"
@@ -59,7 +114,7 @@ function Buy({ isOpen, onClose, game }) {
           <h2 className="buy-game-title">{game.name}</h2>
           <p className="buy-price">R$ {game.discount}</p>
 
-          <form className="buy-form" onSubmit={(e) => e.preventDefault()}>
+          <form className="buy-form" onSubmit={handleConfirmPurchase}>
             <div className="form-group">
               <label htmlFor="card-name">Name on Card</label>
               <input
@@ -113,8 +168,8 @@ function Buy({ isOpen, onClose, game }) {
               </div>
             </div>
 
-            <button type="submit" className="buy-confirm-btn">
-              Confirm Purchase
+            <button type="submit" className="buy-confirm-btn" disabled={loading}>
+              {loading ? "Processing..." : "Confirm Purchase"}
             </button>
           </form>
         </div>

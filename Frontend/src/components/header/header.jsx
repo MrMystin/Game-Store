@@ -45,7 +45,7 @@ function Header({ scrollToSection, scrollToTopSection }) {
 
         {isLoggedIn && (
           <ul className="ul3-app">
-            <li className="cart-app li-app">
+            <li className="cart-app li-app" onClick={() => window.location.href = "/cart"}>
               <div className="text-header">
                 🛒
               </div>

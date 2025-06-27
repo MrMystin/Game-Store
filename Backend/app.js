@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cors = require('cors');
 var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products');
+var transactionRouter = require('./routes/transaction');
 var app = express();
 var errorHandler = require('./middlewares/errorHandler');
 
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
+app.use('/transaction', transactionRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));

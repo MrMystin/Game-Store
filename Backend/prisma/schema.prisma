@@ -81,7 +81,7 @@ model photos {
 
 model productLanguage {
   id        Int       @id @default(autoincrement())
-  language  String    @db.VarChar(10)
+  language  String    @db.VarChar(64)
   audio     Boolean
   text      Boolean
   productId Int
