@@ -68,28 +68,44 @@ export async function registerUser(req, res, next) {
 
 export async function updateUser(req, res, next) {
   try {
-    const {cpf} = req.params;
+    const { cpf } = req.params;
     if (req.user.cpf !== cpf) {
       return res.status(403).json({ message: "Access denied." });
     }
-    const user = await prisma.user.findUnique({where: {cpf: cpf}});
-    if (!user) return res.status(400).json({message: 'User Not Found'});
-    
+
+    const user = await prisma.user.findUnique({ where: { cpf } });
+    if (!user) return res.status(400).json({ message: 'User Not Found' });
+
     const newData = userUpdateSchema.parse(req.body);
-    if (newData.password) newData.password = await bcrypt.hash(newData.password, 10);
-    
-    if (newData.email) {
-      const emailMatch = await prisma.user.findUnique({where: {email: newData.email}})
-      if (emailMatch) res.status(400).json({message: 'Email already used'})
-      return
+    if (Object.keys(newData).length === 0) {
+      return res.status(400).json({ message: 'No data to update.' });
     }
-    
+
+    if (newData.password) {
+      newData.password = await bcrypt.hash(newData.password, 10);
+    }
+
+    if (newData.email) {
+      const emailMatch = await prisma.user.findUnique({ where: { email: newData.email } });
+      if (emailMatch && emailMatch.cpf !== cpf) {
+        return res.status(400).json({ message: 'Email already used' });
+      }
+    }
+
+    console.log('New data to update:', newData);
+
     await prisma.user.update({
-      where: { cpf: cpf },
+      where: { cpf },
       data: { ...newData }
     });
-    res.status(200).json({message: 'User updated successfully'});
-  } catch (err) {next(err)}
+
+    res.status(200).json({ message: 'User updated successfully' });
+  } catch (err) {
+    if (err.name === 'ZodError') {
+      return res.status(400).json({ message: 'Validation error', errors: err.errors });
+    }
+    next(err);
+  }
 }
 
 export async function deleteUser(req, res, next) {

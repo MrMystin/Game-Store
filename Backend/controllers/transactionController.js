@@ -1,10 +1,8 @@
-import { PrismaClient } from '@prisma/client';
-import { transactionSchema } from '../schemas/transactionSchemas.js';
-import { authenticateToken } from '../middlewares/auth.js';
-
+const { PrismaClient } = require('@prisma/client');
+const { transactionSchema } = require('../schemas/transactionSchemas');
 const prisma = new PrismaClient();
 
-export async function getTransactions(req, res, next) {
+exports.getTransactions = async (req, res, next) => {
   try {
     const userId = req.user?.id;
     if (!userId) return res.status(401).json({ message: 'Unauthorized' });
@@ -31,16 +29,26 @@ export async function getTransactions(req, res, next) {
   } catch (err) {
     next(err);
   }
-}
+};
 
-export async function getTransactionById(req, res, next) {
+exports.getTransactionById = async (req, res, next) => {
   try {
     const userId = req.user?.id;
     const { id } = req.params;
 
     const transaction = await prisma.transaction.findUnique({
       where: { id: Number(id) },
-      include: { transactionItems: true }
+      include: {
+        transactionItems: {
+          include: {
+            product: {
+              include: {
+                photos: true,
+              }
+            }
+          }
+        }
+      }
     });
 
     if (!transaction || transaction.userId !== userId) {
@@ -51,32 +59,71 @@ export async function getTransactionById(req, res, next) {
   } catch (err) {
     next(err);
   }
-}
+};
 
-export async function createTransaction(req, res, next) {
+exports.createTransaction = async (req, res, next) => {
   try {
     const userId = req.user?.id;
     if (!userId) return res.status(401).json({ message: 'Unauthorized' });
 
     const parsed = transactionSchema.parse(req.body);
 
+    const invoiceId = `INV-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const orderId = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+    const productIds = parsed.transactionItems.map(item => item.productId);
+
+    const products = await prisma.product.findMany({
+      where: { id: { in: productIds } },
+      include: {
+        publisher: true
+      }
+    });
+
+    const alreadyPurchased = await prisma.transactionItem.findFirst({
+      where: {
+        productId: { in: productIds },
+        transaction: {
+          userId: userId
+        }
+      }
+    });
+
+    if (alreadyPurchased) {
+      return res.status(400).json({ message: 'Você já comprou um ou mais produtos selecionados.' });
+    }
+    
+    if (products.length !== productIds.length) {
+      return res.status(400).json({ message: 'Um ou mais produtos não encontrados.' });
+    }
+
+    const transactionItemsData = products.map(product => {
+      const discount = product.discount || 0;
+      const productValue = Number(product.value);
+
+      return {
+        productId: product.id,
+        productValue: parseFloat(productValue.toFixed(2)),
+        discount: parseFloat(discount.toFixed(2)),
+      };
+    });
+
+    const totalValue = transactionItemsData.reduce(
+      (acc, item) => acc + (item.productValue - item.discount),
+      0
+    );
+    const total = totalValue.toFixed(2);
+    
+
     const transaction = await prisma.transaction.create({
       data: {
-        invoiceId: parsed.invoiceId,
-        orderId: parsed.orderId,
+        invoiceId,
+        orderId,
         paymentType: parsed.paymentType,
-        source: parsed.source,
-        total: parsed.total,
-        userId: userId,
+        total,
+        userId,
         transactionItems: {
-          create: parsed.transactionItems.map(item => ({
-            productId: item.productId,
-            productName: item.productName,
-            publisherName: item.publisherName,
-            productValue: item.productValue,
-            discount: item.discount || 0,
-            finalPrice: item.finalPrice,
-          }))
+          create: transactionItemsData
         }
       },
       include: {
@@ -86,6 +133,9 @@ export async function createTransaction(req, res, next) {
 
     res.status(201).json({ message: 'Transaction created', transaction });
   } catch (err) {
+    if (err.name === 'ZodError') {
+      return res.status(400).json({ message: 'Validation error', errors: err.errors });
+    }
     next(err);
   }
-}
+};

@@ -7,6 +7,7 @@ async function seed() {
     {
       name: "Minecraft",
       discount: 5,
+      discountUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       value: 10,
       description: "Explore mundos infinitos e construa de tudo, desde casas simples até castelos grandiosos. Jogue no modo criativo com recursos ilimitados ou cave fundo no mundo no modo de sobrevivência.",
       indicativeRating: "r10",
@@ -80,6 +81,7 @@ async function seed() {
     {
       name: "Minecraft Legends",
       discount: 10,
+      discountUntil: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000),
       value: 25,
       description: "Lidere batalhas épicas no universo Minecraft em um jogo de estratégia em tempo real. Reúna aliados, construa defesas e defenda a Overworld da ameaça dos Piglins.",
       indicativeRating: "r10",
@@ -149,6 +151,7 @@ async function seed() {
     {
       name: "Minecraft Dungeons",
       discount: 20,
+      discountUntil: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
       value: 20,
       description: "Embarque em uma nova aventura de ação no universo Minecraft! Lute contra hordas de inimigos em masmorras perigosas, sozinho ou com amigos.",
       indicativeRating: "r10",
@@ -217,6 +220,7 @@ async function seed() {
     {
       name: "Minecraft Education",
       discount: 0,
+      discountUntil: null,
       value: 15,
       description: "Versão educacional do Minecraft voltada para o ensino de diversas disciplinas como química, programação, história e matemática, usada por professores em todo o mundo.",
       indicativeRating: "rL",
@@ -243,7 +247,7 @@ async function seed() {
         { text: "Plano de aula de ciências" },
         { text: "Mapa exclusivo de programação" }
       ],
-      timeToBeats: [0, 0, 0, 0], // Sem campanha
+      timeToBeats: [0, 0, 0, 0],
       gameFeatures: [
         { name: "Modo Educacional" },
         { name: "Simulador de Química" },
@@ -294,6 +298,7 @@ async function seed() {
         name: game.name,
         value: game.value,
         discount: game.discount,
+        discountUntil: game.discountUntil,
         description: game.description,
         indicativeRating: game.indicativeRating,
         rating: game.rating,
@@ -358,4 +363,4 @@ async function seed() {
   console.log('Seed finalizado!');
 }
 
-seed()
+seed();

@@ -56,6 +56,13 @@ export async function getOneProduct(req, res, next) {
 export async function newProduct(req, res, next) {
   try {
     req.body.releaseDate = new Date(req.body.releaseDate);
+    if (req.body.discountUntil && req.body.discount !== null && req.body.discount !== undefined) {
+      req.body.discountUntil = new Date(req.body.discountUntil);
+    } else {
+      req.body.discountUntil = undefined;
+      req.body.discount = undefined;
+    }
+    
     req.body.value = parseFloat(req.body.value);
     req.body.rating = parseFloat(req.body.rating);
     req.body.fileSize = parseFloat(req.body.fileSize);
@@ -76,7 +83,6 @@ export async function newProduct(req, res, next) {
       data: {
         name: req.body.name,
         value: req.body.value,
-        discount: req.body.discount,
         description: req.body.description,
         indicativeRating: req.body.indicativeRating,
         rating: req.body.rating,
@@ -84,6 +90,10 @@ export async function newProduct(req, res, next) {
         file: req.body.file,
         fileSize: req.body.fileSize,
         workOn: req.body.workOn,
+
+        ...(req.body.discount !== undefined && { discount: req.body.discount }),
+        ...(req.body.discountUntil !== undefined && { discountUntil: req.body.discountUntil }),
+
         photos: {
           create: req.body.photos.map(p => ({ photo: p.photo, type: p.type }))
         },

@@ -34,6 +34,7 @@ const productSchema = z.object({
   file: z.string(),
   fileSize: z.number(),
   discount: z.number().optional(),
+  discountUntil: z.date().optional(),
 
   photos: z.array(photoSchema),
   languages: z.array(languageSchema),

@@ -29,6 +29,7 @@ model product {
   file             String
   fileSize         Float
   discount         Int?
+  discountUntil    DateTime?
   workOn           String
 
   photos           photos[]
@@ -137,18 +138,16 @@ model requirement {
   linuxOf   productRequirements[] @relation("LinuxRequirement")
 }
 
-
 model transaction {
   id               Int                 @id @default(autoincrement())
-  invoiceId        String              @unique @db.VarChar(32) // e.g., F40901238123
-  orderId          String              @unique @db.VarChar(32) // e.g., F23423423423
+  invoiceId        String              @unique @db.VarChar(32)
+  orderId          String              @unique @db.VarChar(32)
   userId           Int
   paymentType      paymentType
   transactionDate  DateTime            @default(now())
-  source           String              @db.VarChar(64)         // e.g., Minecraft Store
   total            Decimal
 
-  user             user                @relation(fields: [userId], references: [id])
+  user             user                @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactionItems transactionItem[]
 }
 
@@ -156,15 +155,13 @@ model transactionItem {
   id             Int       @id @default(autoincrement())
   transactionId  Int
   productId      Int
-  productName    String    @db.VarChar(256)
-  publisherName  String    @db.VarChar(128)
   productValue   Decimal
   discount       Decimal   @default(0)
-  finalPrice     Decimal
 
   transaction    transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
   product        product     @relation(fields: [productId], references: [id])
 }
+
 
 enum photoType {
   banner

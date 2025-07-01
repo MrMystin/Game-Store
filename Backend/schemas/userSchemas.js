@@ -10,10 +10,8 @@ const userSchema = z.object({
 
 const userUpdateSchema = userSchema.pick({
   fullName: true,
-  username: true,
   email: true,
-  password: true,
-  cpf: false
+  password: true
 }).partial();
 
 module.exports = {userSchema, userUpdateSchema};
