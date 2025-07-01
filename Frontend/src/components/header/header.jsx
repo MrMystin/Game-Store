@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./header.css";
 import logo from "/img/logo.svg";
 
-function Header({ scrollToSection, scrollToTopSection }) {
+function Header({ scrollToSection, scrollToTopSection, onCartClick }) {
   const [scrolled, setScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -45,7 +45,7 @@ function Header({ scrollToSection, scrollToTopSection }) {
 
         {isLoggedIn && (
           <ul className="ul3-app">
-            <li className="cart-app li-app" onClick={() => window.location.href = "/cart"}>
+            <li className="cart-app li-app" onClick={onCartClick}>
               <div className="text-header">
                 🛒
               </div>

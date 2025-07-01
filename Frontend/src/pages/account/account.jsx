@@ -30,7 +30,6 @@ export default function PerfilUsuario() {
     setName(userObj.fullName);
     setEmail(userObj.email);
   
-    // Função para buscar transações e extrair produtos comprados
     const fetchUserTransactions = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -115,13 +114,16 @@ export default function PerfilUsuario() {
       return;
     }
     const bodyData = {};
-    if (!user.fullName === name) {
+    if (user.fullName !== name) {
+      console.log('a')
       bodyData.fullName = name;
     }
-    if (!user.email === email) {
+    if (user.email !== email) {
+      console.log('a')
       bodyData.email = email;
     }
     if (password.trim() !== "") {
+      console.log('a')
       bodyData.password = password;
     }
 
@@ -141,12 +143,36 @@ export default function PerfilUsuario() {
         return res.json();
       })
       .then((data) => {
-        Swal.fire({
-          icon: "success",
-          title: "Dados atualizados!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        fetch(`http://localhost:3000/users/${user.cpf}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }).then(async (res) => {
+            if (!res.ok) {
+              const error = await res.json();
+              throw new Error(error.message || "Erro ao pegar novos dados");
+            }
+            return res.json();
+          }).then((data) => {
+            localStorage.setItem("user", JSON.stringify(data.user));
+            setUser(data.user);
+            Swal.fire({
+              icon: "success",
+              title: "Dados atualizados!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            Swal.fire({
+              icon: "error",
+              title: "An Error Occurred!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
       })
       .catch((err) => {
         console.error(err);

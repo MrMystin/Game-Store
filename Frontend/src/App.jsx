@@ -17,6 +17,7 @@ import sobre1 from "/img/sobre1.png";
 import sobre2 from "/img/sobre2.png";
 import iconPlay from "/img/iconPlay.png";
 import { useNavigate } from "react-router-dom"
+import Buy from "./components/buy/buy";
 
 function App() {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ function App() {
   const sectionRef = useRef(null);
   const topSectionRef = useRef(null);
   const [products, setProducts] = useState([])
+  const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
   let counter = 1; 
 
   const scrollToSection = () => {
@@ -78,9 +80,8 @@ function App() {
   return (
     <>
     <img className="background-app" src={fundo} alt="" />
-
-    <Header scrollToSection={scrollToSection} scrollToTopSection={scrollToTopSection}/>
-
+    <Header scrollToSection={scrollToSection} scrollToTopSection={scrollToTopSection} onCartClick={() => setIsBuyModalOpen(true)} />
+    <Buy isOpen={isBuyModalOpen} onClose={() => setIsBuyModalOpen(false)} game={null} />
       <div className="banner-app">
         <video 
           className="video-banner-app"

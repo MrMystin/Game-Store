@@ -1,42 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./buy.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { getCart } from "../../utils/cart";
 
 function Buy({ isOpen, onClose, game }) {
-  if (!isOpen || !game) return null;
   const navigate = useNavigate();
-  const banner = game.photos.find((photo) => photo.type === "banner")?.photo;
 
+  const [itemsToBuy, setItemsToBuy] = useState([]);
   const [cardName, setCardName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardCcv, setCardCcv] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Formata o número do cartão como "1234 5678 9012 3456"
+  useEffect(() => {
+    if (isOpen) {
+      const cart = getCart();
+      const isCartEmpty = !game && cart.length === 0;
+
+      if (isCartEmpty) {
+        alert("Não há produtos no carrinho para comprar.");
+        onClose();
+      }
+    }
+  }, [isOpen, game]);
+
+  useEffect(() => {
+    if (game) {
+      setItemsToBuy([
+        {
+          productId: game.id,
+          productName: game.name,
+          publisherName: game.publisher?.name || "",
+          productValue: Number(game.value),
+          discount: Number(game.discount) || 0,
+          finalPrice: Number(game.value) - (Number(game.discount) || 0),
+          banner: game.photos?.find((p) => p.type === "banner")?.photo || "",
+        },
+      ]);
+    } else {
+      setItemsToBuy(getCart());
+    }
+  }, [game]);
+
+  if (!isOpen) return null;
+
   function handleCardNumberChange(e) {
-    let value = e.target.value.replace(/\D/g, ""); // Remove tudo que não for número
+    let value = e.target.value.replace(/\D/g, "");
     if (value.length > 16) value = value.slice(0, 16);
-
-    // Divide em grupos de 4 dígitos
     const formattedValue = value.match(/.{1,4}/g)?.join(" ") || "";
-
     setCardNumber(formattedValue);
   }
 
-  // Formata data como MM/AA
   function handleCardExpiryChange(e) {
-    let value = e.target.value.replace(/\D/g, ""); // só números
+    let value = e.target.value.replace(/\D/g, "");
     if (value.length > 4) value = value.slice(0, 4);
-
     if (value.length >= 3) {
       value = value.slice(0, 2) + "/" + value.slice(2);
     }
-
     setCardExpiry(value);
   }
 
-  // Limita CCV para 3 números
   function handleCardCcvChange(e) {
     let value = e.target.value.replace(/\D/g, "");
     if (value.length > 3) value = value.slice(0, 3);
@@ -45,31 +69,17 @@ function Buy({ isOpen, onClose, game }) {
 
   async function handleConfirmPurchase(e) {
     e.preventDefault();
-
     setLoading(true);
 
     try {
-      // Aqui você deve montar os dados conforme o schema do backend
       const body = {
-        invoiceId: `F${Date.now()}`,
-        orderId: `O${Date.now()}`,
         paymentType: "credit_card",
-        source: "Minecraft Store",
-        total: Number(game.discount),  // converta para number
-        transactionItems: [
-          {
-            productId: Number(game.id),
-            productName: game.name,
-            publisherName: game.publisher?.name || "",
-            productValue: Number(game.value),    // converter aqui
-            discount: Number(game.value) - Number(game.discount), // desconto calculado
-            finalPrice: Number(game.discount),
-          },
-        ],
+        transactionItems: itemsToBuy.map((item) => ({
+          productId: item.productId,
+        })),
       };
-      
 
-      const token = localStorage.getItem("token"); // supondo que o token JWT está aqui
+      const token = localStorage.getItem("token");
 
       const res = await fetch("http://localhost:3000/transaction/", {
         method: "POST",
@@ -85,12 +95,12 @@ function Buy({ isOpen, onClose, game }) {
         throw new Error(errorData.message || "Failed to create transaction");
       }
 
-      // Sucesso
-      alert("Purchase confirmed!");
+      alert("Compra realizada com sucesso!");
+      if (!game) localStorage.removeItem("cart");
       navigate("/");
       onClose();
     } catch (err) {
-      alert("Error: " + err.message);
+      alert("Erro: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -103,16 +113,36 @@ function Buy({ isOpen, onClose, game }) {
           ×
         </button>
 
-        <div
-          className="buy-modal-banner"
-          style={{
-            backgroundImage: `url(http://localhost:3000/images/${game.id}/${banner})`,
-          }}
-        />
+        {itemsToBuy.length > 0 && (
+          <div
+            className="buy-modal-banner"
+            style={{
+              backgroundImage: `url(http://localhost:3000/images/${itemsToBuy[0].productId}/${itemsToBuy[0].banner})`,
+            }}
+          />
+        )}
 
         <div className="buy-modal-info">
-          <h2 className="buy-game-title">{game.name}</h2>
-          <p className="buy-price">R$ {game.discount}</p>
+          <div className="buy-item-list">
+            {itemsToBuy.map((item) => (
+              <div className="buy-item" key={item.productId}>
+                <img
+                  src={`http://localhost:3000/images/${item.productId}/${item.banner}`}
+                  alt={item.productName}
+                  className="buy-item-banner"
+                />
+                <div className="buy-item-info">
+                  <h3>{item.productName}</h3>
+                  <p>R$ {item.finalPrice.toFixed(2)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="buy-total">
+            Total: R${" "}
+            {itemsToBuy.reduce((acc, item) => acc + item.finalPrice, 0).toFixed(2)}
+          </p>
 
           <form className="buy-form" onSubmit={handleConfirmPurchase}>
             <div className="form-group">
@@ -135,7 +165,7 @@ function Buy({ isOpen, onClose, game }) {
                 placeholder="1234 5678 9012 3456"
                 value={cardNumber}
                 onChange={handleCardNumberChange}
-                maxLength={19} // 16 dígitos + 3 espaços
+                maxLength={19}
                 required
               />
             </div>

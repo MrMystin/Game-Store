@@ -138,3 +138,43 @@
 .buy-confirm-btn:hover {
   background-color: #005c00;
 }
+
+.buy-item-list {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.buy-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.buy-item-banner {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  margin-right: 16px;
+  border-radius: 8px;
+}
+
+.buy-item-info h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.buy-item-info p {
+  color: #007000;
+  font-weight: bold;
+  margin: 4px 0 0 0;
+}
+
+.buy-total {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: right;
+  margin-bottom: 20px;
+  color: #222;
+}

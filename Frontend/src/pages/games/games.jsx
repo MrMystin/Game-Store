@@ -11,7 +11,7 @@ import Header from "../../components/header/header";
 import Rodape from "../../components/footer/footer";
 import Swal from "sweetalert2";
 import Buy from "../../components/buy/buy";
-import { addToCart } from "../../utils/cart";
+import { isInCart, addOrRemoveFromCart } from "../../utils/cart";
 
 function formatRequirementsObject(reqObj) {
   if (!reqObj) return [];
@@ -61,6 +61,7 @@ function Games() {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const [inCart, setInCart] = useState(false);
   const [game, setGame] = useState(null);
   const [activeTab, setActiveTab] = useState("windows");
   const [requirements, setRequirements] = useState([]);
@@ -68,6 +69,7 @@ function Games() {
   const [modalImage, setModalImage] = useState(null);
   const [hasPurchased, setHasPurchased] = useState(false);
 
+  const [isBuyModalOpen2, setIsBuyModalOpen2] = useState(false);
   useEffect(() => {
     fetch(`http://localhost:3000/products/${id}`, { method: "GET" })
       .then(async (res) => {
@@ -137,6 +139,17 @@ function Games() {
     }
   }, [activeTab, game]);
 
+  useEffect(() => {
+    if (game) {
+      setInCart(isInCart(game.id));
+    }
+  }, [game]);
+  
+  function handleCartToggle() {
+    const result = addOrRemoveFromCart(game);
+    setInCart(result);
+  }
+
   function next() {
     if (currentIndex < maxIndex) {
       setCurrentIndex(currentIndex + 1);
@@ -170,7 +183,8 @@ function Games() {
 
   return (
     <>
-      <Header />
+      <Header onCartClick={() => setIsBuyModalOpen2(true)} />
+      <Buy isOpen={isBuyModalOpen2} onClose={() => setIsBuyModalOpen2(false)} game={null} />
       {game ? (
         <div className="games">
           <div
@@ -232,8 +246,8 @@ function Games() {
                       </button>
                     ) : (
                       <>
-                        <button className="add-to-cart-btn" onClick={() => addToCart(game)}>
-                          Add to cart
+                        <button className="add-to-cart-btn" onClick={handleCartToggle}>
+                          {inCart ? "Remover do carrinho" : "Adicionar ao carrinho"}
                         </button>
                         <button className="buy-now-btn" onClick={() => setIsBuyModalOpen(true)}>
                           Buy now

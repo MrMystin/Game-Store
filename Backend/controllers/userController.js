@@ -92,8 +92,6 @@ export async function updateUser(req, res, next) {
       }
     }
 
-    console.log('New data to update:', newData);
-
     await prisma.user.update({
       where: { cpf },
       data: { ...newData }

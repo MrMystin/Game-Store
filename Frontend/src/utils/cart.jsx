@@ -5,11 +5,28 @@ export function getCart() {
   return cart ? JSON.parse(cart) : [];
 }
 
-export function addToCart(game) {
+export function isInCart(productId) {
   const cart = getCart();
+  return cart.some(item => item.productId === productId);
+}
 
-  const alreadyInCart = cart.find(item => item.productId === game.id);
-  if (!alreadyInCart) {
+export function addOrRemoveFromCart(game) {
+  const cart = getCart();
+  const index = cart.findIndex(item => item.productId === game.id);
+
+  if (index !== -1) {
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    Swal.fire({
+      icon: "warning",
+      title: "Removido do carrinho!",
+      showConfirmButton: false,
+      timer: 1200,
+    });
+
+    return false;
+  } else {
     const cartItem = {
       productId: game.id,
       productName: game.name,
@@ -29,12 +46,7 @@ export function addToCart(game) {
       showConfirmButton: false,
       timer: 1200,
     });
-  } else {
-    Swal.fire({
-      icon: "info",
-      title: "Produto já está no carrinho!",
-      showConfirmButton: false,
-      timer: 1200,
-    });
+
+    return true;
   }
 }
