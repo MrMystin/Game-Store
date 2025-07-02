@@ -15,74 +15,96 @@ function Signup() {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("user")) {
-      navigate("/");
-    }
-  }, []);
+      if (localStorage.getItem("user")) {
+        navigate("/");
+      }
+    }, []);
 
-  const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSaving(true);
 
-    const cpfNumber = cpf.replace(/\D/g, ""); 
+    try {
+      const cpfNumber = cpf.replace(/\D/g, "");
 
-    fetch("http://localhost:3000/users/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        fullName: name,
-        cpf: cpfNumber,
-        username: username
-      })
-    }).then(async (res) => {
-        if (!res.ok) {
-          const error = await res.json();
-          throw new Error(error.message || "Erro ao criar conta");
-        }
-        return res.json();
-      }).then((data) => {
-        fetch("http://localhost:3000/users/login", {
+      const resRegister = await fetch("http://localhost:3000/users/", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      }).then(async (res) => {
-          if (!res.ok) {
-            const error = await res.json();
-            throw new Error(error.message || "Erro ao fazer login");
-          }
-          return res.json();
-        }).then((data) => {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("user", JSON.stringify(data.user));
-          Swal.fire({
-            icon: "success",
-            title: "Registration successfully!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          navigate("/");
-          setEmail("");
-          setPassword("");
-        })
-      })
-      .catch((err) => {
-        console.error(err);
-        Swal.fire({
-          icon: "error",
-          title: "An Error Occurred!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }).finally(() => setIsSaving(false));
+          email,
+          password,
+          fullName: name,
+          cpf: cpfNumber,
+          username,
+        }),
+      });
+
+      const dataRegister = await resRegister.json();
+      console.log(dataRegister)
+      console.log(resRegister)
+      if (!resRegister.ok) {
+        if (dataRegister.errorCode === 2 && Array.isArray(dataRegister.errors)) {
+          const messages = dataRegister.errors
+            .map((e) => `${e.path.join(".")}: ${e.message}`)
+            .join("\n");
+          throw new Error(messages);
+        }
+
+        if (dataRegister.errorCode === 1 && Array.isArray(dataRegister.errors)) {
+          const messages = dataRegister.errors
+            .map((e) => {
+              if (e === "cpfMatch") return "CPF já cadastrado";
+              if (e === "usernameMatch") return "Usuário já cadastrado";
+              if (e === "emailMatch") return "Email já cadastrado";
+              return e;
+            })
+            .join("\n");
+          throw new Error(messages);
+        }
+
+        throw new Error(dataRegister.message || "Erro ao criar conta");
+      }
+
+      const resLogin = await fetch("http://localhost:3000/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const dataLogin = await resLogin.json();
+
+      if (!resLogin.ok) {
+        throw new Error(dataLogin.message || "Erro ao fazer login");
+      }
+
+      localStorage.setItem("token", dataLogin.token);
+      localStorage.setItem("user", JSON.stringify(dataLogin.user));
+
+      Swal.fire({
+        icon: "success",
+        title: "Registro realizado com sucesso!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      navigate("/");
+
+      setEmail("");
+      setPassword("");
+      setName("");
+      setCpf("");
+      setUsername("");
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        icon: "error",
+        title: "Erro",
+        html: err.message.replace(/\n/g, "<br>"),
+        confirmButtonText: "OK",
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleCpfChange = (e) => {

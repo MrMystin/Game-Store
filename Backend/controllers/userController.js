@@ -2,6 +2,7 @@ import {userSchema, userUpdateSchema} from '../schemas/userSchemas.js';
 import {PrismaClient} from '@prisma/client'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { ZodError } from "zod";
 const prisma = new PrismaClient();
 const SECRET_KEY = process.env.JWT_SECRET || 'seu_segredo_super_secreto';
 
@@ -25,7 +26,7 @@ export async function getOneUser(req, res, next) {
   } catch (err) {next(err)}
 }
 
-export async function registerUser(req, res, next) {
+export async function registerUser(req, res) {
   try {
     const parseData = userSchema.parse(req.body);
 
@@ -40,16 +41,16 @@ export async function registerUser(req, res, next) {
     });
 
     const checkResults = usersExists.reduce((check, users) => {
-      if (users.cpf === parseData.cpf) check.push('cpfMatch');
-      if (users.username === parseData.username) check.push('usernameMatch');
-      if (users.email === parseData.email) check.push('emailMatch');
+      if (users.cpf === parseData.cpf) check.push("cpfMatch");
+      if (users.username === parseData.username) check.push("usernameMatch");
+      if (users.email === parseData.email) check.push("emailMatch");
       return check;
     }, []);
 
     if (checkResults.length > 0) {
       return res.status(400).json({
         errorCode: 1,
-        errors: checkResults
+        errors: checkResults,
       });
     }
 
@@ -58,12 +59,27 @@ export async function registerUser(req, res, next) {
 
     await prisma.user.create({
       data: {
-        ...parseData
+        ...parseData,
       },
     });
 
-    res.status(200).json({message: 'User created successfully'})
-  } catch (err) {next(err)}
+    return res.status(200).json({ message: "User created successfully" });
+
+  } catch (err) {
+
+    if (err instanceof ZodError || (err.errors && Array.isArray(err.errors))) {
+      return res.status(400).json({
+        errorCode: 2,
+        errors: err.errors.map((e) => ({
+          path: e.path,
+          message: e.message,
+        })),
+      });
+    }
+
+    console.error(err);
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
 }
 
 export async function updateUser(req, res, next) {
