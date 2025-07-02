@@ -12,6 +12,7 @@ import Rodape from "../../components/footer/footer";
 import Swal from "sweetalert2";
 import Buy from "../../components/buy/buy";
 import { isInCart, addOrRemoveFromCart } from "../../utils/cart";
+import Invoice from "../../components/invoice/invoice";
 
 function formatRequirementsObject(reqObj) {
   if (!reqObj) return [];
@@ -68,8 +69,12 @@ function Games() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalImage, setModalImage] = useState(null);
   const [hasPurchased, setHasPurchased] = useState(false);
-
+  const [isOnOffer, setIsOnOffer] = useState(false);
   const [isBuyModalOpen2, setIsBuyModalOpen2] = useState(false);
+  const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
+  const [invoiceData, setInvoiceData] = useState(null);
+  const user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     fetch(`http://localhost:3000/products/${id}`, { method: "GET" })
       .then(async (res) => {
@@ -99,10 +104,19 @@ function Games() {
 
   useEffect(() => {
     if (!game) return;
-  
+
+    const now = new Date();
+    const discountValue = Number(game.discount);
+    const originalValue = Number(game.value);
+    const discountUntilDate = new Date(game.discountUntil);
+    setIsOnOffer(
+      discountValue > 0 &&
+        discountValue < originalValue &&
+        now < discountUntilDate
+    );
     const token = localStorage.getItem("token");
     if (!token) return;
-  
+
     fetch("http://localhost:3000/transaction", {
       method: "GET",
       headers: {
@@ -144,7 +158,7 @@ function Games() {
       setInCart(isInCart(game.id));
     }
   }, [game]);
-  
+
   function handleCartToggle() {
     const result = addOrRemoveFromCart(game);
     setInCart(result);
@@ -166,7 +180,8 @@ function Games() {
     setModalImage(null);
   }
 
-  const photoSlides = game?.photos?.filter((photo) => photo.type === "photos") || [];
+  const photoSlides =
+    game?.photos?.filter((photo) => photo.type === "photos") || [];
   const SLIDE_WIDTH = 274;
   const VISIBLE_SLIDES = Math.floor(1096 / SLIDE_WIDTH);
   const maxIndex = Math.max(0, photoSlides.length - VISIBLE_SLIDES);
@@ -177,14 +192,16 @@ function Games() {
     { key: "linux", label: "Linux", icon: "IoLogoTux" },
   ];
 
-  const tags = ["Adventure", "Action", "Indie", "Fantasy", "Exploration"];
-
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
 
   return (
     <>
-      <Header onCartClick={() => setIsBuyModalOpen2(true)} />
-      <Buy isOpen={isBuyModalOpen2} onClose={() => setIsBuyModalOpen2(false)} game={null} />
+    <Header onCartClick={() => setIsBuyModalOpen2(true)} />
+    <Buy isOpen={isBuyModalOpen2} onClose={() => setIsBuyModalOpen2(false)} game={null} onPurchaseConfirmed={(dados) => {
+      setInvoiceData(dados);
+      setIsInvoiceOpen(true);
+    }}/>
+    <Invoice isOpen={isInvoiceOpen} onClose={() => setIsInvoiceOpen(false)} data={invoiceData} user={user}/>
       {game ? (
         <div className="games">
           <div
@@ -223,21 +240,45 @@ function Games() {
                 </div>
               </div>
               <div className="purchase-card">
-                <div className="offer-header">
-                  <span className="offer-label">Offer ends on:</span>
-                  <span className="offer-date">16/06/2025 09:59 EEST</span>
-                </div>
-                <div className="purchase-content">
-                  <div className="discount-badge">
-                    -
-                    {Math.floor(
-                      ((game.value - game.discount) / game.value) * 100
-                    )}
-                    %
+                {isOnOffer && (
+                  <div className="offer-header">
+                    <span className="offer-label">Offer ends on:</span>
+                    <span className="offer-date">
+                      {game.discountUntil
+                        ? new Date(game.discountUntil).toLocaleString("pt-BR", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false,
+                            timeZone: "UTC",
+                          })
+                        : "Indisponível"}
+                    </span>
                   </div>
+                )}
+                <div className="purchase-content">
+                  {isOnOffer && (
+                    <div className="discount-badge">
+                      -
+                      {Math.floor(
+                        ((game.value - game.discount) / game.value) * 100
+                      )}
+                      %
+                    </div>
+                  )}
                   <div className="price-container">
-                    <div className="original-price">R$ {game.value}</div>
-                    <div className="current-price">R$ {game.discount}</div>
+                    {isOnOffer ? (
+                      <>
+                        <div className="original-price">R$ {Number(game.value)}</div>
+                        <div className="current-price">
+                          R$ {(Number(game.value) - Number(game.discount))}
+                        </div>
+                      </>
+                    ) : (
+                      <div className="current-price">R$ {Number(game.value)}</div>
+                    )}
                   </div>
                   <div className="action-buttons">
                     {hasPurchased ? (
@@ -246,10 +287,18 @@ function Games() {
                       </button>
                     ) : (
                       <>
-                        <button className="add-to-cart-btn" onClick={handleCartToggle}>
-                          {inCart ? "Remover do carrinho" : "Adicionar ao carrinho"}
+                        <button
+                          className="add-to-cart-btn"
+                          onClick={handleCartToggle}
+                        >
+                          {inCart
+                            ? "Remover do carrinho"
+                            : "Adicionar ao carrinho"}
                         </button>
-                        <button className="buy-now-btn" onClick={() => setIsBuyModalOpen(true)}>
+                        <button
+                          className="buy-now-btn"
+                          onClick={() => setIsBuyModalOpen(true)}
+                        >
                           Buy now
                         </button>
                       </>
@@ -331,7 +380,13 @@ function Games() {
                   <div
                     className="screenshot"
                     style={{
-                      backgroundImage: `url('http://localhost:3000/images/${game.id}/${game.photos?.filter((photo) => photo.type === "descriptionPhoto")[0].photo}')`,
+                      backgroundImage: `url('http://localhost:3000/images/${
+                        game.id
+                      }/${
+                        game.photos?.filter(
+                          (photo) => photo.type === "descriptionPhoto"
+                        )[0].photo
+                      }')`,
                     }}
                   />
                   <h3 className="heading-h3">Welcome to the {game.name}</h3>
@@ -339,7 +394,13 @@ function Games() {
                   <div
                     className="screenshot"
                     style={{
-                      backgroundImage: `url('http://localhost:3000/images/${game.id}/${game.photos?.filter((photo) => photo.type === "descriptionPhoto")[1].photo}')`,
+                      backgroundImage: `url('http://localhost:3000/images/${
+                        game.id
+                      }/${
+                        game.photos?.filter(
+                          (photo) => photo.type === "descriptionPhoto"
+                        )[1].photo
+                      }')`,
                     }}
                   />
                 </div>
@@ -355,7 +416,13 @@ function Games() {
                             className={`tab-button ${isActive ? "active" : ""}`}
                             onClick={() => setActiveTab(tab.key)}
                           >
-                            {tab.key == 'windows' ? <IoLogoWindows/> : tab.key == 'mac' ? <IoLogoApple/> : <IoLogoTux/>}
+                            {tab.key == "windows" ? (
+                              <IoLogoWindows />
+                            ) : tab.key == "mac" ? (
+                              <IoLogoApple />
+                            ) : (
+                              <IoLogoTux />
+                            )}
                             {isActive && <div className="tab-underline" />}
                           </button>
                         );
@@ -499,9 +566,7 @@ function Games() {
 
                     <div className="detail-row">
                       <div className="detail-label">Works on:</div>
-                      <div className="detail-value">
-                        {game.workOn}
-                      </div>
+                      <div className="detail-value">{game.workOn}</div>
                     </div>
 
                     <div className="detail-row">
@@ -521,14 +586,23 @@ function Games() {
                     <div className="detail-row">
                       <div className="detail-label">Company:</div>
                       <div className="detail-value">
-                        <span className="underline-text">{game.company?.name}</span> /{" "}
-                        <span className="underline-text">{game.publisher?.name}</span>
+                        <span className="underline-text">
+                          {game.company?.name}
+                        </span>{" "}
+                        /{" "}
+                        <span className="underline-text">
+                          {game.publisher?.name}
+                        </span>
                       </div>
                     </div>
 
                     <div className="detail-row">
                       <div className="detail-label">Size:</div>
-                      <div className="detail-value">{requirements?.find(item => item.label === "Storage:")?.value.replace(" available space", "") || "N/A"}</div>
+                      <div className="detail-value">
+                        {requirements
+                          ?.find((item) => item.label === "Storage:")
+                          ?.value.replace(" available space", "") || "N/A"}
+                      </div>
                     </div>
 
                     <div className="detail-row">
@@ -623,7 +697,11 @@ function Games() {
       ) : (
         <p>Carregando...</p>
       )}
-      <Buy isOpen={isBuyModalOpen} onClose={() => setIsBuyModalOpen(false)} game={game} />
+      <Buy
+        isOpen={isBuyModalOpen}
+        onClose={() => setIsBuyModalOpen(false)}
+        game={game}
+      />
       <Rodape />
     </>
   );

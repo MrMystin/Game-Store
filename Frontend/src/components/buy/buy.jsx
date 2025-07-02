@@ -3,7 +3,7 @@ import "./buy.css";
 import { useNavigate } from "react-router-dom";
 import { getCart } from "../../utils/cart";
 
-function Buy({ isOpen, onClose, game }) {
+function Buy({ isOpen, onClose, game, onPurchaseConfirmed }) {
   const navigate = useNavigate();
 
   const [itemsToBuy, setItemsToBuy] = useState([]);
@@ -26,6 +26,8 @@ function Buy({ isOpen, onClose, game }) {
   }, [isOpen, game]);
 
   useEffect(() => {
+    if (!isOpen) return;
+
     if (game) {
       setItemsToBuy([
         {
@@ -39,9 +41,11 @@ function Buy({ isOpen, onClose, game }) {
         },
       ]);
     } else {
-      setItemsToBuy(getCart());
+      const updatedCart = getCart();
+      console.log(updatedCart)
+      setItemsToBuy(updatedCart);
     }
-  }, [game]);
+  }, [isOpen, game]);
 
   if (!isOpen) return null;
 
@@ -97,8 +101,13 @@ function Buy({ isOpen, onClose, game }) {
 
       alert("Compra realizada com sucesso!");
       if (!game) localStorage.removeItem("cart");
-      navigate("/");
-      onClose();
+      const transactionResult = await res.json();
+      onClose(); 
+      onPurchaseConfirmed({
+        transaction: transactionResult.transaction,
+        cartItems: itemsToBuy,
+      });
+
     } catch (err) {
       alert("Erro: " + err.message);
     } finally {

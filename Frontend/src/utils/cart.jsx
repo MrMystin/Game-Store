@@ -11,6 +11,23 @@ export function isInCart(productId) {
 }
 
 export function addOrRemoveFromCart(game) {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    Swal.fire({
+      icon: "info",
+      title: "Você precisa estar logado para usar o carrinho.",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    setTimeout(() => {
+      window.location.href = "/login";
+    }, 1500);
+
+    return false;
+  }
+
   const cart = getCart();
   const index = cart.findIndex(item => item.productId === game.id);
 

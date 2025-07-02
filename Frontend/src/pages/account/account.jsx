@@ -4,6 +4,8 @@ import Header from "../../components/header/header";
 import Rodape from "../../components/footer/footer";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
+import Buy from "../../components/buy/buy";
+import Invoice from "../../components/invoice/invoice";
 
 export default function PerfilUsuario() {
   const navigate = useNavigate();
@@ -16,7 +18,10 @@ export default function PerfilUsuario() {
   const [password, setPassword] = useState("");
 
   const [userProducts, setUserProducts] = useState([]);
+  const [isBuyModalOpen2, setIsBuyModalOpen2] = useState(false);
 
+  const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
+  const [invoiceData, setInvoiceData] = useState(null);
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (!storedUser) {
@@ -157,6 +162,7 @@ export default function PerfilUsuario() {
           }).then((data) => {
             localStorage.setItem("user", JSON.stringify(data.user));
             setUser(data.user);
+            setPassword('')
             Swal.fire({
               icon: "success",
               title: "Dados atualizados!",
@@ -166,6 +172,7 @@ export default function PerfilUsuario() {
           })
           .catch((err) => {
             console.error(err);
+            setPassword('')
             Swal.fire({
               icon: "error",
               title: "An Error Occurred!",
@@ -187,7 +194,12 @@ export default function PerfilUsuario() {
 
   return (
     <>
-      <Header />
+    <Header onCartClick={() => setIsBuyModalOpen2(true)} />
+    <Buy isOpen={isBuyModalOpen2} onClose={() => setIsBuyModalOpen2(false)} game={null} onPurchaseConfirmed={(dados) => {
+      setInvoiceData(dados);
+      setIsInvoiceOpen(true);
+    }}/>
+    <Invoice isOpen={isInvoiceOpen} onClose={() => setIsInvoiceOpen(false)} data={invoiceData} user={user}/>
       <div className="container">
         <aside className="sidebar">
           <div className="sidebar-top">

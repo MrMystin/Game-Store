@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./header.css";
 import logo from "/img/logo.svg";
+import { useNavigate } from "react-router-dom";
 
-function Header({ scrollToSection, scrollToTopSection, onCartClick }) {
+function Header({ onCartClick }) {
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -18,6 +20,10 @@ function Header({ scrollToSection, scrollToTopSection, onCartClick }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  function goToSection(sectionId) {
+    navigate(`/?scrollTo=${sectionId}`);
+  }
+
   return (
     <>
       <div className={`header-app ${scrolled ? "scrolled" : ""}`}>
@@ -30,14 +36,14 @@ function Header({ scrollToSection, scrollToTopSection, onCartClick }) {
         </div>
 
         <ul className="ul1-app">
-          <li className="game-app li-app" onClick={scrollToTopSection}>
+          <li className="game-app li-app" onClick={() => {goToSection("jogos");}}>
             <div className="text-header">Nossos jogos</div>
             <div className="borderbottom-header"></div>
           </li>
         </ul>
 
         <ul className="ul2-app">
-          <li className="about-app li-app" onClick={scrollToSection}>
+          <li className="game-app li-app" onClick={() => {goToSection("sobre");}}>
             <div className="text-header">Sobre nós</div>
             <div className="borderbottom-header"></div>
           </li>

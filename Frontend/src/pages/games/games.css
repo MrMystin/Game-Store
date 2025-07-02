@@ -173,6 +173,7 @@
 }
 
 .current-price {
+  margin-top: 14px;
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 14px;

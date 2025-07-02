@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/header";
 import Rodape from "./components/footer/footer";
@@ -16,35 +17,47 @@ import nov3 from "/img/nov3.png";
 import sobre1 from "/img/sobre1.png";
 import sobre2 from "/img/sobre2.png";
 import iconPlay from "/img/iconPlay.png";
-import { useNavigate } from "react-router-dom"
 import Buy from "./components/buy/buy";
+import Invoice from "./components/invoice/invoice";
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [mostrarSpan, setMostrarSpan] = useState(false); 
   const [pause, setPause] = useState(false); 
   const sectionRef = useRef(null);
   const topSectionRef = useRef(null);
   const [products, setProducts] = useState([])
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
+  const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
+  const [invoiceData, setInvoiceData] = useState(null);
+  const user = JSON.parse(localStorage.getItem("user"));
+
   let counter = 1; 
 
-  const scrollToSection = () => {
-    if (sectionRef.current) {
-      const offset = 85; 
-      const topPosition = sectionRef.current.getBoundingClientRect().top + window.scrollY - offset;
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const scrollTo = params.get("scrollTo");
 
-      window.scrollTo({ top: topPosition, behavior: "smooth" });
+    if (scrollTo === "sobre" && sectionRef.current) {
+      setTimeout(() => {
+        const offset = 85;
+        const topPosition =
+          sectionRef.current.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: topPosition, behavior: "smooth" });
+      }, 100);
     }
-  };
 
-  const scrollToTopSection = () => {
-    if (topSectionRef.current) {
-      const offset = 100;
-      const topPosition = topSectionRef.current.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top: topPosition, behavior: "smooth" });
+    if (scrollTo === "jogos" && topSectionRef.current) {
+      setTimeout(() => {
+        const offset = 100;
+        const topPosition =
+          topSectionRef.current.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: topPosition, behavior: "smooth" });
+      }, 100);
     }
-  };
+  }, [location]);
 
   const videoRef = useRef(null);
 
@@ -77,11 +90,21 @@ function App() {
     fetchProducts();
   }, []);
 
+  function handleCompraConfirmada(dadosDaCompra) {
+    setIsBuyOpen(false);
+    setInvoiceData(dadosDaCompra);
+    setIsInvoiceOpen(true);
+  }
+
   return (
     <>
     <img className="background-app" src={fundo} alt="" />
-    <Header scrollToSection={scrollToSection} scrollToTopSection={scrollToTopSection} onCartClick={() => setIsBuyModalOpen(true)} />
-    <Buy isOpen={isBuyModalOpen} onClose={() => setIsBuyModalOpen(false)} game={null} />
+    <Header onCartClick={() => setIsBuyModalOpen(true)} />
+    <Buy isOpen={isBuyModalOpen} onClose={() => setIsBuyModalOpen(false)} game={null} onPurchaseConfirmed={(dados) => {
+      setInvoiceData(dados);
+      setIsInvoiceOpen(true);
+    }}/>
+    <Invoice isOpen={isInvoiceOpen} onClose={() => setIsInvoiceOpen(false)} data={invoiceData} user={user}/>
       <div className="banner-app">
         <video 
           className="video-banner-app"

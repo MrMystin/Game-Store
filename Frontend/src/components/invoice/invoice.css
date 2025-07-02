@@ -1,246 +1,205 @@
 .body-invoice {
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    background-color: black;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.7);
+  overflow-y: auto;
+  padding: 20px;
+  z-index: 1000;
 }
 
 .central-invoice {
-    width: 600px;
-    height: 800px;
-    background-color: rgba(218, 218, 218, 0.877);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    border-radius: 30px;
-    border: 2px solid gray;
+  width: 600px;
+  max-width: 95%;
+  background-color: rgba(218, 218, 218, 0.877);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  border-radius: 30px;
+  border: 2px solid gray;
+  padding-top: 160px;
+  padding-bottom: 30px;
+  flex-direction: column;
 }
 
 .logo-invoice {
-    position: absolute;
-    top: 30px;
-    width: 350px;
+  position: absolute;
+  left: 100px;
+  top: 30px;
+  width: 350px;
+  max-width: 80%;
 }
 
 .titlecentral-invoice {
-    position: absolute;
-    top: 120px;
-    font-size: 40px;
+  position: absolute;
+  top: 110px;
+  font-size: 40px;
+  text-align: center;
+  width: 100%;
 }
 
 .content-invoice {
-    height: 600px;
-    width: 500px;
-    background-color: white;
-    bottom: 0px;
-    position: absolute;
+  width: 500px;
+  background-color: white;
+  position: relative;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 20px 0;
+  margin: 0 auto;
 }
 
 .grouptext-invoice {
-    position: relative;
-    width: 100%;
-    height: 150px;
-    justify-content: center;
-    display: flex;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .p1-gptx-invoice {
-    position: absolute;
-    margin-top: 20px;
-    font-size: 22px;
-
+  font-size: 22px;
+  margin-top: 10px;
 }
 
 .p2-gptx-invoice {
-    position: absolute;
-    margin-top: 45px;
+  margin-top: 10px;
 }
 
 .p3-gptx-invoice {
-    position: absolute;
-    margin-top: 80px;
-    font-size: 30px;
+  margin-top: 15px;
+  font-size: 24px;
+  text-align: center;
 }
 
 .infomid-invoice {
-    position: relative;
-    width: 100%;
-    height: 20px;
-    margin-top: 10px;
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .p-informid-invoice {
-    width: 480px;
-    height: 100%;
-    margin-left: 10px;
-    color: gray;
-    border-bottom: 1px solid rgba(163, 163, 163, 0.548);
+  width: 100%;
+  padding: 5px 10px;
+  color: gray;
+  border-bottom: 1px solid rgba(163, 163, 163, 0.548);
+  font-weight: bold;
 }
 
 .groupmid-invoice {
-    width: 100%;
-    position: relative;
-    height: 150px;
-    display: flex;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
-.spacemid1-invoice {
-    position: absolute;
-    width: 50%;
-    height: 75px;
-    top: 0px;
-    left: 0px;
-    display: flex;
-    align-items: center;
-}
-
-.spacemid2-invoice {
-    position: absolute;
-    width: 50%;
-    height: 75px;
-    bottom: 0px;
-    left: 0px;
-    display: flex;
-    align-items: center;
-}
-
-.spacemid3-invoice {
-    position: absolute;
-    width: 50%;
-    height: 75px;
-    top: 0px;
-    right: 0px;
-    display: flex;
-    align-items: center;
-}
-
+.spacemid1-invoice,
+.spacemid2-invoice,
+.spacemid3-invoice,
 .spacemid4-invoice {
-    position: absolute;
-    width: 50%;
-    height: 75px;
-    bottom: 0px;
-    right: 0px;
-    display: flex;
-    align-items: center;
+  width: 50%;
+  height: 75px;
+  display: flex;
+  align-items: center;
 }
 
 .textmid-invoice {
-    width: 90%;
-    height: 50px;
-    margin-left: 8%;
-    margin-top: 10px;
-    overflow-wrap: break-word; 
-    word-wrap: break-word;
+  width: 90%;
+  margin-left: 8%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .textmid-invoice h4 {
-    font-size: 17px;
+  font-size: 17px;
+  margin: 0;
 }
 
 .textmid-invoice p {
-    font-size: 16px;
+  font-size: 16px;
+  margin: 2px 0 0 0;
 }
 
 .emailmid-invoice {
-    color: #0000ff;
-    cursor: pointer;
-    text-decoration: underline;
+  color: #0000ff;
+  cursor: pointer;
+  text-decoration: underline;
 }
-
-.p-textmid-invoice {
-    font-size: 14px;
-}
-
 
 .bottom-invoice {
-    width: 500px;
-    height: 270px;
-    display: flex;
-    justify-content: center;
-    position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 20px;
 }
 
 .space-bottom-invoice {
-    width: 450px;
-    height: 270px;
-    bottom: 0px;
-    position: absolute;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .line-bottom-invoice {
-    width: 450px;
-    height: 45px;
+  width: 100%;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.line1-invoice,
+.line3-invoice,
+.line5-invoice {
+  border-bottom: 1px solid rgba(163, 163, 163, 0.548);
+}
+
+.line2-invoice,
+.line4-invoice {
+  background-color: rgba(218, 218, 218, 0.877);
 }
 
 .title-bottom-invoice {
-    color: gray;
-    position: absolute;
-    margin-top: 20px;
+  color: gray;
+  font-weight: bold;
+  margin: 10px 0;
 }
 
-.line1-invoice, .line2-invoice, 
-.line3-invoice, .line4-invoice, 
-.line5-invoice, .line6-invoice {
-    display: flex;
-    align-items: center;
-}
-
-.line1-invoice, .line3-invoice, .line5-invoice {
-    border-bottom: 1px solid rgba(163, 163, 163, 0.548);
-}
-
-.line2-invoice, .line4-invoice {
-    background-color: rgba(218, 218, 218, 0.877);
-}
-
-.text-bottom1-invoice {
-    height: 45px;
-    width: 190px;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-}
-
-.text-bottom2-invoice {
-    height: 45px;
-    width: 150px;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    margin-left: 200px;
-}
-
+.text-bottom1-invoice,
+.text-bottom2-invoice,
 .text-bottom3-invoice {
-    height: 45px;
-    width: 100px;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    margin-left: 350px;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 .textleft-bottom-invoice {
-    margin-left: 10px;
-    font-size: 14px;
+  margin-left: 10px;
+  font-size: 14px;
 }
 
 .textright-bottom-invoice {
-   right: 10px;
-   position: absolute;
-   font-size: 14px;
+  margin-left: auto;
+  margin-right: 10px;
+  font-size: 14px;
 }
 
 .valuebottom-invoice {
-    color: gray;
-    margin-left: 200px;
+  color: gray;
+  margin-left: 10px;
+  font-weight: bold;
 }
 
 .numberbottom-invoice {
-    position: absolute;
-    right: 10px;
+  margin-left: auto;
+  margin-right: 10px;
+  font-weight: bold;
 }
