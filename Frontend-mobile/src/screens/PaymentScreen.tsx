@@ -64,6 +64,7 @@ function PaymentScreen() {
                 title="Confirm Purchase"
                 // onPress={}  
               ></Button>
+              <Text></Text>
             </View>
           </View>
         </View>
