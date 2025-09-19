@@ -1,36 +1,44 @@
 import React, { useState } from "react";
 import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    StyleSheet,
-    SafeAreaView,
-    ScrollView,
-    ImageBackground,
-  } from "react-native";
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function LoginScreen() {
+export default function SignUpScreen({ }) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  return ( 
+  return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-      <ImageBackground
-          source={require("../../assets/Steveimage.jpg")} // sua imagem
-          style={styles.waveBackground}
-          resizeMode="cover"
-        >
-          {/* overlay amarelo translúcido */}
-          <View style={styles.waveOverlay} />
-        </ImageBackground>
+        {/* Wave / topo amarelo */}
+        <View style={styles.waveBackground} />
 
         {/* Conteúdo */}
-        <View style={styles.card} >
-          <Text style={styles.title}>Login</Text>
+        <View style={styles.card}>
+          <Text style={styles.title}>Create an account</Text>
+
+          {/* Nome */}
+          <View style={styles.inputContainer}>
+            <Ionicons name="person-outline" size={20} color="#0eaeae" />
+            <TextInput
+              style={styles.input}
+              placeholder="Name"
+              placeholderTextColor="#aaa"
+              value={name}
+              onChangeText={setName}
+            />
+          </View>
 
           {/* Email */}
           <View style={styles.inputContainer}>
@@ -38,7 +46,7 @@ export default function LoginScreen() {
             <TextInput
               style={styles.input}
               placeholder="Email"
-              placeholderTextColor="#fff"
+              placeholderTextColor="#aaa"
               keyboardType="email-address"
               value={email}
               onChangeText={setEmail}
@@ -51,7 +59,7 @@ export default function LoginScreen() {
             <TextInput
               style={styles.input}
               placeholder="Password"
-              placeholderTextColor="#fff"
+              placeholderTextColor="#aaa"
               secureTextEntry={!showPassword}
               value={password}
               onChangeText={setPassword}
@@ -59,6 +67,28 @@ export default function LoginScreen() {
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
               <Ionicons
                 name={showPassword ? "eye-off-outline" : "eye-outline"}
+                size={20}
+                color="#555"
+              />
+            </TouchableOpacity>
+          </View>
+
+          {/* Confirm Password */}
+          <View style={styles.inputContainer}>
+            <Ionicons name="lock-closed-outline" size={20} color="#f5a623" />
+            <TextInput
+              style={styles.input}
+              placeholder="Confirm Password"
+              placeholderTextColor="#aaa"
+              secureTextEntry={!showConfirmPassword}
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+            />
+            <TouchableOpacity
+              onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              <Ionicons
+                name={showConfirmPassword ? "eye-off-outline" : "eye-outline"}
                 size={20}
                 color="#555"
               />
@@ -76,16 +106,16 @@ export default function LoginScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* Botão Login */}
-          <TouchableOpacity style={styles.loginButton}>
-            <Text style={styles.loginText}>LOGIN</Text>
+          {/* Botão Sign Up */}
+          <TouchableOpacity style={styles.signUpButton}>
+            <Text style={styles.signUpText}>SIGN UP</Text>
           </TouchableOpacity>
 
-          {/* Link Sign Up */}
+          {/* Link Login */}
           <View style={styles.footer}>
-            <Text style={styles.footerText}>Don’t have an account? </Text>
-            <TouchableOpacity onPress={() => console.log("oi")}>
-              <Text style={styles.footerLink}>Sign Up</Text>
+            <Text style={styles.footerText}>Already have an account? </Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+              <Text style={styles.footerLink}>Login</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -93,6 +123,7 @@ export default function LoginScreen() {
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -107,14 +138,12 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 300,
-    overflow: "hidden", // importante p/ respeitar o borderRadius
-  },
-  waveOverlay: {
-    flex: 1,
+    height: 200,
+    backgroundColor: "#fbc02d", // amarelo
+    borderBottomRightRadius: 100,
+    borderBottomLeftRadius: 40,
   },
   card: {
-    position: "relative",
     backgroundColor: "#494697",
     marginHorizontal: 20,
     borderRadius: 16,
@@ -125,9 +154,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "700",
-    marginBottom: 30,
+    marginBottom: 25,
   },
   inputContainer: {
     flexDirection: "row",
@@ -168,14 +197,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#fff",
   },
-  loginButton: {
+  signUpButton: {
     backgroundColor: "#31302b",
     borderRadius: 8,
     paddingVertical: 14,
     alignItems: "center",
     marginBottom: 15,
   },
-  loginText: {
+  signUpText: {
     color: "#fff",
     fontWeight: "700",
     fontSize: 16,
@@ -193,6 +222,4 @@ const styles = StyleSheet.create({
     color: "#0eaeae",
     fontWeight: "600",
   },
-})
-
-;
+});
