@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
-import SignUpScreen from './src/screens/CadastroScreen';
+import ProfileScreen from './src/screens/accountScreen';
 
 export default function App() {
   return (
-    < SignUpScreen />
+    <ProfileScreen/>
   );
 }
 

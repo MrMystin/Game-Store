@@ -7,6 +7,7 @@ import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
+  ImageBackground,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -21,8 +22,14 @@ export default function SignUpScreen({ }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Wave / topo amarelo */}
-        <View style={styles.waveBackground} />
+        <ImageBackground
+            source={require("../../assets/Steveimage.jpg")} // sua imagem
+            style={styles.waveBackground}
+            resizeMode="cover"
+          >
+            {/* overlay amarelo translúcido */}
+            <View style={styles.waveOverlay} />
+            </ImageBackground>
 
         {/* Conteúdo */}
         <View style={styles.card}>
@@ -75,7 +82,7 @@ export default function SignUpScreen({ }) {
 
           {/* Confirm Password */}
           <View style={styles.inputContainer}>
-            <Ionicons name="lock-closed-outline" size={20} color="#f5a623" />
+            <Ionicons name="lock-closed-outline" size={20} color="#0eaeae" />
             <TextInput
               style={styles.input}
               placeholder="Confirm Password"
@@ -114,7 +121,7 @@ export default function SignUpScreen({ }) {
           {/* Link Login */}
           <View style={styles.footer}>
             <Text style={styles.footerText}>Already have an account? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+            <TouchableOpacity onPress={() => console.log("oi")}>
               <Text style={styles.footerLink}>Login</Text>
             </TouchableOpacity>
           </View>
@@ -138,10 +145,11 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 200,
-    backgroundColor: "#fbc02d", // amarelo
-    borderBottomRightRadius: 100,
-    borderBottomLeftRadius: 40,
+    height: 300,
+    overflow: "hidden", // importante p/ respeitar o borderRadius
+  },
+  waveOverlay: {
+    flex: 1,
   },
   card: {
     backgroundColor: "#494697",
