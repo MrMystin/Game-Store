@@ -10,11 +10,31 @@ import {
     ImageBackground,
   } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { RootStackParamList, TabParamList } from '../navigation/types';
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { requestLogin } from "../services/authService";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function LoginScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const { login, cpfState } = useAuth();
+
+  const handleLogin = async () => {
+      try {
+          // Lógica de login / conexão com backend.
+          const {jwt, cpfValue} = await requestLogin(email, password);
+          login(jwt);
+          cpfState(cpfValue)
+          console.log('Login ok');
+      } catch (err: any) {
+          setError(err);
+      }
+  }
 
   return ( 
     <SafeAreaView style={styles.container}>
@@ -77,14 +97,14 @@ export default function LoginScreen() {
           </View>
 
           {/* Botão Login */}
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
             <Text style={styles.loginText}>LOGIN</Text>
           </TouchableOpacity>
 
           {/* Link Sign Up */}
           <View style={styles.footer}>
             <Text style={styles.footerText}>Don’t have an account? </Text>
-            <TouchableOpacity onPress={() => console.log("oi")}>
+            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
               <Text style={styles.footerLink}>Sign Up</Text>
             </TouchableOpacity>
           </View>
@@ -93,6 +113,7 @@ export default function LoginScreen() {
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -193,6 +214,4 @@ const styles = StyleSheet.create({
     color: "#0eaeae",
     fontWeight: "600",
   },
-})
-
-;
+});

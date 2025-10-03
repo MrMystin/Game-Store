@@ -10,14 +10,37 @@ import {
   ImageBackground,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList, TabParamList } from '../navigation/types';
+import { requestRegister, requestLogin } from "../services/authService";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function SignUpScreen({ }) {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState('');
+  const { login, cpfState } = useAuth();
+  const [username, setUsername] = useState("");
+  const [cpf, setCpf] = useState("");
+
+  const handleRegister = async () => {
+      try {
+          // Lógica de login / conexão com backend.
+          await requestRegister(email, password, username, cpf, name);
+          const {jwt, cpfValue} = await requestLogin(email, password);
+          login(jwt);
+          cpfState(cpfValue)
+          console.log('Register ok');
+      } catch (err: any) {
+          setError(err);
+      }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,6 +67,32 @@ export default function SignUpScreen({ }) {
               placeholderTextColor="#aaa"
               value={name}
               onChangeText={setName}
+            />
+          </View>
+
+          {/* Username */}
+          <View style={styles.inputContainer}>
+            <Ionicons name="at-outline" size={20} color="#0eaeae" />
+            <TextInput
+              style={styles.input}
+              placeholder="Username"
+              placeholderTextColor="#aaa"
+              value={username}
+              onChangeText={setUsername}
+            />
+          </View>
+
+          {/* CPF */}
+          <View style={styles.inputContainer}>
+            <Ionicons name="card-outline" size={20} color="#0eaeae" />
+            <TextInput
+              style={styles.input}
+              placeholder="CPF"
+              placeholderTextColor="#aaa"
+              keyboardType="numeric"
+              value={cpf}
+              onChangeText={setCpf}
+              maxLength={14}
             />
           </View>
 
@@ -114,14 +163,14 @@ export default function SignUpScreen({ }) {
           </View>
 
           {/* Botão Sign Up */}
-          <TouchableOpacity style={styles.signUpButton}>
+          <TouchableOpacity onPress={handleRegister} style={styles.signUpButton}>
             <Text style={styles.signUpText}>SIGN UP</Text>
           </TouchableOpacity>
 
           {/* Link Login */}
           <View style={styles.footer}>
             <Text style={styles.footerText}>Already have an account? </Text>
-            <TouchableOpacity onPress={() => console.log("oi")}>
+            <TouchableOpacity onPress={() => navigation.navigate("Tabs", { screen: "Login" })}>
               <Text style={styles.footerLink}>Login</Text>
             </TouchableOpacity>
           </View>
